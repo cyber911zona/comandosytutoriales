@@ -1335,3 +1335,37 @@ code a.link-comando:hover {
     }
 
 }
+/* =====================================================
+   11. AJUSTES PARA SCROLL MÓVILES
+   ===================================================== */
+
+/* ESTILOS PULL TO REFRESH */
+#ptr-indicator {
+    position: fixed;
+    top: -60px; /* Escondido arriba */
+    left: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--primary);
+    color: white;
+    z-index: 3000;
+    transition: transform 0.2s ease;
+    font-weight: 600;
+    pointer-events: none;
+}
+
+/* Animación cuando está cargando */
+#ptr-indicator.loading i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+
