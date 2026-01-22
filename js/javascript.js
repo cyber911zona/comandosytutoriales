@@ -3419,4 +3419,41 @@ btnSubir.addEventListener('click', () => {
         top: 0,
         behavior: 'smooth'
     });
+
+});
+/* LÓGICA DE PULL TO REFRESH OPTIMIZADA SCROLL MOVIL */
+let touchStart = 0;
+let pullDistance = 0;
+const ptrIndicator = document.getElementById('ptr-indicator');
+const ptrText = ptrIndicator.querySelector('span');
+
+window.addEventListener('touchstart', (e) => {
+    // Usamos scrollTop para mayor compatibilidad
+    const scrollActual = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollActual <= 0) {
+        touchStart = e.touches[0].pageY;
+    }
+}, { passive: true });
+
+window.addEventListener('touchmove', (e) => {
+    const touchCurrent = e.touches[0].pageY;
+    const scrollActual = window.pageYOffset || document.documentElement.scrollTop;
+    pullDistance = touchCurrent - touchStart;
+
+    if (scrollActual <= 0 && pullDistance > 0 && pullDistance < 120) {
+        ptrIndicator.style.transform = `translateY(${pullDistance}px)`;
+        ptrText.innerText = pullDistance > 80 ? "Suelta para actualizar" : "Desliza para actualizar";
+    }
+}, { passive: true });
+
+window.addEventListener('touchend', () => {
+    if (pullDistance > 80) {
+        ptrIndicator.classList.add('loading');
+        ptrText.innerText = "Actualizando...";
+        setTimeout(() => { location.reload(); }, 500);
+    } else {
+        ptrIndicator.style.transform = 'translateY(0)';
+    }
+    pullDistance = 0;
+    touchStart = 0;
 });
