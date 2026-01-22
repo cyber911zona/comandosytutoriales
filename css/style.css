@@ -175,7 +175,7 @@ header {
     */
     background: 
         linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7)), 
-        url('../img/Fondos/header-bg2.jpg'); 
+        url('../img/fondos/header-bg2.jpg'); 
     
     background-size: cover;           /* Asegura que la imagen no se estire feo */
     background-position: center;      /* Centra la imagen siempre */
@@ -215,7 +215,7 @@ body:not(.dark-mode) header {
     /* Capa de luz (blanca con transparencia) para que el título y buscador resalten */
     background: 
         linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255)), 
-        url('../img/Fondos/header-bg3.jpg'); 
+        url('../img/fondos/header-bg3.jpg'); 
     
     background-size: cover;
     background-position: center;
@@ -1333,4 +1333,5 @@ code a.link-comando:hover {
         font-size: 0.9rem;    /* Texto de búsqueda un poco más pequeño */
         padding: 12px 15px 12px 45px;
     }
+
 }
