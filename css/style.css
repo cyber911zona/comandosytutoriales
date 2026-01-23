@@ -20,9 +20,9 @@
 
     /* Fondos: Modifica las capas base de la interfaz */
     --bg-body: #f3f4f6;       /* Fondo general de la página (detrás de las tarjetas). */
-    --bg-card: rgba(255, 255, 255, 0.6); /* Fondo de las tarjetas. Permite el efecto de cristal. */
+    --bg-card: rgba(255, 255, 255, 0.55); /* Fondo de las tarjetas. Permite el efecto de cristal. */
     --bg-header: rgba(255, 255, 255, 0.1); /* Fondo del encabezado superior. */
-    --border-glass: 1px solid rgba(255, 255, 255, 0.4);
+    --border-glass: 1px solid rgba(255, 255, 255, 0.3);
 
     /* Sombras y Bordes: Crean la profundidad y el efecto 'Glassmorphism' */
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);   /* Sombra suave para inputs. */
@@ -48,9 +48,9 @@ body.dark-mode {
     --text-main: #f1f5f9;      /* Texto claro para fondo oscuro. */
     --text-muted: #94a3b8;     /* Texto grisáceo sutil. */
     --bg-body: #0f172a;        /* Fondo azul noche profundo. */
-    --bg-card: rgba(30, 41, 59, 0.4); /* Tarjetas azul oscuro semitransparente. */
+    --bg-card: rgba(15, 23, 42, 0.25); /* Tarjetas azul oscuro semitransparente. */
     --bg-header: rgba(0, 0, 0, 0.3);   /* Header negro tenue. */
-    --border-glass: 1px solid rgba(255, 255, 255, 0.1); /* Borde más oscuro. */
+    --border-glass: 1px solid rgba(255, 255, 255, 0.08); /* Borde más oscuro. */
     --shadow-md: 0 8px 20px rgba(0,0,0,0.3); /* Sombras más marcadas. */
 }
 
@@ -171,13 +171,25 @@ body.dark-mode .tarjeta-img-contenedor img {
 body:not(.dark-mode) {
     /* Degradado sutil (0.85 de opacidad) para que las tarjetas blancas resalten */
     background: 
-        linear-gradient(rgb(248, 250, 252), rgb(248, 250, 252)), 
+        linear-gradient(rgba(248, 250, 252, 0.199), rgba(248, 250, 252, 0.103)), 
         url('../img/fondos/header-bg1.jpg'); 
     
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* Mantiene la imagen estática al hacer scroll */
     background-color: #f8fafc;    /* Color de respaldo por seguridad */
+}
+
+
+/* Mejoramos el contraste del texto muted en modo claro */
+body:not(.dark-mode) .tarjeta p {
+    color: #475569; /* Un gris más profundo para lectura clara */
+}
+
+/* Botones de acción: fondo un poco más sólido de día para que no se "transparenten" */
+body:not(.dark-mode) .btn-copiar {
+    background: rgba(241, 245, 249, 0.9); /* Casi sólido */
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Apagamos el efecto Matrix en el día para que no ensucie la imagen */
@@ -188,7 +200,7 @@ body:not(.dark-mode) #matrix-bg {
 /* 2. CONFIGURACIÓN MODO NOCHE: Se activa con la clase .dark-mode */
 body.dark-mode #matrix-bg {
     display: block;  /* El canvas se vuelve visible para mostrar la animación */
-    opacity: 0.15;   /* Nivel de transparencia sutil que ya tenías configurado */
+    opacity: 0.22;   /* Subimos de 0.15 a 0.20 para que se note más a través de las tarjetas */
 }
 
 /* =====================================================
@@ -246,7 +258,7 @@ header h1 {
 body:not(.dark-mode) header {
     /* Capa de luz (blanca con transparencia) para que el título y buscador resalten */
     background: 
-        linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255)), 
+        linear-gradient(rgba(255, 255, 255, 0.151), rgba(255, 255, 255, 0.103)), 
         url('../img/fondos/header-bg3.jpg'); 
     
     background-size: cover;
@@ -515,15 +527,18 @@ header p {
 */
 .tarjeta {
     background: var(--bg-card);       /* Aplica el fondo semitransparente (Glassmorphism). */
-    backdrop-filter: blur(12px);      /* Efecto de cristal esmerilado que desenfoca el fondo. */
-    border: var(--border-glass);      /* Borde fino y sutil definido en las variables globales. */
+    backdrop-filter: blur(8px);      /* Efecto de cristal esmerilado que desenfoca el fondo. */
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-lg);  /* Esquinas muy redondeadas (24px). */
     padding: 25px;                    /* Espacio interno para que el contenido no toque los bordes. */
-    box-shadow: var(--shadow-sm);     /* Sombra ligera inicial para dar profundidad. */
+    box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.2), /* Sombra profunda */
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05); /* Brillo interno de cristal */
     /* Efecto de brillo sutil en el borde superior */
     background-clip: padding-box;
     /* Define la velocidad y suavidad de las animaciones de movimiento y sombra. */
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;                    /* Permite organizar el contenido interno en una columna. */
     flex-direction: column;           /* Alinea título, comando y descripción verticalmente. */
     position: relative;               /* Permite posicionar elementos internos de forma absoluta si es necesario. */
@@ -1360,6 +1375,12 @@ code a.link-comando:hover {
         page-break-inside: auto !important;  /* Evita huecos blancos entre hojas */
         display: block !important;
         width: 100% !important;
+    }
+
+    /* NUEVA REGLA: Fuerza a los enlaces dentro de códigos a ser negros en el PDF */
+    code a, .caja-negra a, a.link-comando {
+        color: #000000 !important;
+        text-decoration: underline !important; /* Añadimos subrayado para saber qué es un link en papel */
     }
 
     .tutorial-header {
