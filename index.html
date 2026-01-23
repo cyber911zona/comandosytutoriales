@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<!-- 
+    Define el tipo de documento.
+    Le dice al navegador que este archivo es HTML5.
+    (HTML)
+-->
+
+<html lang="es">
+<!-- 
+    Etiqueta raíz del documento HTML.
+    lang="es" indica que el contenido está en español.
+    Ayuda a buscadores y lectores de pantalla.
+    (HTML)
+-->
+
+<head>
+    <!-- 
+        Contiene información del documento que NO se ve en pantalla.
+        Aquí van metadatos, enlaces a CSS, título, etc.
+        (HTML)
+    -->
+
+    <meta charset="UTF-8">
+    <!-- 
+        Define la codificación de caracteres.
+        UTF-8 permite usar acentos, ñ, símbolos, etc.
+        (HTML)
+    -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 
+        Hace que la página sea responsive.
+        Ajusta el diseño a celulares, tablets y pantallas grandes.
+        (HTML + relación con CSS responsive)
+    -->
+        <!--estas dos linea ayuda a crear una web app-->
+        <link rel="manifest" href="manifest.json">  <!--para crear ventana de web app se relaciona con manifiesto.json y sw.js-->
+        <meta name="theme-color" content="#6366f1"> <!--para crear ventana de web app se relaciona con manifiesto.json y sw.js-->
+
+    <title>Comandos y Tutoriales</title>
+    <!-- 
+        Título de la pestaña del navegador.
+        No se muestra dentro de la página.
+        (HTML)
+    -->
+    <link rel="icon" type="image/png" href="img/iconos/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/iconos/apple-touch-icon.png">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="img/iconos/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/iconos/favicon-16x16.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&family=Fira+Code&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <!-- 
+        Enlace a tu archivo CSS local.
+        Aquí se define el diseño visual del sitio.
+        (HTML que conecta con CSS)
+    -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 
+        Carga la librería Font Awesome desde internet. https://fontawesome.com/search
+        Permite usar iconos como la lupa, la luna, la X, etc.
+        (HTML que conecta con CSS externo)
+    -->
+</head>
+
+ <!-- Contiene TODO lo que el usuario ve en pantalla.(HTML) -->
+<body class="dark-mode"> 
+    <canvas id="matrix-bg"></canvas>
+            
+    <header>
+        <!-- 
+            Encabezado principal del sitio.
+            Normalmente contiene título, navegación, buscador.
+            (HTML estructural)
+        -->
+
+        <div class="header-content">
+            <!-- 
+                Contenedor para organizar el contenido del header.
+                La clase se usa en CSS para estilos.
+                (HTML + CSS)
+            -->
+
+            <h1>Guía de Comandos y Tutoriales</h1>
+            <!-- 
+                Título principal del sitio.
+                Importante para SEO y jerarquía visual.
+                (HTML)
+            -->
+
+            <p>Tu base de conocimiento para sistema de Windows.</p>
+            <!-- 
+                Texto descriptivo debajo del título.
+                (HTML)
+            -->
+            
+            <div class="search-container">
+                <!-- 
+                    Contenedor del buscador.
+                    Se usa para alinear icono + input con CSS.
+                    (HTML + CSS)
+                -->
+
+                <i class="fas fa-search"></i>
+                <!-- 
+                    Icono de lupa de Font Awesome.
+                    Solo es visual.
+                    (HTML + Font Awesome CSS)
+                -->
+
+                <label for="inputBusqueda" style="display:none;">Buscar comandos</label> 
+                <!-- 
+                    Etiqueta accesible para el input.
+                    Está oculta visualmente, pero ayuda a accesibilidad.
+                    (HTML)
+                -->
+
+                <input type="text" id="inputBusqueda" name="busqueda" placeholder="¿Qué comando necesitas hoy?">
+                <!-- 
+                    Campo de texto para buscar comandos.
+                    id se usa en JavaScript para detectar lo que escribe el usuario.
+                    placeholder muestra texto guía.
+                    (HTML + JavaScript)
+                -->
+            </div>
+
+            
+
+            <div class="global-tools">
+                <button onclick="toggleDarkMode()" data-tooltip="Cambiar Tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button onclick="window.location.href='#'" data-tooltip="Repositorio">
+                    <i class="fab fa-github"></i>
+                </button>
+                <button onclick="alert('Bienvenido a tu Guía de Comandos')" data-tooltip="Ayuda">
+                    <i class="fas fa-question-circle"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav id="tabs-categorias">
+                <!-- 
+                    Barra de navegación para categorías.
+                    id usado en CSS o JavaScript.
+                    (HTML + CSS + JS)
+                -->
+
+                <button id="tab-todas" class="tab active" onclick="filtrarPorCategoria('todas')">
+                    <i class="fas fa-layer-group"></i> Todas
+                </button>
+                <!-- 
+                    Botón de categoría "Todas".
+                    onclick llama a una función JavaScript.
+                    class="active" indica la pestaña seleccionada.
+                    (HTML + JavaScript + CSS)
+                -->
+                
+                
+                <button class="tab cmd" onclick="filtrarPorCategoria('cmd')">
+                    <i class="fas fa-terminal"></i> CMD
+                </button>
+                <!-- 
+                    Filtra contenido por comandos CMD.
+                    (HTML + JavaScript)
+                -->
+                <button class="tab atajos" onclick="filtrarPorCategoria('atajos')">
+                    <i class="fas fa-bolt"></i> Atajos Win+R
+                </button>
+
+                 <button class="tab basicos" onclick="filtrarPorCategoria('basicos')">
+                    <i class="fas fa-desktop"></i> Básicos
+                </button>
+                <!-- 
+                    Filtra contenido por comandos CMD.
+                    (HTML + JavaScript)
+                -->
+
+                <button class="tab programas" onclick="filtrarPorCategoria('programas')">
+                    <i class="fas fa-download"></i> Programas
+                </button>
+                <!-- 
+                    Filtra contenido por categoría Windows.
+                    (HTML + JavaScript)
+                -->
+
+                <button class="tab aplicaciones" onclick="filtrarPorCategoria('aplicaciones')">
+                    <i class="fas fa-th-large"></i> Aplicaciones
+                </button>
+                <!-- 
+                    Filtra contenido por Git.
+                    (HTML + JavaScript)
+                -->
+                
+                <button class="tab onlinea" onclick="filtrarPorCategoria('onlinea')">
+                    <i class="fas fa-globe"></i> Onlinea
+                </button>
+                <!-- 
+                    Filtra enlaces o recursos.
+                    (HTML + JavaScript)
+                -->
+                <button class="tab windows" onclick="filtrarPorCategoria('windows')">
+                    <i class="fab fa-windows"></i> Windows
+                </button>
+                <!-- 
+                    Filtra enlaces o recursos.
+                    (HTML + JavaScript)
+                -->
+                <button class="tab tutoriales" onclick="filtrarPorCategoria('tutoriales')">
+                    <i class="fas fa-book-open"></i> Tutoriales
+                </button>
+                <!-- 
+                    Filtra enlaces o recursos.
+                    (HTML + JavaScript)
+                -->
+                
+                <button class="tab programacion" onclick="filtrarPorCategoria('programacion')">
+                    <i class="fas fa-code"></i> Programacion
+                </button>
+                <!-- 
+                    Filtra enlaces o recursos.
+                    (HTML + JavaScript)
+                -->
+                <button class="tab excel" onclick="filtrarPorCategoria('excel')">
+                    <i class="fa-regular fa-file-excel"></i> Excel
+                </button>
+                <!-- 
+                    Filtra enlaces o recursos.
+                    (HTML + JavaScript)
+                -->
+
+                <button class="tab utilidades" onclick="filtrarPorCategoria('utilidades')">
+                    <i class="fas fa-tools"></i> Utilidades
+                </button>
+            </nav>
+
+    <main>
+        <!-- 
+            Contenido principal del sitio.
+            (HTML semántico)
+        -->
+
+        <section id="lista-recursos"></section>
+        <!-- 
+            Aquí JavaScript insertará dinámicamente los comandos,
+            tutoriales o links.
+            Está vacío al inicio.
+            (HTML + JavaScript)
+        -->
+    </main>
+
+    <div id="modal-tutorial" class="modal hidden">
+        <!-- 
+            Ventana modal para mostrar tutoriales.
+            hidden se usa para ocultarlo con CSS.
+            (HTML + CSS + JS)
+        -->
+            
+            <div class="modal-blur-overlay" onclick="cerrarTutorial()"></div>
+            <div class="modal-contenido animate-pop-in">
+            
+            <!-- 
+                Contenido interno del modal.
+                (HTML + CSS)
+            -->
+
+            <button class="cerrar-modal" onclick="cerrarTutorial()" aria-label="Cerrar tutorial">
+                <!-- 
+                    Botón para cerrar el modal.
+                    Llama a una función JavaScript.
+                    aria-label ayuda a accesibilidad.
+                    (HTML + JavaScript)
+                -->
+                <i class="fas fa-times"></i>
+                <!-- 
+                    Icono de cerrar (X).
+                    (HTML + Font Awesome)
+                -->
+            </button>
+            
+            <div id="tutorial-cuerpo" class="print-area">
+                
+            </div>
+                <!-- 
+                    Aquí JavaScript insertará el contenido del tutorial.
+                    (HTML + JavaScript)
+                -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/javascript.js" defer></script>
+    <!-- 
+        Enlace al archivo JavaScript.
+        defer hace que se cargue después del HTML.
+        (HTML + JavaScript)
+    -->
+        <div id="contenedor-subir">
+            <span id="contador-tarjetas" title="Total de resultados">0</span>
+            <button id="btn-subir" title="Volver arriba">
+                <i class="fas fa-chevron-up"></i>
+            </button>
+        </div>
+</body>
+</html>
