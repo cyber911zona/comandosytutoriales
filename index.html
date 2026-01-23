@@ -33,8 +33,9 @@
         Ajusta el diseño a celulares, tablets y pantallas grandes.
         (HTML + relación con CSS responsive)
     -->
-         <link rel="manifest" href="manifest.json">  <!--para crear ventana de web app-->
-         <meta name="theme-color" content="#6366f1"> <!--para crear ventana de web app-->
+        <!--estas dos linea ayuda a crear una web app-->
+        <link rel="manifest" href="manifest.json">  <!--para crear ventana de web app se relaciona con manifiesto.json y sw.js-->
+        <meta name="theme-color" content="#6366f1"> <!--para crear ventana de web app se relaciona con manifiesto.json y sw.js-->
 
     <title>Comandos y Tutoriales</title>
     <!-- 
@@ -70,8 +71,7 @@
  <!-- Contiene TODO lo que el usuario ve en pantalla.(HTML) -->
 <body class="dark-mode"> 
     <canvas id="matrix-bg"></canvas>
-    
-        
+            
     <header>
         <!-- 
             Encabezado principal del sitio.
@@ -129,7 +129,23 @@
                 -->
             </div>
 
-            <nav id="tabs-categorias">
+            
+
+            <div class="global-tools">
+                <button onclick="toggleDarkMode()" data-tooltip="Cambiar Tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button onclick="window.location.href='#'" data-tooltip="Repositorio">
+                    <i class="fab fa-github"></i>
+                </button>
+                <button onclick="alert('Bienvenido a tu Guía de Comandos')" data-tooltip="Ayuda">
+                    <i class="fas fa-question-circle"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav id="tabs-categorias">
                 <!-- 
                     Barra de navegación para categorías.
                     id usado en CSS o JavaScript.
@@ -224,29 +240,6 @@
                 </button>
             </nav>
 
-            <div class="global-tools">
-                <!-- 
-                    Contenedor para herramientas globales.
-                    (HTML + CSS)
-                -->
-
-                <button onclick="toggleDarkMode()" title="Modo Oscuro">
-                    <!-- 
-                        Botón que activa o desactiva el modo oscuro.
-                        Llama a una función JavaScript.
-                        (HTML + JavaScript)
-                    -->
-                    <i class="fas fa-moon"></i>
-                    <!-- 
-                        Icono de luna (Font Awesome).
-                        Representa el modo oscuro.
-                        (HTML + CSS externo)
-                    -->
-                </button>
-            </div>
-        </div>
-    </header>
-
     <main>
         <!-- 
             Contenido principal del sitio.
@@ -316,6 +309,3 @@
         </div>
 </body>
 </html>
-
-
-
