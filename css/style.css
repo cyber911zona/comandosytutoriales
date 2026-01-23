@@ -20,8 +20,9 @@
 
     /* Fondos: Modifica las capas base de la interfaz */
     --bg-body: #f3f4f6;       /* Fondo general de la página (detrás de las tarjetas). */
-    --bg-card: rgba(255, 255, 255, 0.9); /* Fondo de las tarjetas. Permite el efecto de cristal. */
+    --bg-card: rgba(255, 255, 255, 0.6); /* Fondo de las tarjetas. Permite el efecto de cristal. */
     --bg-header: rgba(255, 255, 255, 0.1); /* Fondo del encabezado superior. */
+    --border-glass: 1px solid rgba(255, 255, 255, 0.4);
 
     /* Sombras y Bordes: Crean la profundidad y el efecto 'Glassmorphism' */
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);   /* Sombra suave para inputs. */
@@ -47,7 +48,7 @@ body.dark-mode {
     --text-main: #f1f5f9;      /* Texto claro para fondo oscuro. */
     --text-muted: #94a3b8;     /* Texto grisáceo sutil. */
     --bg-body: #0f172a;        /* Fondo azul noche profundo. */
-    --bg-card: rgba(30, 41, 59, 0.85); /* Tarjetas azul oscuro semitransparente. */
+    --bg-card: rgba(30, 41, 59, 0.4); /* Tarjetas azul oscuro semitransparente. */
     --bg-header: rgba(0, 0, 0, 0.3);   /* Header negro tenue. */
     --border-glass: 1px solid rgba(255, 255, 255, 0.1); /* Borde más oscuro. */
     --shadow-md: 0 8px 20px rgba(0,0,0,0.3); /* Sombras más marcadas. */
@@ -76,6 +77,36 @@ body {
     position: relative;                  /* Permite posicionar las formas decorativas detrás. */
     overflow-x: hidden;                  /* Evita que aparezca una barra de scroll horizontal. */
 }
+
+/* =====================================================
+   1.1 SCROLLBAR PERSONALIZADO (CROMO/FIREFOX) MODIFICA LA BARRA LATERAL PARA BAJAR --INICIO DEL CODIGO--
+   ===================================================== */
+
+/* Estilo para navegadores basados en Chrome (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 8px;              /* Una barra más delgada y elegante */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-body); /* El fondo del carril coincide con tu sitio */
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3); /* Color índigo suave y transparente */
+    border-radius: 10px;      /* Bordes redondeados tipo cápsula */
+    border: 2px solid var(--bg-body); /* Crea un efecto de 'flotado' dentro del carril */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary); /* Se ilumina al pasar el mouse */
+}
+
+/* Estilo para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(99, 102, 241, 0.3) transparent;
+}
+/*--FIN DEL CODIGO (NO TIENE RELACION CON OTRA PARTE DEL CODIGO)*/
 
 /* CLASE .BACKGROUND-SHAPES: Crea el efecto visual de fondo.
    Relación: No está en el index.html actual, pero puede agregarse como un div vacío al inicio.
@@ -113,10 +144,10 @@ body.dark-mode .tarjeta-img-contenedor img {
 }
 
 /* Ajuste de tarjetas: Mejora el contraste sobre el fondo azul noche */
-body.dark-mode .tarjeta {
+/*body.dark-mode .tarjeta {
     /* Hace que el fondo de la tarjeta sea más sólido (95% opacidad) para que el texto resalte mejor */
-    background: rgba(30, 41, 59, 0.95); 
-}
+    /*background: rgba(30, 41, 59, 0.95);
+}*/
 
 /* =====================================================
    FONDO DINÁMICO: REJILLA (DÍA) / MATRIX (NOCHE)
@@ -131,7 +162,8 @@ body.dark-mode .tarjeta {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1;          /* Se mantiene detrás de todo el contenido */
+    z-index: -2;          /* Se mantiene detrás de todo el contenido */
+    opacity: 0.07;
     pointer-events: none; /* No interfiere con los clics */
 }
 
@@ -286,16 +318,29 @@ header p {
     font-size: 1.2rem;                /* Tamaño visual del icono. */
 }
 
-/* CONTENEDOR TABS: Barra de botones de categoría (CMD, Atajos, etc).
-   Relación: Modifica el <nav id="tabs-categorias"> en index.html.
-*/
+/* style.css corregido y fusionado */
 #tabs-categorias {
-    display: flex;                    /* Alinea todos los botones en una sola fila. */
-    justify-content: flex-start;      /* Los botones empiezan desde la izquierda. */
-    overflow-x: auto;                 /* Si hay muchas categorías, permite deslizar de lado en móviles. */
-    padding-bottom: 10px;             /* Espacio inferior para que no choque con el scrollbar. */
-    white-space: nowrap;              /* Impide que los botones se bajen a la siguiente línea. */
-    scrollbar-width: thin;            /* Hace la barra de scroll más delgada en navegadores compatibles. */
+    /* 1. COMPORTAMIENTO STICKY (Lo nuevo) */
+    position: sticky;           /* Permite que se quede fijo al hacer scroll */
+    top: 0;                     /* Se ancla al borde superior de la pantalla */
+    z-index: 2000;              /* Asegura que siempre esté por encima de las tarjetas */
+    
+    /* 2. DISEÑO PROFESIONAL (Efecto Cristal) */
+    background: var(--bg-body); /* Usa el fondo actual (claro u oscuro) */
+    backdrop-filter: blur(15px); /* Desenfoca lo que pasa por debajo */
+    -webkit-backdrop-filter: blur(15px); 
+    border-bottom: var(--border-glass); /* Línea sutil de separación */
+    
+    /* 3. ESPACIADO AJUSTADO */
+    padding: 15px 20px;         /* Da aire alrededor de los botones */
+    margin: 0;                  /* Sin márgenes para que ocupe todo el ancho */
+
+    /* 4. TUS ESTILOS ORIGINALES (Mantenidos) */
+    display: flex;              /* Alinea botones en una fila */
+    justify-content: flex-start; /* Alineación al inicio */
+    overflow-x: auto;           /* Habilita scroll horizontal en móviles */
+    white-space: nowrap;        /* Evita que los botones salten de línea */
+    scrollbar-width: thin;      /* Tu estilo de barra delgada */
 }
 
 /* CLASE .TAB: Estilo base de los botones de categoría.
@@ -350,31 +395,77 @@ header p {
 /* CONTENEDOR HERRAMIENTAS GLOBALES: Grupo que contiene el botón de modo oscuro.
    Relación: Afecta al <div class="global-tools"> en index.html.
 */
+/* CONTENEDOR: Ahora es una cápsula flotante con efecto cristal */
 .global-tools {
-    margin-top: 20px;                 /* Separa las herramientas de las pestañas superiores. */
-    display: flex;                    /* Alinea botones de herramientas en fila. */
-    justify-content: center;          /* Centra los botones horizontalmente en el header. */
-    gap: 15px;                        /* Espacio de separación entre cada herramienta. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 25px auto 0;
+    padding: 8px 16px;
+    width: fit-content; /* Se ajusta al número de botones */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s ease;
+}
+
+/* EFECTO AL PASAR EL MOUSE POR LA BARRA */
+.global-tools:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary); /* Brillo sutil del color principal */
+    transform: translateY(-2px);
 }
 
 /* BOTONES DE HERRAMIENTAS: Estilo de los círculos como el de Modo Oscuro.
    Relación: Afecta a los <button> dentro de .global-tools.
-*/
+/* BOTONES INTERNOS: Más elegantes y minimalistas */
 .global-tools button {
-    background: white;                /* Fondo blanco sólido. */
-    border: none;                     /* Elimina bordes por defecto. */
-    width: 45px;                      /* Ancho del círculo. */
-    height: 45px;                     /* Alto del círculo (igual al ancho para que sea perfecto). */
-    border-radius: 50%;               /* Convierte el cuadrado en un círculo. */
-    cursor: pointer;                  /* Puntero de mano. */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Sombra para dar efecto de flotado. */
-    transition: 0.3s;                 /* Suaviza la animación de escala. */
+    background: transparent;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--text-muted); /* Color suave por defecto */
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
 }
 
 /* HOVER HERRAMIENTAS: Efecto al pasar el mouse.
 */
+/* HOVER EN BOTONES: Color y resplandor */
 .global-tools button:hover {
-    transform: scale(1.1);            /* Aumenta el tamaño un 10% sutilmente. */
+    color: white;
+    background: var(--primary); /* Color índigo al resaltar */
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+    transform: scale(1.1);
+}
+
+/* Tooltip (Texto de ayuda al pasar el mouse) - Opcional */
+.global-tools button::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -35px;
+    font-size: 0.7rem;
+    background: var(--primary);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+.global-tools button:hover::after {
+    opacity: 1;
 }
 
 /* CLASE .TOOL-BTN: Variante alternativa para botones de herramientas.
@@ -424,11 +515,13 @@ header p {
 */
 .tarjeta {
     background: var(--bg-card);       /* Aplica el fondo semitransparente (Glassmorphism). */
-    backdrop-filter: blur(10px);      /* Efecto de cristal esmerilado que desenfoca el fondo. */
+    backdrop-filter: blur(12px);      /* Efecto de cristal esmerilado que desenfoca el fondo. */
     border: var(--border-glass);      /* Borde fino y sutil definido en las variables globales. */
     border-radius: var(--radius-lg);  /* Esquinas muy redondeadas (24px). */
     padding: 25px;                    /* Espacio interno para que el contenido no toque los bordes. */
     box-shadow: var(--shadow-sm);     /* Sombra ligera inicial para dar profundidad. */
+    /* Efecto de brillo sutil en el borde superior */
+    background-clip: padding-box;
     /* Define la velocidad y suavidad de las animaciones de movimiento y sombra. */
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
     display: flex;                    /* Permite organizar el contenido interno en una columna. */
@@ -608,7 +701,33 @@ body.dark-mode .btn-copiar:hover { background: #334155; }
     font-style: italic;               /* Letra cursiva para indicar estado vacío. */
 }
 
+/* Mejora específica para la barra fija en Modo Oscuro */
+/* Mejora específica para la barra fija en MODO DÍA */
+body:not(.dark-mode) #tabs-categorias {
+    /* Color gris claro de fondo con 80% de opacidad para permitir la transparencia */
+    background: rgba(243, 244, 246, 0.8) !important; 
+    
+    /* El desenfoque es vital para el efecto de cristal */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    /* Sombra muy sutil para dar profundidad sin oscurecer demasiado */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    
+    /* Borde blanco casi invisible para resaltar el brillo del cristal */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+}
 
+main {
+    /* Asegura que el área de tarjetas sea siempre lo suficientemente alta 
+       para que el scroll funcione correctamente en todas las categorías */
+    min-height: 100vh; 
+}
+
+#lista-recursos {
+    /* Da un respiro sutil para que la primera tarjeta no se pegue a la barra */
+    padding-top: 10px; 
+}
 
 /* =====================================================
    4. ETIQUETAS DE COLOR POR CATEGORÍA
@@ -681,7 +800,7 @@ body.dark-mode .btn-copiar:hover { background: #334155; }
     display: flex;                /* Activa el sistema flexible para centrar el contenido. */
     justify-content: center;      /* Centra horizontalmente la caja del tutorial. */
     align-items: center;          /* Centra verticalmente la caja del tutorial. */
-    z-index: 1000;                /* Se asegura de estar por ENCIMA de las tarjetas y el header. */
+    z-index: 4000;                /* Se asegura de estar por ENCIMA de las tarjetas y el header. */
     padding: 20px;                /* Margen de seguridad para que la caja no toque los bordes en móviles. */
 }
 
@@ -714,7 +833,7 @@ body.dark-mode .btn-copiar:hover { background: #334155; }
     position: relative;               /* Permite posicionar el botón 'X' de cierre de forma absoluta. */
     box-shadow: var(--shadow-lg);     /* Sombra intensa para dar sensación de que la caja "vuela" sobre la web. */
     border: var(--border-glass);      /* Borde fino transparente para el efecto de cristal. */
-    z-index: 1001;                    /* Un nivel arriba del overlay para que sea el elemento más frontal. */
+    z-index: 4001;                    /* Un nivel arriba del overlay para que sea el elemento más frontal. */
 }
 
 /* CLASE .CERRAR-MODAL: El botón con icono de 'X'.
@@ -736,6 +855,7 @@ body.dark-mode .btn-copiar:hover { background: #334155; }
     display: flex;                    /* Alineación interna del icono. */
     align-items: center;              /* Centra la 'X' verticalmente. */
     justify-content: center;          /* Centra la 'X' horizontalmente. */
+    z-index: 4002; /* La X es lo más importante para salir del tutorial */
 }
 
 /* ESTADO :HOVER DE CERRAR-MODAL: Respuesta visual al intentar cerrar.
@@ -1176,76 +1296,80 @@ code a.link-comando:hover {
    Relación JS: Se activa cuando el usuario pulsa el botón '.btn-pdf' (window.print()).
    Modifica: Limpia la página de elementos innecesarios para que el documento PDF sea profesional.
 */
+
+/* =====================================================
+   SOLUCIÓN FINAL: PDF PROFESIONAL (SIN HOJA EN BLANCO)
+   ===================================================== */
 @media print {
-    /* 1. OCULTACIÓN DE ELEMENTOS WEB: Quita menús, botones y herramientas que no sirven en papel. */
-    header, 
-    main, 
-    .global-tools, 
-    .cerrar-modal, 
-    .btn-pdf, 
-    .panel-controles {
-        display: none !important; /* Elimina cabeceras, buscadores y botones de acción del PDF. */
+    /* 1. RESETEO TOTAL: Matamos la hoja en blanco al inicio */
+    html, body, main {
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        /* IMPORTANTE: Forzamos altura auto y quitamos el 100vh de la web */
+        height: auto !important;
+        min-height: 0 !important; 
+        overflow: visible !important;
     }
 
-    /* Ajuste de estructura base para impresión. */
-    html, body {
-        height: auto !important;     /* Permite que el cuerpo crezca según el largo del texto. */
-        overflow: visible !important; /* Asegura que se vea todo el contenido en varias páginas. */
-        background: white !important; /* Fuerza fondo blanco para ahorrar tinta. */
-        color: black !important;      /* Fuerza texto negro para máxima legibilidad. */
+    /* 2. OCULTACIÓN QUIRÚRGICA: Solo queda el tutorial */
+    header, nav, #tabs-categorias, .global-tools, 
+    .cerrar-modal, .btn-pdf, .panel-controles, 
+    #matrix-bg, #contenedor-subir, .background-shapes, 
+    #lista-recursos, .modal-blur-overlay { 
+        display: none !important; /* Limpieza total de la interfaz */
     }
 
-    /* 2. AJUSTE DEL MODAL PARA IMPRESIÓN:
-       Modifica: Convierte la ventana flotante en un documento plano normal.
-    */
-    .modal {
-        position: relative !important; /* Quita el estado fijo para que fluya con el papel. */
-        display: block !important;    /* Cambia de flex a bloque estándar. */
-        background: white !important; /* Fondo blanco. */
-        padding: 0 !important;        /* Elimina márgenes externos de pantalla. */
-        overflow: visible !important; /* Asegura visibilidad total. */
-        height: auto !important; 
+    /* 3. FORZAR CONTRASTE Y QUITAR ADVERTENCIA AMARILLA */
+    * {
+        color: #000000 !important;         /* Negro puro para todo el texto */
+        print-color-adjust: exact;        /* Quita la línea amarilla del editor */
+        -webkit-print-color-adjust: exact;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        backdrop-filter: none !important;
+    }
+
+    /* 4. POSICIONAR EN LA PÁGINA 1 (Sin saltos) */
+    #modal-tutorial, .modal {
+        display: block !important;
+        position: static !important;      /* Se integra al flujo natural del papel */
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .modal-contenido {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        max-height: none !important;      /* Quita el límite de 90vh */
+        overflow: visible !important;     /* Permite que el PDF tenga varias hojas */
+        padding: 0 !important;
+        margin: 0 !important;
+        background: white !important;
+        border: none !important;
+    }
+
+    /* 5. VISIBILIDAD DE COMANDOS (Letras negras intensas) */
+    code, .caja-negra, .tutorial-pasos {
+        background-color: #f1f5f9 !important; /* Gris suave profesional */
+        border: 1px solid #cbd5e1 !important;
+        color: #000000 !important;           /* Texto negro dentro de comandos */
+        page-break-inside: auto !important;  /* Evita huecos blancos entre hojas */
+        display: block !important;
         width: 100% !important;
     }
 
-    /* 3. AJUSTE DEL CONTENIDO DEL TUTORIAL:
-       Modifica: Expande el texto a todo el ancho de la hoja A4.
-    */
-    .modal-contenido {
-        box-shadow: none !important;  /* Quita sombras (no tienen sentido en papel). */
-        border: none !important;      /* Quita bordes decorativos. */
-        width: 100% !important;       /* Usa todo el ancho de la página. */
-        max-width: none !important;   /* Elimina el límite de 800px de la web. */
-        margin: 0 !important;         /* Centrado manual desactivado. */
-        padding: 20px !important;     /* Margen interno para el texto. */
-        height: auto !important;      /* Altura automática según el texto. */
-        max-height: none !important;  /* Elimina el límite de 90vh de la web. */
-        overflow: visible !important; /* Garantiza que se impriman todas las hojas necesarias. */
+    .tutorial-header {
+        border-bottom: 2px solid #000 !important;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
     }
 
-    /* 4. ESTILOS DE TEXTO TÉCNICO EN PAPEL:
-       Modifica: Los bloques de código se ven como recuadros grises claros en el PDF.
-    */
-    code, .caja-negra {
-        background: #f4f4f4 !important; /* Fondo gris muy tenue. */
-        color: black !important;        /* Letra negra. */
-        border: 1px solid #ccc !important; /* Borde gris definido. */
-        page-break-inside: avoid;       /* EVITA QUE UN COMANDO SE CORTE entre dos páginas. */
-    }
-
-    /* Ajuste visual para los pasos destacados en la guía impresa. */
-    .tutorial-pasos code, .caja-negra {
-        background: white !important;   /* Fondo blanco puro. */
-        border-left: 5px solid #3498db !important; /* Mantiene la barra azul de énfasis. */
-        page-break-inside: avoid;       /* Mantiene el bloque unido. */
-    }
-
-    /* Configuración de los márgenes físicos de la hoja. */
-    @page { 
-        margin: 15mm; /* Deja 1.5 cm de margen en todos los lados del papel. */
-    }
+    @page { margin: 1.5cm; }
 }
-
 
 /* EL CONTENEDOR: Cambiamos a 'column' para apilarlos */
 #contenedor-subir {
@@ -1333,5 +1457,5 @@ code a.link-comando:hover {
         font-size: 0.9rem;    /* Texto de búsqueda un poco más pequeño */
         padding: 12px 15px 12px 45px;
     }
-
 }
+
