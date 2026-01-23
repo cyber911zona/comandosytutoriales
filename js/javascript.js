@@ -3266,24 +3266,40 @@ if (buscador) {
     });
 }
 
+/* javascript.js */
 function filtrarPorCategoria(cat) {
-    // 1. Quita la clase active de todos los botones
+    // 1. Gestión de botones activos (Tu lógica original)
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-
-    // 2. Busca el botón exacto que se clickeó usando su atributo onclick
     const botonActivo = document.querySelector(`button[onclick="filtrarPorCategoria('${cat}')"]`);
-    
-    // 3. Si lo encuentra, le pone el color (clase active)
-    if (botonActivo) {
-        botonActivo.classList.add('active');
-    }
+    if (botonActivo) botonActivo.classList.add('active');
 
-    // 4. Filtra los datos
-    const final = (cat === 'todas')
-        ? misNotas
-        : misNotas.filter(n => n.categoria === cat);
-
+    // 2. Filtrado y dibujado (Tu lógica original)
+    const final = (cat === 'todas') ? misNotas : misNotas.filter(n => n.categoria === cat);
     mostrarNotas(final);
+
+    // 3. LA SOLUCIÓN: Scroll Inteligente Condicional
+    const barra = document.getElementById('tabs-categorias');
+    if (barra) {
+        // Obtenemos la posición de la barra respecto a lo que tú ves en pantalla
+        const rectBarra = barra.getBoundingClientRect();
+
+        /* Si rectBarra.top es menor o igual a 0, significa que la barra 
+           ya está pegada al techo (sticky) o el usuario ya bajó.
+        */
+        if (rectBarra.top <= 1) { 
+            const contenedor = document.getElementById('lista-recursos');
+            const alturaBarra = barra.offsetHeight;
+            
+            // Calculamos el punto donde empiezan las tarjetas
+            const posicionDestino = contenedor.offsetTop - alturaBarra;
+
+            window.scrollTo({
+                top: posicionDestino,
+                behavior: 'smooth'
+            });
+        }
+        // SI ESTÁS ARRIBA (rectBarra.top > 1), EL CÓDIGO NO HACE NADA (No hay scroll)
+    }
 }
 
 // =====================================================
@@ -3419,5 +3435,5 @@ btnSubir.addEventListener('click', () => {
         top: 0,
         behavior: 'smooth'
     });
-
 });
+
