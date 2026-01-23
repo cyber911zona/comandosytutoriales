@@ -171,7 +171,7 @@ body.dark-mode .tarjeta-img-contenedor img {
 body:not(.dark-mode) {
     /* Degradado sutil (0.85 de opacidad) para que las tarjetas blancas resalten */
     background: 
-        linear-gradient(rgba(248, 250, 252, 0.199), rgba(248, 250, 252, 0.103)), 
+        linear-gradient(rgba(248, 250, 252), rgba(248, 250, 252)), 
         url('../img/fondos/header-bg1.jpg'); 
     
     background-size: cover;
@@ -258,7 +258,7 @@ header h1 {
 body:not(.dark-mode) header {
     /* Capa de luz (blanca con transparencia) para que el título y buscador resalten */
     background: 
-        linear-gradient(rgba(255, 255, 255, 0.151), rgba(255, 255, 255, 0.103)), 
+        linear-gradient(rgba(255, 255, 255), rgba(255, 255, 255)), 
         url('../img/fondos/header-bg3.jpg'); 
     
     background-size: cover;
@@ -1479,4 +1479,5 @@ code a.link-comando:hover {
         padding: 12px 15px 12px 45px;
     }
 }
+
 
