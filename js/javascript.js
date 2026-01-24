@@ -3228,38 +3228,36 @@ function copiarComando(btn) {
 }
 
 // =====================================================
-// 7. BUSCADOR Y FILTROS MEJORADO
+// 7. BUSCADOR Y FILTROS AVANZADO (BUSCA DENTRO DE PASOS)
 // =====================================================
 if (buscador) {
     buscador.addEventListener('input', () => {
-        // Texto escrito por el usuario en minúsculas
         const texto = buscador.value.toLowerCase().trim();
 
-        // Si el buscador está vacío, mostramos todo y salimos
         if (texto === "") {
             mostrarNotas(misNotas);
             return;
         }
 
-        // Filtra notas revisando múltiples campos
         const filtradas = misNotas.filter(n => {
-            // Buscamos en el tutorial HTML eliminando las etiquetas para que sea texto limpio
-            const contenidoLimpio = n.contenidoTutorialHtml ? n.contenidoTutorialHtml.toLowerCase() : "";
+            // 1. LIMPIEZA REAL: Quitamos las etiquetas HTML para buscar solo en el texto visible
+            // Usamos un pequeño truco de navegador para extraer solo el texto
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = n.contenidoTutorialHtml || "";
+            const textoLimpioTutorial = tempDiv.textContent.toLowerCase() || "";
 
             return (
-                n.titulo.toLowerCase().includes(texto) ||      // Busca en el título
-                n.categoria.toLowerCase().includes(texto) ||   // Busca en la categoría
-                n.descripcion.toLowerCase().includes(texto) || // Busca en la descripción
-                n.comando.toLowerCase().includes(texto) || // NUEVO: Busca en el comando principal
-                contenidoLimpio.includes(texto) ||         // NUEVO: Busca dentro de todo el tutorial unificado
-                n.pasos.some(p => p.toLowerCase().includes(texto)) // Busca dentro de los pasos de la guía
+                n.titulo.toLowerCase().includes(texto) ||      
+                n.categoria.toLowerCase().includes(texto) ||   
+                n.descripcion.toLowerCase().includes(texto) || 
+                n.comando.toLowerCase().includes(texto) || 
+                // Ahora sí buscamos solo en el texto real del tutorial
+                textoLimpioTutorial.includes(texto) 
             );
         });
 
-        // Redibuja las tarjetas encontradas
         mostrarNotas(filtradas);
 
-        // Opcional: Si no hay resultados, puedes mostrar un mensaje
         if (filtradas.length === 0) {
             listaRecursos.innerHTML = `<p class="no-results">No se encontraron comandos o guías con "${texto}"</p>`;
         }
@@ -3436,4 +3434,5 @@ btnSubir.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
 
