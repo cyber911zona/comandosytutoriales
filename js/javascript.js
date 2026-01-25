@@ -46,53 +46,114 @@ const misNotas = [
     },
     {
         categoria: "cmd",
-        titulo: "Reparación de Archivos del Sistema (SFC)",
+        titulo: "Mantenimiento y Reparación Completa",
         imagen: "img/cmd/sfc.jpg",
-        comando: "sfc /scannow",
-        descripcion: "Escanea y repara automáticamente archivos dañados o faltantes del sistema operativo Windows.",
+        comando: "sfc / DISM / chkdsk",
+        descripcion: "Kit de herramientas esenciales para diagnosticar y solucionar errores lógicos, físicos y de arranque en Windows.",
         contenidoTutorialHtml: `
-            <h3>🛠️ System File Checker (SFC)</h3>
-            <p>Esta utilidad es la primera que debes usar si Windows presenta errores de pantalla azul, lentitud extrema o si algunas aplicaciones del sistema no abren correctamente.</p>
+            <h3>🛠️ Protocolo de Reparación del Sistema</h3>
+            <p>Sigue este orden lógico para solucionar desde errores leves hasta fallos críticos en el sistema operativo.</p>
             
             <div class="tutorial-pasos">
-                <h4>Paso 1: Abrir CMD como Administrador</h4>
-                <p>Para modificar archivos protegidos del sistema, es obligatorio tener permisos elevados:</p>
-                
-                <ul style="list-style: none; padding: 0; margin-bottom: 20px;">
-                    <li>Pulsa la tecla <kbd>Win</kbd>, escribe <strong>"cmd"</strong>.</li>
-                    <li>Haz clic derecho en el resultado y elige <strong>Ejecutar como administrador</strong>.</li>
-                </ul>
-
-                <h4>Paso 2: Ejecutar el Análisis Completo</h4>
-                <p>Escribe el comando y presiona <kbd>Enter</kbd>. El proceso suele tardar entre 5 y 15 minutos según la velocidad de tu disco:</p>
-                
+                <h4>Fase 1: Reparación de Archivos (SFC)</h4>
+                <p>Escanea y reemplaza archivos dañados individualmente de forma rápida.</p>
                 <div class="contenedor-comando">
                     <code>sfc /scannow</code>
                     <button class="btn-copiar-interno" onclick="copiarComando(this)">
                         <i class="fas fa-copy"></i> Copiar
                     </button>
+                </div>                
+
+                <h4 style="margin-top:20px;">Fase 2: Reparación Profunda de Imagen (DISM)</h4>
+                <p>Repara la base del sistema usando los servidores de Microsoft si SFC falla.</p>
+                <div class="contenedor-comando">
+                    <code>DISM /Online /Cleanup-Image /RestoreHealth</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)">
+                        <i class="fas fa-copy"></i> Copiar
+                    </button>
                 </div>
 
-                <h4>Paso 3: Entender los Mensajes</h4>
-                <p>Al terminar, el sistema te dará uno de estos reportes:</p>
-                <ul>
-                    <li><strong>"No encontró infracciones":</strong> Tu sistema está íntegro y saludable.</li>
-                    <li><strong>"Encontró archivos dañados y los reparó":</strong> El error ha sido corregido. Debes reiniciar la PC.</li>
-                    <li><strong>"No pudo reparar algunos archivos":</strong> En este caso, revisa nuestro tutorial de <strong>DISM</strong> para una reparación más profunda.</li>
-                </ul>
+                <details class="acordeon-tutorial" style="margin-top: 15px; border-color: #3498db;">
+                    <summary class="acordeon-header" style="background: #3498db;">
+                        <i class="fas fa-clock"></i> ¿EL ESCANEO SE QUEDÓ TRABADO EN 62.3%?
+                    </summary>
+                    <div class="tutorial-pasos warning">
+                        <p>Si DISM no avanza, es probable que los servicios de actualización estén dormidos. Ejecuta estos comandos uno por uno:</p>
+                        <div class="contenedor-comando">
+                            <code>net start bits</code>
+                            <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                        </div>
+                        <div class="contenedor-comando" style="margin-top: 5px;">
+                            <code>net start dosvc</code>
+                            <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                        </div>
+                        <div class="contenedor-comando" style="margin-top: 5px;">
+                            <code>net start usosvc</code>
+                            <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                        </div>
+                        <div class="contenedor-comando" style="margin-top: 5px;">
+                            <code>net start trustedinstaller</code>
+                            <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                        </div>
+                        <div class="contenedor-comando" style="margin-top: 5px;">
+                            <code>net start wuauserv</code>
+                            <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                        </div>
+                        <p style="margin-top: 10px;"><small><i>Tip final: Si sigue sin moverse, intenta presionar la tecla <kbd>ESC</kbd> dos veces sobre la ventana de CMD para "despertar" el proceso.</i></small></p>
+                        <a href="https://www.youtube.com/watch?v=1d3GCF8tZqk" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i>Video: Solución Error 62.3%</a>
+                    </div>                        
+                </details>
 
-                <p style="margin-top: 15px;"><i>Nota: También puedes usar este comando <kbd>sfc /?</kbd> te mostrara los comandos que puedes utilizar.</i></p>
+                <h4 style="margin-top:20px;">Fase 3: Integridad del Disco (CHKDSK)</h4>
+                <p>Corrige errores físicos en el disco duro o SSD. Requiere reiniciar el PC.</p>
+                <div class="contenedor-comando">
+                    <code>chkdsk C: /f</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)">
+                        <i class="fas fa-copy"></i> Copiar
+                    </button>
+                </div>
             </div>
+
+            <div class="tutorial-pasos warning" style="border-left-color: #f39c12; background: rgba(243, 156, 18, 0.1); margin-top: 30px;">
+                <h4 style="color: #e67e22; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-exclamation-triangle"></i> REQUISITO PARA REPARAR ARRANQUE
+                </h4>
+                <p>El comando <strong>bootrec</strong> solo funciona desde el <strong>Entorno de Recuperación</strong>. No lo ejecutes en una sesión normal.</p>
+                
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-top: 10px;">
+                    <strong>Cómo entrar:</strong>
+                    <ol style="margin-top: 8px; font-size: 0.9rem;">
+                        <li>Mantén presionada la tecla <kbd>Shift</kbd>.</li>
+                        <li>Haz clic en <strong>Inicio > Inicio/Apagado > Reiniciar</strong>.</li>
+                        <li>Navega a: <strong>Solucionar problemas > Opciones avanzadas > Símbolo del sistema</strong>.</li>
+                    </ol>
+                </div>
+                
+                <div class="contenedor-comando" style="margin-top: 15px;">
+                    <code>bootrec /fixmbr</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)">
+                        <i class="fas fa-copy"></i> Copiar
+                    </button>
+                </div>
+            </div>
+
+            <details class="acordeon-tutorial" style="margin-top: 20px;">
+                <summary class="acordeon-header">
+                    <i class="fas fa-network-wired"></i> LIMPIEZA DE CONEXIÓN (DNS)
+                </summary>
+                <div class="tutorial-pasos warning">
+                    <p>Úsalo si el internet funciona pero algunas páginas no cargan correctamente.</p>
+                    <div class="contenedor-comando">
+                        <code>ipconfig /flushdns</code>
+                        <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                    </div>
+                </div>
+            </details>
         `,
         links: [
             {
-                texto: "Soporte Oficial de Microsoft",
+                texto: "Soporte Oficial Microsoft",
                 url: "https://support.microsoft.com/es-es/topic/use-la-herramienta-comprobador-de-archivos-de-sistema-para-reparar-los-archivos-de-sistema-que-faltan-o-est%C3%A1n-da%C3%B1ados-79aa86cb-ca52-166a-92a3-966e85d4094e"
-            },
-            {
-                texto: "Video tutorial",
-                url: "https://www.youtube.com/watch?v=OlLYiFcWG6g",
-                plataforma: "youtube"
             }
         ],
         pasos: []
@@ -3434,6 +3495,7 @@ btnSubir.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
 
 
 
