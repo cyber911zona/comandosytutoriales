@@ -1004,7 +1004,7 @@ goto inicio
         categoria: "aplicaciones",
         titulo: "MKVToolNix",
         imagen: "img/aplicaciones/mkvtoolnix.jpg",
-        comando: "https://www.fosshub.com/MKVToolNix.html",
+        comando: "https://mkvtoolnix.download/downloads.html",
         descripcion: "Herramientas para unir o separar pistas de audio, video y subtítulos en archivos MKV.",
         contenidoTutorialHtml: `
             <h3>🎬 Herramientas para Contenedores MKV</h3>
@@ -1014,7 +1014,7 @@ goto inicio
                 <h4>Repositorio de descarga:</h4>
                 <div class="contenedor-comando">
                     <code>
-                        <a href="https://www.fosshub.com/MKVToolNix.html" target="_blank" class="link-comando">https://www.fosshub.com/MKVToolNix.html</a>
+                        <a href="https://mkvtoolnix.download/downloads.html" class="https://mkvtoolnix.download/downloads.html"</a>
                     </code>
                     <button class="btn-copiar-interno" onclick="copiarComando(this)">
                         <i class="fas fa-copy"></i> Copiar Link
@@ -1024,7 +1024,7 @@ goto inicio
             </div>
         `,
         links: [
-            { texto: "Sitio oficial", url: "https://www.fosshub.com/MKVToolNix.html" }
+            { texto: "Sitio oficial", url: "https://mkvtoolnix.download/downloads.html" }
         ],
         pasos: []
     },
@@ -3434,5 +3434,6 @@ btnSubir.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
 
 
