@@ -24,6 +24,8 @@ const provider = new GoogleAuthProvider();
 
 let usuarioActual = null;
 let misFavoritos = []; 
+// JS: Variable global para recordar en qué pestaña estamos
+let categoriaActual = 'todas';
 
 // 2. EL DISPARADOR: Abre la ventana y captura errores
 // JS: Esta función abre la ventana de Google y te avisa EXACTAMENTE qué falta
@@ -3787,6 +3789,7 @@ window.cerrarTutorial = cerrarTutorial;
 window.toggleDarkMode = toggleDarkMode; 
 window.copiarComando = copiarComando; 
 window.toggleLectura = toggleLectura;
+
 
 
 
