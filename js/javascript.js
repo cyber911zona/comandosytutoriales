@@ -26,20 +26,32 @@ let usuarioActual = null;
 let misFavoritos = []; 
 
 // 2. EL DISPARADOR: Abre la ventana y captura errores
+// JS: Esta función abre la ventana de Google y te avisa EXACTAMENTE qué falta
 async function iniciarSesion() {
     try {
-        console.log("Iniciando ventana de Google...");
+        console.log("Intentando abrir ventana de Google..."); // JS: Control en consola
         const result = await signInWithPopup(auth, provider);
-        console.log("¡Éxito!", result.user.displayName);
+        console.log("¡Éxito! Bienvenido:", result.user.displayName);
     } catch (error) {
-        console.error("Código de error:", error.code);
+        // JS: Si la ventana se cierra, aquí te dirá el porqué técnico
+        console.error("Detalle técnico del error:", error.code);
+        
         if (error.code === 'auth/operation-not-allowed') {
-            alert("Error: Activa 'Google' en Sign-in method de Firebase.");
+            alert("⚠️ ERROR: No has activado 'Google' como método de acceso en la consola de Firebase.");
         } else if (error.code === 'auth/unauthorized-domain') {
-            alert("Error: Agrega tu dominio en Authorized domains.");
+            alert("⚠️ ERROR: Este dominio (github.io o localhost) no está autorizado en Firebase.");
+        } else if (error.code === 'auth/popup-closed-by-user') {
+            alert("Has cerrado la ventana antes de terminar el proceso.");
+        } else {
+            // JS: Para cualquier otro error inesperado
+            alert("Error de conexión: " + error.code);
         }
     }
 }
+
+// JS: No olvides que al final de tu archivo debe estar el "puente"
+window.iniciarSesion = iniciarSesion;
+
 
 // 3. EL VIGILANTE: Detecta la sesión y baja los datos
 onAuthStateChanged(auth, async (user) => {
@@ -3760,4 +3772,5 @@ window.cerrarTutorial = cerrarTutorial; // JS: Conecta la X del modal
 window.toggleDarkMode = toggleDarkMode; // JS: Conecta el cambio de tema
 window.copiarComando = copiarComando; // JS: Conecta los botones de copiar
 window.toggleLectura = toggleLectura; // JS: Conecta el modo lectura
+
 
