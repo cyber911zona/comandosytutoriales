@@ -3720,14 +3720,19 @@ btnSubir.addEventListener('click', () => {
     });
 });
 
-// JS: Puente para conectar el HTML con las funciones del módulo
-window.iniciarSesion = async () => { await signInWithPopup(auth, provider); };
-window.toggleFavorito = toggleFavorito;
-window.filtrarPorCategoria = filtrarPorCategoria;
-window.abrirTutorial = abrirTutorial;
-window.cerrarTutorial = cerrarTutorial;
-window.toggleDarkMode = toggleDarkMode;
-window.copiarComando = copiarComando;
-window.toggleLectura = toggleLectura;
-// Al final de javascript.js
-window.iniciarSesion = iniciarSesion;
+// JS: "Puente" final para que el HTML pueda ejecutar las funciones del módulo
+window.iniciarSesion = async () => { 
+    try {
+        await signInWithPopup(auth, provider); // JS: Abre la ventana de Google
+    } catch (error) {
+        console.error("Error en login:", error);
+    }
+};
+
+window.toggleFavorito = toggleFavorito; // JS: Conecta el engranaje de favoritos
+window.filtrarPorCategoria = filtrarPorCategoria; // JS: Conecta el menú de categorías
+window.abrirTutorial = abrirTutorial; // JS: Conecta el botón de Guía
+window.cerrarTutorial = cerrarTutorial; // JS: Conecta la X del modal
+window.toggleDarkMode = toggleDarkMode; // JS: Conecta el cambio de tema
+window.copiarComando = copiarComando; // JS: Conecta los botones de copiar
+window.toggleLectura = toggleLectura; // JS: Conecta el modo lectura
