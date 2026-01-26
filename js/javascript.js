@@ -3336,9 +3336,12 @@ function mostrarNotas(notasAMostrar) {
             // JS: Extrae la categoría del atributo 'onclick' del botón
             const cat = boton.getAttribute('onclick').match(/'([^']+)'/)[1]; 
             // JS: Calcula cuántas notas hay para esa categoría específica
+            // JS: Reemplaza las líneas 1146-1150 por estas
             const cantidad = (cat === 'todas') 
                 ? misNotas.length 
-                : misNotas.filter(n => n.categoria === cat).length; 
+                : (cat === 'favoritas') // JS: Si el botón es el de favoritos
+                    ? misFavoritos.length // JS: Usa el tamaño de tu lista de la nube
+                    : misNotas.filter(n => n.categoria === cat).length;
                 
             // JS: Busca el círculo pequeño del contador en el botón
             let badge = boton.querySelector('.count-badge'); 
@@ -3612,27 +3615,42 @@ if (buscador) { // JS: Si el input de búsqueda existe
     });
 }
 
-// JS: Función para mostrar tarjetas por grupo de categoría
+// JS: Función unificada para filtrar por categorías, favoritos o mostrar todas
 function filtrarPorCategoria(cat) { 
-    // CSS/JS: Quita el color de realce de todas las pestañas
+    // CSS/JS: Quita el color de realce (clase active) de todas las pestañas
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); 
-    // HTML/JS: Selecciona el botón que se presionó
+    
+    // HTML/JS: Selecciona el botón que se presionó y le pone el color de activo
     const botonActivo = document.querySelector(`button[onclick="filtrarPorCategoria('${cat}')"]`); 
-    if (botonActivo) botonActivo.classList.add('active'); // CSS: Le pone el color de activa
+    if (botonActivo) botonActivo.classList.add('active'); 
 
-    // JS: Filtra el arreglo principal según la categoría elegida
-    const final = (cat === 'todas') ? misNotas : misNotas.filter(n => n.categoria === cat); 
-    mostrarNotas(final); // JS: Dibuja las tarjetas filtradas
+    // ============================================================
+    // LÓGICA DE FILTRADO (INTEGRADA)
+    // ============================================================
+    let final;
+    if (cat === 'todas') {
+        final = misNotas; // JS: Muestra el catálogo completo
+    } else if (cat === 'favoritas') {
+        // JS: Filtra solo las notas cuyos títulos estén en tu lista de la nube
+        final = misNotas.filter(n => misFavoritos.includes(n.titulo)); 
+    } else {
+        // JS: Filtra por la categoría técnica (cmd, atajos, etc.)
+        final = misNotas.filter(n => n.categoria === cat);
+    }
+    
+    mostrarNotas(final); // JS: Dibuja las tarjetas resultantes en pantalla
 
-    // JS: Lógica para mover la pantalla si la barra está pegada arriba
+    // ============================================================
+    // LÓGICA DE SCROLL (MANTENIDA)
+    // ============================================================
     const barra = document.getElementById('tabs-categorias'); 
     if (barra) { 
-        const rectBarra = barra.getBoundingClientRect(); // JS: Obtiene la posición real en la pantalla
+        const rectBarra = barra.getBoundingClientRect(); // JS: Obtiene la posición en pantalla
 
-        if (rectBarra.top <= 1) { // JS: Si la barra ya está en el techo
+        if (rectBarra.top <= 1) { // JS: Si la barra ya está pegada al techo
             const contenedor = document.getElementById('lista-recursos'); 
             const alturaBarra = barra.offsetHeight; 
-            const posicionDestino = contenedor.offsetTop - alturaBarra; // JS: Calcula el punto exacto
+            const posicionDestino = contenedor.offsetTop - alturaBarra; 
 
             window.scrollTo({ // JS: Realiza un scroll suave hasta las tarjetas
                 top: posicionDestino,
@@ -3769,5 +3787,6 @@ window.cerrarTutorial = cerrarTutorial;
 window.toggleDarkMode = toggleDarkMode; 
 window.copiarComando = copiarComando; 
 window.toggleLectura = toggleLectura;
+
 
 
