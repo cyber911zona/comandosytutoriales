@@ -3300,7 +3300,13 @@ function titleCase(str) {
 // Esta función CREA las tarjetas dinámicamente en HTML
 // =====================================================
 // JS: Función principal para dibujar el contenido en pantalla
-function mostrarNotas(notasAMostrar) { 
+function mostrarNotas(notasAMostrar, esRefresco = false) { 
+    // JS: Si es un refresco de favoritos, añadimos una clase al contenedor para quitar animaciones
+    if (esRefresco) {
+        listaRecursos.classList.add('sin-animacion');
+    } else {
+        listaRecursos.classList.remove('sin-animacion');
+    }
     // HTML/JS: Busca el elemento del contador flotante
     const contador = document.getElementById('contador-tarjetas'); 
     if (contador) { // JS: Si el contador existe en el HTML
@@ -3633,7 +3639,7 @@ function filtrarPorCategoria(cat, esRefresco = false) {
         final = misNotas.filter(n => n.categoria === cat);
     }
     
-    mostrarNotas(final); // JS: Dibuja las notas
+    mostrarNotas(final, esRefresco); // JS: Dibuja las notas
 
     // JS: Solo mueve la pantalla si NO es un refresco de favoritos
     if (!esRefresco) {
@@ -3775,6 +3781,7 @@ window.cerrarTutorial = cerrarTutorial;
 window.toggleDarkMode = toggleDarkMode; 
 window.copiarComando = copiarComando; 
 window.toggleLectura = toggleLectura;
+
 
 
 
