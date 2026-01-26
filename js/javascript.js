@@ -356,6 +356,124 @@ const misNotas = [
         links: [],
         pasos: []
     },
+    {
+        categoria: "cmd",
+        titulo: "Estrategias con Robocopy",
+        imagen: "img/cmd/robocopy.jpg",
+        comando: "robocopy [origen] [destino] [opciones]",
+        descripcion: "Guía avanzada para transferencias seguras, desde pocos archivos personales hasta migraciones masivas de servidores.",
+        contenidoTutorialHtml: `
+            <h3>🛡️ Guía de Transferencia Segura</h3>
+            <p>Selecciona el comando según el volumen de datos y la estabilidad de tu conexión.</p>
+
+            <details class="acordeon-tutorial" style="margin-top: 20px;">
+                    <summary class="acordeon-header">
+                        <i class="fas fa-shield-alt"></i> TABLA DE PARAMETROS ESENCIALES
+                    </summary>
+                    <div class="tutorial-pasos">
+                    <h4>Tabla</h4>
+                    <table class="tabla-tecnica" style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--primary); text-align: left;">
+                                <th style="padding: 10px;">Comando</th>
+                                <th style="padding: 10px;">Función</th>
+                                <th style="padding: 10px;">Cuándo usarlo</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-glass);">
+                                <td style="padding: 10px;"><code>/E</code></td>
+                                <td style="padding: 10px;">Copia subdirectorios.</td>
+                                <td style="padding: 10px;">Siempre que quieras mantener la estructura de carpetas.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-glass);">
+                                <td style="padding: 10px;"><code>/Z</code></td>
+                                <td style="padding: 10px;">Modo reiniciable.</td>
+                                <td style="padding: 10px;">Crucial para copias por Wi-Fi o redes inestables.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-glass);">
+                                <td style="padding: 10px;"><code>/MT:32</code></td>
+                                <td style="padding: 10px;">Multihilo (Multi-thread).</td>
+                                <td style="padding: 10px;">Para aumentar la velocidad (usa 32 núcleos a la vez).</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-glass);">
+                                <td style="padding: 10px;"><code>/R:3 /W:5</code></td>
+                                <td style="padding: 10px;">Reintentos y Espera.</td>
+                                <td style="padding: 10px;">Si un archivo está bloqueado, reintenta 3 veces cada 5 seg.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-glass);">
+                                <td style="padding: 10px;"><code>/ZB</code></td>
+                                <td style="padding: 10px;">Reiniciable + Backup.</td>
+                                <td style="padding: 10px;">Si falla por permisos, usa modo respaldo.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-glass);">
+                                <td style="padding: 10px;"><code>/NFL</code></td>
+                                <td style="padding: 10px;">Ocultar archivos.</td>
+                                <td style="padding: 10px;">Copiado más rápido y pantalla limpia.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-glass);">
+                                <td style="padding: 10px;"><code>/NDL</code></td>
+                                <td style="padding: 10px;">Ocultar carpetas.</td>
+                                <td style="padding: 10px;">Evita saturar la terminal con nombres.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-glass); color: #e74c3c;">
+                                <td style="padding: 10px;"><code>/MIR</code></td>
+                                <td style="padding: 10px;">Modo Espejo (Mirror).</td>
+                                <td style="padding: 10px;"><strong>⚠️ Cuidado:</strong> Borra en destino lo que no esté en origen.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </details>
+            
+            <div class="tutorial-pasos">
+                
+                <h4>1. Copiado de Precisión (Pocos archivos / Carpetas personales)</h4>
+                <p>Ideal para ver qué está pasando en tiempo real. Usa este comando cuando quieras confirmar visualmente que cada archivo se copió bien.</p>
+                <div class="contenedor-comando">
+                    <code>robocopy "C:\\Origen" "D:\\Destino" /E /Z /ZB /R:5 /W:5 /MT:16</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+                <p><small><i>Uso: Respaldos de documentos o fotos donde el registro visual en pantalla es útil.</i></small></p>
+
+                <h4 style="margin-top:20px;">2. Copiado Masivo y Veloz (Miles de archivos / Discos completos)</h4>
+                <p>Optimizado para rendimiento. Oculta la lista de archivos para ahorrar ciclos del procesador y acelerar el copiado hasta un 20%.</p>
+                <div class="contenedor-comando">
+                    <code>robocopy "C:\\Origen" "D:\\Destino" /E /ZB /NFL /NDL /R:5 /W:5 /MT:32</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+                <p><small><i>Uso: Migración de discos duros o servidores donde mostrar nombres en pantalla ralentizaría el proceso.</i></small></p>
+
+                <div class="tutorial-pasos warning" style="border-left-color: #e74c3c; background: rgba(231, 76, 60, 0.1); margin-top: 25px;">
+                    <h4 style="color: #c0392b;"><i class="fas fa-exclamation-circle"></i> PELIGRO: EL MODO ESPEJO (/MIR)</h4>
+                    <p>El parámetro <code>/MIR</code> no solo copia; también <strong>ELIMINA</strong>. Si un archivo existe en el Destino pero no en el Origen, Robocopy lo borrará permanentemente para que ambas carpetas sean idénticas.</p>
+                    <p><strong>Regla de oro:</strong> Úsalo solo para sincronizaciones, nunca para respaldos incrementales simples.</p>
+                </div>
+            </div>
+
+            <details class="acordeon-tutorial" style="margin-top: 20px;">
+                <summary class="acordeon-header">
+                    <i class="fas fa-shield-alt"></i> LA OPCIÓN MÁS CONFIABLE (COMBO DEFINITIVO)
+                </summary>
+                <div class="tutorial-pasos">
+                    <p>Si necesitas la máxima seguridad posible, este es el comando "A prueba de fallos":</p>
+                    <div class="contenedor-comando">
+                        <code>robocopy "C:\\Origen" "D:\\Destino" /E /ZB /COPYALL /R:10 /W:10 /LOG:log_respaldo.txt</code>
+                        <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                    </div>
+                    <ul>
+                        <li><strong>/COPYALL:</strong> Copia todo (datos, fechas, atributos y permisos NTFS).</li>
+                        <li><strong>/LOG:</strong> No muestra nada en pantalla, pero guarda un informe detallado en un archivo .txt.</li>
+                    </ul>
+                </div>
+            </details>
+        `,
+        links: [
+            { texto: "Manual de Flags Microsoft", url: "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy" },
+            { texto: "Video Tutorial", url: "https://www.facebook.com/reel/1214941197231206", plataforma: "facebook" }
+        ],
+        pasos: []
+    },
     //CATEGORIA ATAJOS
     {
         categoria: "atajos",
@@ -3576,6 +3694,7 @@ btnSubir.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
 
 
 
