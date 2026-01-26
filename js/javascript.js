@@ -1,3 +1,54 @@
+// ==============================================================
+// 1. CONFIGURACIÓN DE FIREBASE (CON TUS LLAVES REALES)
+// ==============================================================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// JS: Aquí he puesto los datos exactos que te dio la página de Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBUHP2Gi25IxYZw1NgQrZh17lY92g2c-Kc",
+  authDomain: "comandosytutoriales.firebaseapp.com",
+  projectId: "comandosytutoriales",
+  storageBucket: "comandosytutoriales.firebasestorage.app",
+  messagingSenderId: "597611163587",
+  appId: "1:597611163587:web:92c172a7a59109bb341776",
+  measurementId: "G-5YQ50S1QP2"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+let usuarioActual = null;
+let misFavoritos = []; 
+
+// JS: Sincronización con la nube
+async function toggleFavorito(tituloNota) {
+    if (!usuarioActual) return alert("Inicia sesión para guardar favoritos");
+    const userRef = doc(db, "usuarios", usuarioActual.uid);
+    if (misFavoritos.includes(tituloNota)) {
+        await updateDoc(userRef, { favoritos: arrayRemove(tituloNota) });
+        misFavoritos = misFavoritos.filter(f => f !== tituloNota);
+    } else {
+        await setDoc(userRef, { favoritos: arrayUnion(tituloNota) }, { merge: true });
+        misFavoritos.push(tituloNota);
+    }
+    mostrarNotas(misNotas);
+}
+
+// JS: Monitoreo de sesión
+onAuthStateChanged(auth, async (user) => {
+    usuarioActual = user;
+    if (user) {
+        const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+        if (docSnap.exists()) misFavoritos = docSnap.data().favoritos || [];
+    }
+    mostrarNotas(misNotas);
+});
+
+
 // =====================================================
 // DATOS: Aquí se almacena toda la información de las tarjetas
 // =====================================================
@@ -5,12 +56,12 @@
 const misNotas = [
     //CATEGORIA DE CMD
     
-    {
-        categoria: "cmd",
-        titulo: "Informe de Salud de la Batería",
-        imagen: "img/cmd/baterialap.jpg",
-        comando: "powercfg /batteryreport",
-        descripcion: "Genera un reporte HTML con ciclos de carga y capacidad real de la batería.",
+    { // JS: Objeto que representa una tarjeta individual
+        categoria: "cmd", // JS: Propiedad para filtrar por categoría en el menú
+        titulo: "Informe de Salud de la Batería", // JS: Título que aparecerá en la tarjeta
+        imagen: "img/cmd/baterialap.jpg", // HTML/JS: Ruta del archivo de imagen para la tarjeta
+        comando: "powercfg /batteryreport", // JS: Texto técnico del comando de Windows
+        descripcion: "Genera un reporte HTML con ciclos de carga y capacidad real de la batería.", // JS: Resumen para la tarjeta
         contenidoTutorialHtml: `
             <h3>🔋 Diagnóstico de Energía Avanzado</h3>
             <p>Este comando crea un archivo HTML detallado que muestra el uso de la batería, su capacidad de fábrica y su capacidad actual.</p>
@@ -105,7 +156,7 @@ const misNotas = [
                         <p style="margin-top: 10px;"><small><i>Tip final: Si sigue sin moverse, intenta presionar la tecla <kbd>ESC</kbd> dos veces sobre la ventana de CMD para "despertar" el proceso.</i></small></p>
                         <div class="flex-group">
                             <a href="https://www.youtube.com/watch?v=1d3GCF8tZqk" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i>Video: Solución Error 62.3%</a>
-                        </div> 
+                        </div>                         
                     </div>                        
                 </details>
 
@@ -160,9 +211,9 @@ const misNotas = [
                     </div>
                     <div class="flex-group">
                         <a href="https://www.youtube.com/watch?v=ld-qI9qWt70" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Tutorial </a>                        
-                    </div>  
+                    </div>
                 </div>
-                    
+                      
             </details>
         `,
         links: [
@@ -1208,7 +1259,7 @@ goto inicio
                 <h4>Repositorio de descarga:</h4>
                 <div class="contenedor-comando">
                     <code>
-                        <a href="https://mkvtoolnix.download/downloads.html" class="https://mkvtoolnix.download/downloads.html"</a>
+                        <a href="https://mkvtoolnix.download/downloads.html" target="_blank" class="link-comando">https://mkvtoolnix.download/downloads.html</a>
                     </code>
                     <button class="btn-copiar-interno" onclick="copiarComando(this)">
                         <i class="fas fa-copy"></i> Copiar Link
@@ -2723,10 +2774,16 @@ goto inicio
                 texto: "Video Tutorial",
                 url: "https://www.youtube.com/shorts/gcMF7Yu0u6Y",
                 plataforma: "youtube"
+            },
+            {
+                texto: "Video Tutorial",
+                url: "https://www.facebook.com/reel/728884509538774",
+                plataforma: "facebook"
             }
         ],
         pasos: []
     },
+   
     //CATEGORIA UTILIDADES    
     // =====================================================
     // CATEGORIA UTILIDADES
@@ -3167,7 +3224,8 @@ goto inicio
             }
         ],
         pasos: [] // JS: Campo vacío por uso de HTML personalizado
-    },   
+    },
+    
             
 ];
 
@@ -3176,125 +3234,127 @@ goto inicio
 // Aquí JavaScript “atrapa” elementos del HTML por su ID.
 // Esto permite modificarlos dinámicamente.
 // =====================================================
-const listaRecursos = document.getElementById('lista-recursos');
-// ↳ <section id="lista-recursos"></section>
-
-const buscador = document.getElementById('inputBusqueda');
-// ↳ <input id="inputBusqueda">
-
-const modal = document.getElementById('modal-tutorial');
-// ↳ <div id="modal-tutorial">
-
-const cuerpoTutorial = document.getElementById('tutorial-cuerpo');
-// ↳ <div id="tutorial-cuerpo">
+// HTML/JS: Selecciona el contenedor donde se dibujarán las tarjetas
+const listaRecursos = document.getElementById('lista-recursos'); 
+// HTML/JS: Selecciona el campo de entrada de texto del buscador
+const buscador = document.getElementById('inputBusqueda'); 
+// HTML/JS: Selecciona el contenedor principal de la ventana emergente
+const modal = document.getElementById('modal-tutorial'); 
+// HTML/JS: Selecciona el área interna del modal donde se pone el texto
+const cuerpoTutorial = document.getElementById('tutorial-cuerpo'); 
 
 
 // =====================================================
 // 3. UTILIDAD
 // Convierte texto normal en formato Título (Title Case)
 // =====================================================
-function titleCase(str) {
-    return str
-        .toLowerCase()              // Convierte todo a minúsculas
-        .split(' ')                 // Separa palabras
-        .map(word =>
-            word.charAt(0).toUpperCase() + word.slice(1)
-        )                           // Primera letra mayúscula
-        .join(' ');                 // Une las palabras
+// JS: Función para poner mayúsculas al inicio de cada palabra
+function titleCase(str) { 
+    return str // JS: Devuelve la cadena procesada
+        .toLowerCase() // JS: Convierte todo a minúsculas primero
+        .split(' ') // JS: Divide el texto en palabras separadas
+        .map(word => // JS: Recorre cada palabra para modificarla
+            word.charAt(0).toUpperCase() + word.slice(1) // JS: Capitaliza la primera letra
+        ) 
+        .join(' '); // JS: Une las palabras de nuevo en un solo texto
 }
 
 // =====================================================
 // 4. MOTOR DE RENDERIZADO
 // Esta función CREA las tarjetas dinámicamente en HTML
 // =====================================================
-function mostrarNotas(notasAMostrar) {
-    // 1. Actualizamos el contador visual con el total de notas recibidas
-    const contador = document.getElementById('contador-tarjetas');
-    if (contador) {
-        contador.innerText = `${notasAMostrar.length} Recursos`;
+// JS: Función principal para dibujar el contenido en pantalla
+function mostrarNotas(notasAMostrar) { 
+    // HTML/JS: Busca el elemento del contador flotante
+    const contador = document.getElementById('contador-tarjetas'); 
+    if (contador) { // JS: Si el contador existe en el HTML
+        contador.innerText = `${notasAMostrar.length} Recursos`; // HTML/JS: Actualiza el texto con el total
     }
 
-    // Limpia el contenido anterior para evitar duplicados
-    listaRecursos.innerHTML = '';
+    // HTML/JS: Borra el contenido actual del contenedor para limpiar la vista
+    listaRecursos.innerHTML = ''; 
 
-    // Recorre cada nota del arreglo recibido
-    notasAMostrar.forEach((nota) => {
+    // JS: Empieza el ciclo para procesar cada tarjeta una por una
+    notasAMostrar.forEach((nota) => { 
 
-        // Generamos el HTML de la imagen solo si la nota la tiene definida
-        let imgHtml = nota.imagen ? `
+        // JS: Crea el bloque de imagen solo si la propiedad existe
+        let imgHtml = nota.imagen ? ` 
             <div class="tarjeta-img-contenedor">
                 <img src="${nota.imagen}" alt="${nota.titulo}">
             </div>
-        ` : "";
+        ` : ""; // JS: Si no hay imagen, deja el espacio vacío
 
-        // Crea un <div> para cada tarjeta
-        const tarjeta = document.createElement('div');
+        // JS: Crea un elemento 'div' nuevo en la memoria del navegador
+        const tarjeta = document.createElement('div'); 
 
-        // Asigna clases CSS (tarjeta + categoría)
-        tarjeta.className = `tarjeta ${nota.categoria}`;
+        // CSS/JS: Asigna la clase base 'tarjeta' y la clase de su categoría
+        tarjeta.className = `tarjeta ${nota.categoria}`; 
 
-        // Busca el índice real en la base de datos original
-        const originalIndex = misNotas.findIndex(
+        // JS: Identifica la posición de esta nota en el arreglo original
+        const originalIndex = misNotas.findIndex( 
             n => n.titulo === nota.titulo
         );
-        // cuenta cuantas notas hay en cada categoria 
-        document.querySelectorAll('.tab').forEach(boton => {
-        const cat = boton.getAttribute('onclick').match(/'([^']+)'/)[1];
-        const cantidad = (cat === 'todas') 
-            ? misNotas.length 
-            : misNotas.filter(n => n.categoria === cat).length;
-            
-        // Busca si ya existe un span de contador, si no lo crea
-        let badge = boton.querySelector('.count-badge');
-        if (!badge) {
-            badge = document.createElement('span');
-            badge.className = 'count-badge';
-            boton.appendChild(badge);
-        }
-        badge.innerText = cantidad;
-    });
+
+        // HTML/JS: Selecciona todas las pestañas del menú superior
+        document.querySelectorAll('.tab').forEach(boton => { 
+            // JS: Extrae la categoría del atributo 'onclick' del botón
+            const cat = boton.getAttribute('onclick').match(/'([^']+)'/)[1]; 
+            // JS: Calcula cuántas notas hay para esa categoría específica
+            const cantidad = (cat === 'todas') 
+                ? misNotas.length 
+                : misNotas.filter(n => n.categoria === cat).length; 
+                
+            // JS: Busca el círculo pequeño del contador en el botón
+            let badge = boton.querySelector('.count-badge'); 
+            if (!badge) { // JS: Si no tiene círculo de contador, lo crea
+                badge = document.createElement('span'); // JS: Crea el elemento span
+                badge.className = 'count-badge'; // CSS: Le asigna la clase para estilo
+                boton.appendChild(badge); // HTML: Lo mete dentro del botón
+            }
+            badge.innerText = cantidad; // HTML/JS: Escribe el número en el círculo
+        });
 
 
-        // =================================================
-        // LINKS: Solo se crean si existen
-        // =================================================
-        // Dentro de la función mostrarNotas(notasAMostrar)
-
-        let htmlLinks = (nota.links && nota.links.length > 0)
+        // JS: Genera los botones de enlaces si la nota tiene datos
+        let htmlLinks = (nota.links && nota.links.length > 0) 
             ? `
                 <div class="links-seccion">
-                    ${nota.links.map(link => {
-                        // Definimos el icono según la plataforma
-                        let icono = "fas fa-link"; // Icono por defecto
-                        if(link.plataforma === "youtube") icono = "fab fa-youtube";
-                        if(link.plataforma === "facebook") icono = "fab fa-facebook";
-                        if(link.plataforma === "google") icono = "fab fa-google";
+                    ${nota.links.map(link => { // JS: Crea un botón por cada link encontrado
+                        let icono = "fas fa-link"; // CSS: Icono por defecto de cadena
+                        if(link.plataforma === "youtube") icono = "fab fa-youtube"; // CSS: Icono oficial de YouTube
+                        if(link.plataforma === "facebook") icono = "fab fa-facebook"; // CSS: Icono oficial de Facebook
+                        if(link.plataforma === "google") icono = "fab fa-google"; // CSS: Icono oficial de Google
 
-                        // Retornamos el botón con las clases profesionales
                         return `
                             <a href="${link.url}" target="_blank" class="btn-pro-link ${link.plataforma || 'generic'}">
                                 <i class="${icono}"></i> ${link.texto}
-                            </a>`;
+                            </a>`; // HTML: Genera la etiqueta de enlace con su estilo
                     }).join('')}
                 </div>
             `
-            : "";
-        // =================================================
-        // BOTÓN GUÍA: Solo aparece si hay pasos
-        // =================================================
-        // Ahora el botón sale si hay pasos O si hay contenido HTML avanzado
-        let btnTutorial = ( (nota.pasos && nota.pasos.length > 0) || nota.contenidoTutorialHtml )
+            : ""; // JS: No genera nada si no hay links
+
+        // JS: Evalúa si debe mostrar el botón "Guía"
+        let btnTutorial = ( (nota.pasos && nota.pasos.length > 0) || nota.contenidoTutorialHtml ) 
             ? `
                 <button class="btn-accion btn-tutorial"
                         onclick="abrirTutorial(${originalIndex})">
                     <i class="fas fa-book"></i> Guía
                 </button>
-              `
+              ` // HTML: Crea el botón de guía vinculándolo al índice original
             : "";
-        // =================================================
-        // HTML FINAL DE LA TARJETA
-        // =================================================
-        tarjeta.innerHTML = `
+
+        // ============================================================
+        // AQUÍ VA TU NUEVO CÓDIGO (Lógica de Favoritos)
+        // ============================================================
+        const esFav = misFavoritos.includes(nota.titulo); // JS: Revisa si es favorita
+        const claseFav = esFav ? 'active' : ''; // CSS: Aplica color naranja si es activo
+
+        // HTML/JS: Construye toda la estructura interna de la tarjeta
+        tarjeta.innerHTML = ` 
+            <button class="btn-fav-card ${claseFav}" onclick="toggleFavorito('${nota.titulo}')">
+                <i class="fas fa-cog"></i> 
+            </button>
             ${imgHtml}
             <div class="tarjeta-header">
                 <span class="etiqueta ${nota.categoria}">
@@ -3318,8 +3378,8 @@ function mostrarNotas(notasAMostrar) {
             </div>
         `;
 
-        // Inserta la tarjeta en el HTML
-        listaRecursos.appendChild(tarjeta);
+        // HTML: Inserta la tarjeta terminada en la página web
+        listaRecursos.appendChild(tarjeta); 
     });
 }
 
@@ -3328,17 +3388,18 @@ function mostrarNotas(notasAMostrar) {
 // 5. TUTORIALES (MODAL)
 // Abre la ventana y muestra los pasos
 // =====================================================
-function abrirTutorial(index) {
-    const nota = misNotas[index];
+// JS: Función para activar la ventana emergente
+function abrirTutorial(index) { 
+    const nota = misNotas[index]; // JS: Obtiene los datos de la nota según el índice
 
-    // Decidimos qué mostrar en el cuerpo: El HTML avanzado o la lista de pasos
-    const contenidoPrincipal = nota.contenidoTutorialHtml 
+    // JS: Elige entre el HTML diseñado o una lista de pasos numerada
+    const contenidoPrincipal = nota.contenidoTutorialHtml  
         ? nota.contenidoTutorialHtml 
         : `<h4>📝 Pasos detallados:</h4>
            <ol>${nota.pasos.map(p => `<li>${p}</li>`).join('')}</ol>`;
 
-    // Insertamos el nuevo encabezado con DOS botones
-        cuerpoTutorial.innerHTML = `
+    // HTML/JS: Inyecta el título, botones de control y contenido en el modal
+        cuerpoTutorial.innerHTML = ` 
             <div class="tutorial-header">
                 <div class="titulo-grupo">
                     <h2 style="color: var(--primary); font-size: 2.5rem;">${nota.titulo}</h2>
@@ -3360,29 +3421,30 @@ function abrirTutorial(index) {
             </div>
         `;
 
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden'; // Bloquea el scroll de fondo
+    // CSS/JS: Muestra el modal eliminando la clase que lo oculta
+    modal.classList.remove('hidden'); 
+    // CSS/JS: Bloquea el scroll de la página de fondo para no perderse
+    document.body.style.overflow = 'hidden'; 
 
-    // --- SOLUCIÓN DE SCROLL GARANTIZADA ---
-    setTimeout(() => {
-        const contenedorCuerpo = document.querySelector('.modal-contenido');
-        if (contenedorCuerpo) {
-            contenedorCuerpo.scrollTo({ top: 0, behavior: 'instant' });
+    // JS: Pequeña espera para asegurar que el modal se reinicie arriba
+    setTimeout(() => { 
+        const contenedorCuerpo = document.querySelector('.modal-contenido'); // JS: Atrapa la caja de contenido
+        if (contenedorCuerpo) { // JS: Si existe
+            contenedorCuerpo.scrollTo({ top: 0, behavior: 'instant' }); // JS: Hace scroll al inicio inmediatamente
         }
     }, 10);
 }
 
-// Cierra el tutorial
-function cerrarTutorial() {
-    modal.classList.add('hidden');
-    // ESTA ES LA LÍNEA QUE FALTA:
-    document.body.style.overflow = 'auto'; 
+// JS: Función para ocultar la ventana emergente
+function cerrarTutorial() { 
+    modal.classList.add('hidden'); // CSS/JS: Esconde el modal de nuevo
+    document.body.style.overflow = 'auto'; // CSS/JS: Devuelve el scroll normal a la web
 }
 
-// Cierra el modal si se da clic fuera del contenido
-window.onclick = function (event) {
-    if (event.target === modal) {
-        cerrarTutorial();
+// JS: Detecta clics en cualquier parte de la ventana
+window.onclick = function (event) { 
+    if (event.target === modal) { // JS: Si el clic fue fuera de la caja blanca
+        cerrarTutorial(); // JS: Cierra el tutorial
     }
 };
 
@@ -3390,16 +3452,15 @@ window.onclick = function (event) {
    INICIALIZACIÓN DE TEMA (MODO OSCURO)
    Relación: Verifica si el usuario ya eligió un tema antes o si su sistema prefiere oscuro.
    ===================================================== */
-const currentTheme = localStorage.getItem('theme');
+// JS: Busca en la memoria del navegador si hay un tema guardado
+const currentTheme = localStorage.getItem('theme'); 
 
-// Solo se pondrá oscuro si el usuario lo eligió manualmente antes
-if (currentTheme === 'dark') {
-    document.body.classList.add('dark-mode');
-    actualizarIcono(true);
-} else {
-    // Si no hay nada guardado o dice 'light', nos aseguramos de que sea claro
-    document.body.classList.remove('dark-mode');
-    actualizarIcono(false);
+if (currentTheme === 'dark') { // JS: Si el registro dice oscuro
+    document.body.classList.add('dark-mode'); // CSS: Activa el diseño de noche
+    actualizarIcono(true); // JS: Cambia el icono a un sol
+} else { // JS: Si es la primera vez o dice claro
+    document.body.classList.remove('dark-mode'); // CSS: Asegura el diseño de día
+    actualizarIcono(false); // JS: Cambia el icono a una luna
 }
 
 // =====================================================
@@ -3407,156 +3468,141 @@ if (currentTheme === 'dark') {
 // Modo oscuro y copiar comandos
 // =====================================================
 
-// 1. Función de cambio optimizada con memoria
-function toggleDarkMode() {
-    // Cambia la clase en el body y guarda el estado en una constante
-    const isDark = document.body.classList.toggle('dark-mode');
+// JS: Función para alternar entre el tema claro y oscuro
+function toggleDarkMode() { 
+    // CSS/JS: Activa o desactiva la clase en el body y guarda el resultado
+    const isDark = document.body.classList.toggle('dark-mode'); 
     
-    // Guardamos la elección en el navegador para la próxima visita
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    // JS: Guarda la elección del usuario en la memoria local
+    localStorage.setItem('theme', isDark ? 'dark' : 'light'); 
     
-    actualizarIcono(isDark);
+    actualizarIcono(isDark); // JS: Refresca el icono visual
 }
 
-// 2. Función auxiliar para cambiar el icono (sol/luna)
-function actualizarIcono(isDark) {
-    const icono = document.querySelector('.global-tools button i');
-    if (icono) {
-        // Asigna la clase exacta del icono de FontAwesome según el estado
-        icono.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+// JS: Función para cambiar visualmente el botón de tema
+function actualizarIcono(isDark) { 
+    const icono = document.querySelector('.global-tools button i'); // HTML/JS: Busca el icono interno
+    if (icono) { // JS: Si lo encuentra
+        icono.className = isDark ? 'fas fa-sun' : 'fas fa-moon'; // CSS: Cambia la clase de FontAwesome
     }
 }
 
 
-function copiarComando(btn) {
-    // Evita clics repetidos mientras dice "Copiado"
-    if (btn.innerText.includes("Copiado")) return;
-
-    // --- ESTRATEGIA DE BÚSQUEDA INTEGRADA ---
+// JS: Función para llevar texto al portapapeles del sistema
+function copiarComando(btn) { 
+    if (btn.innerText.includes("Copiado")) return; // JS: Evita clics si ya se está copiando
     
-    // 1. Intentamos buscar un vecino inmediato (justo antes del botón)
-    let elementoCodigo = btn.previousElementSibling;
+    // JS: Busca el elemento de texto que está justo arriba del botón
+    let elementoCodigo = btn.previousElementSibling; 
 
-    // 2. Si no es código, buscamos dentro del mismo contenedor (útil para el nuevo script .BAT)
-    // Ahora incluimos 'pre' en la búsqueda
+    // JS: Si no está al lado, lo busca dentro del mismo contenedor
     if (!elementoCodigo || (elementoCodigo.tagName !== 'CODE' && elementoCodigo.tagName !== 'PRE' && !elementoCodigo.classList.contains('caja-negra'))) {
-        elementoCodigo = btn.parentElement.querySelector('code, pre, .caja-negra');
+        elementoCodigo = btn.parentElement.querySelector('code, pre, .caja-negra'); 
     }
 
-    // 3. Si sigue sin aparecer, buscamos en la tarjeta completa (casos de comandos rápidos)
-    if (!elementoCodigo) {
-        const tarjeta = btn.closest('.tarjeta');
-        if (tarjeta) elementoCodigo = tarjeta.querySelector('code, pre, .caja-negra');
+    // JS: Como último recurso, busca en toda la tarjeta
+    if (!elementoCodigo) { 
+        const tarjeta = btn.closest('.tarjeta'); 
+        if (tarjeta) elementoCodigo = tarjeta.querySelector('code, pre, .caja-negra'); 
     }
 
-    // Si después de todo no hay nada, salimos para evitar errores
-    if (!elementoCodigo) return;
+    if (!elementoCodigo) return; // JS: Sale de la función si no hay nada que copiar
 
-    const textoACopiar = elementoCodigo.innerText;
+    const textoACopiar = elementoCodigo.innerText; // JS: Obtiene el texto técnico
 
-    // --- ACCIÓN DE COPIAR Y FEEDBACK VISUAL ---
-    navigator.clipboard.writeText(textoACopiar).then(() => {
-        const contenidoOriginal = btn.innerHTML;
-        const colorOriginal = btn.style.background;
+    // JS: Envía el texto al portapapeles de Windows/Celular
+    navigator.clipboard.writeText(textoACopiar).then(() => { 
+        const contenidoOriginal = btn.innerHTML; // JS: Guarda cómo se veía el botón antes
+        const colorOriginal = btn.style.background; // JS: Guarda el color de fondo
 
-        // Mezclamos lo mejor de ambos mundos:
-        // Usamos el icono de check y el color verde que ya tenías configurado
-        btn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
-        btn.style.background = '#2ecc71'; 
-        btn.classList.add('copiado-exito'); // Añadimos la clase por si usas el CSS nuevo
+        // HTML/CSS/JS: Da retroalimentación visual de éxito
+        btn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!'; 
+        btn.style.background = '#2ecc71'; // CSS: Color verde éxito
+        btn.classList.add('copiado-exito'); // CSS: Aplica posible animación extra
 
-        setTimeout(() => {
-            btn.innerHTML = contenidoOriginal;
-            btn.style.background = colorOriginal;
-            btn.classList.remove('copiado-exito');
+        setTimeout(() => { // JS: Espera 1.5 segundos para volver a la normalidad
+            btn.innerHTML = contenidoOriginal; 
+            btn.style.background = colorOriginal; 
+            btn.classList.remove('copiado-exito'); 
         }, 1500);
     });
 }
 
-        // Función para activar/desactivar el modo de lectura
-        function toggleLectura() {
-            const modal = document.getElementById('modal-tutorial');
-            modal.classList.toggle('modo-lectura'); // Alterna la clase CSS
+        // JS: Función para ensanchar el modal y mejorar el texto
+        function toggleLectura() { 
+            const modal = document.getElementById('modal-tutorial'); // HTML/JS: Selecciona el modal
+            modal.classList.toggle('modo-lectura'); // CSS/JS: Activa/desactiva el estilo de lectura
             
-            // Cambiamos el icono del botón dinámicamente
-            const icono = document.querySelector('.btn-lectura i');
-            if (modal.classList.contains('modo-lectura')) {
-                icono.className = 'fas fa-book-reader'; // Icono de lectura activo
-            } else {
-                icono.className = 'fas fa-book-open';   // Icono normal
+            const icono = document.querySelector('.btn-lectura i'); // JS: Busca el icono del botón
+            if (modal.classList.contains('modo-lectura')) { // JS: Si está activo
+                icono.className = 'fas fa-book-reader'; // CSS: Icono de lector activo
+            } else { 
+                icono.className = 'fas fa-book-open'; // CSS: Icono normal de libro
         }
 }
 
 // =====================================================
-// 7. BUSCADOR Y FILTROS AVANZADO (BUSCA DENTRO DE PASOS)
+// 7. BUSCADOR Y FILTROS AVANZADO
 // =====================================================
-if (buscador) {
-    buscador.addEventListener('input', () => {
-        const texto = buscador.value.toLowerCase().trim();
+if (buscador) { // JS: Si el input de búsqueda existe
+    buscador.addEventListener('input', () => { // JS: Detecta cada vez que el usuario teclea
+        const texto = buscador.value.toLowerCase().trim(); // JS: Limpia el texto buscado
 
-        if (texto === "") {
-            mostrarNotas(misNotas);
+        if (texto === "") { // JS: Si el buscador está vacío
+            mostrarNotas(misNotas); // JS: Muestra todas las tarjetas de nuevo
             return;
         }
 
-        const filtradas = misNotas.filter(n => {
-            // 1. LIMPIEZA REAL: Quitamos las etiquetas HTML para buscar solo en el texto visible
-            // Usamos un pequeño truco de navegador para extraer solo el texto
-            const tempDiv = document.createElement("div");
-            tempDiv.innerHTML = n.contenidoTutorialHtml || "";
-            const textoLimpioTutorial = tempDiv.textContent.toLowerCase() || "";
+        const filtradas = misNotas.filter(n => { // JS: Crea un nuevo grupo con las que coinciden
+            // JS: Truco para quitar las etiquetas HTML y buscar solo en el texto
+            const tempDiv = document.createElement("div"); 
+            tempDiv.innerHTML = n.contenidoTutorialHtml || ""; 
+            const textoLimpioTutorial = tempDiv.textContent.toLowerCase() || ""; 
 
-            return (
+            return ( // JS: Comprueba si el texto está en título, categoría o contenido
                 n.titulo.toLowerCase().includes(texto) ||      
                 n.categoria.toLowerCase().includes(texto) ||   
                 n.descripcion.toLowerCase().includes(texto) || 
                 n.comando.toLowerCase().includes(texto) || 
-                // Ahora sí buscamos solo en el texto real del tutorial
                 textoLimpioTutorial.includes(texto) 
             );
         });
 
-        mostrarNotas(filtradas);
+        mostrarNotas(filtradas); // JS: Dibuja solo los resultados de la búsqueda
 
-        if (filtradas.length === 0) {
-            listaRecursos.innerHTML = `<p class="no-results">No se encontraron comandos o guías con "${texto}"</p>`;
+        if (filtradas.length === 0) { // JS: Si no hay ninguna coincidencia
+            listaRecursos.innerHTML = `<p class="no-results">No se encontraron comandos o guías con "${texto}"</p>`; 
         }
     });
 }
 
-/* javascript.js */
-function filtrarPorCategoria(cat) {
-    // 1. Gestión de botones activos (Tu lógica original)
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    const botonActivo = document.querySelector(`button[onclick="filtrarPorCategoria('${cat}')"]`);
-    if (botonActivo) botonActivo.classList.add('active');
+// JS: Función para mostrar tarjetas por grupo de categoría
+function filtrarPorCategoria(cat) { 
+    // CSS/JS: Quita el color de realce de todas las pestañas
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); 
+    // HTML/JS: Selecciona el botón que se presionó
+    const botonActivo = document.querySelector(`button[onclick="filtrarPorCategoria('${cat}')"]`); 
+    if (botonActivo) botonActivo.classList.add('active'); // CSS: Le pone el color de activa
 
-    // 2. Filtrado y dibujado (Tu lógica original)
-    const final = (cat === 'todas') ? misNotas : misNotas.filter(n => n.categoria === cat);
-    mostrarNotas(final);
+    // JS: Filtra el arreglo principal según la categoría elegida
+    const final = (cat === 'todas') ? misNotas : misNotas.filter(n => n.categoria === cat); 
+    mostrarNotas(final); // JS: Dibuja las tarjetas filtradas
 
-    // 3. LA SOLUCIÓN: Scroll Inteligente Condicional
-    const barra = document.getElementById('tabs-categorias');
-    if (barra) {
-        // Obtenemos la posición de la barra respecto a lo que tú ves en pantalla
-        const rectBarra = barra.getBoundingClientRect();
+    // JS: Lógica para mover la pantalla si la barra está pegada arriba
+    const barra = document.getElementById('tabs-categorias'); 
+    if (barra) { 
+        const rectBarra = barra.getBoundingClientRect(); // JS: Obtiene la posición real en la pantalla
 
-        /* Si rectBarra.top es menor o igual a 0, significa que la barra 
-           ya está pegada al techo (sticky) o el usuario ya bajó.
-        */
-        if (rectBarra.top <= 1) { 
-            const contenedor = document.getElementById('lista-recursos');
-            const alturaBarra = barra.offsetHeight;
-            
-            // Calculamos el punto donde empiezan las tarjetas
-            const posicionDestino = contenedor.offsetTop - alturaBarra;
+        if (rectBarra.top <= 1) { // JS: Si la barra ya está en el techo
+            const contenedor = document.getElementById('lista-recursos'); 
+            const alturaBarra = barra.offsetHeight; 
+            const posicionDestino = contenedor.offsetTop - alturaBarra; // JS: Calcula el punto exacto
 
-            window.scrollTo({
+            window.scrollTo({ // JS: Realiza un scroll suave hasta las tarjetas
                 top: posicionDestino,
                 behavior: 'smooth'
             });
         }
-        // SI ESTÁS ARRIBA (rectBarra.top > 1), EL CÓDIGO NO HACE NADA (No hay scroll)
     }
 }
 
@@ -3564,144 +3610,122 @@ function filtrarPorCategoria(cat) {
 // 8. INICIO
 // Se ejecuta al cargar la página
 // =====================================================
-
-// 1. Desactivamos la restauración automática del navegador para que no nos "ayude" a volver abajo
-if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
+// JS: Configura el navegador para no recordar la posición de scroll anterior
+if ('scrollRestoration' in history) { 
+    history.scrollRestoration = 'manual'; 
 }
 
-// 2. Primero dibujamos las tarjetas para que la página tenga "altura"
-mostrarNotas(misNotas); 
+// JS: Ejecuta la primera carga de todas las tarjetas
+mostrarNotas(misNotas);  
 
-// 3. Ahora que hay contenido, movemos la pantalla al inicio
-window.scrollTo(0, 0);
+// JS: Se asegura de que la página empiece en la parte superior
+window.scrollTo(0, 0); 
 
 /* =====================================================
    FONDO ANIMADO "MATRIX CODE"
    ===================================================== */
-function iniciarFondoMatrix() {
-    const canvas = document.getElementById('matrix-bg');
-    const ctx = canvas.getContext('2d');
+function iniciarFondoMatrix() { 
+    const canvas = document.getElementById('matrix-bg'); // HTML/JS: Selecciona el lienzo de dibujo
+    const ctx = canvas.getContext('2d'); // JS: Activa el modo de dibujo en 2 dimensiones
 
-    // Ajustamos el canvas al tamaño de la ventana
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // HTML/JS: Ajusta el ancho y alto al tamaño total de la ventana
+    canvas.width = window.innerWidth; 
+    canvas.height = window.innerHeight; 
 
-    // Caracteres que caerán (mezcla de sintaxis de código)
+    // JS: Lista de símbolos y palabras clave que caerán
     const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~`var let const function if else for while return class import export from async await div span body html css js php python java react node';
-    const listaCaracteres = caracteres.split('');
+    const listaCaracteres = caracteres.split(''); 
 
-    const tamanoFuente = 14; // Tamaño de las letras
-    const columnas = canvas.width / tamanoFuente; // Cantidad de columnas
+    const tamanoFuente = 14; // CSS/JS: Tamaño de cada letra en pixeles
+    const columnas = canvas.width / tamanoFuente; // JS: Calcula cuántas letras caben a lo ancho
 
-    // Array para guardar la posición vertical de cada columna (empiezan todas arriba)
-    const gotas = [];
-    for (let x = 0; x < columnas; x++) {
-        gotas[x] = 1;
+    const gotas = []; // JS: Arreglo para la posición de cada columna de letras
+    for (let x = 0; x < columnas; x++) { 
+        gotas[x] = 1; // JS: Todas empiezan en la fila 1
     }
 
-    // Función que dibuja cada fotograma de la animación
-    function dibujarMatrix() {
-        // Pintamos un fondo negro semitransparente para crear el efecto de desvanecimiento
-        // El 0.05 controla qué tan rápido se desvanecen las letras anteriores
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; 
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function dibujarMatrix() { // JS: Función que crea el efecto de movimiento
+        // CSS: Pinta un negro muy transparente para que las letras se desvanezcan
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';  
+        ctx.fillRect(0, 0, canvas.width, canvas.height); 
 
-        // Color del texto (Usamos tu azul cian para que combine)
-        // Si lo quieres verde clásico Matrix usa: '#0F0'
-        ctx.fillStyle = '#0ea5e9'; 
-        ctx.font = tamanoFuente + 'px monospace'; // Fuente tipo código
+        ctx.fillStyle = '#0ea5e9'; // CSS: Color de las letras (Azul cian)
+        ctx.font = tamanoFuente + 'px monospace'; // CSS: Define tipo y tamaño de letra
 
-        // Loop para dibujar cada gota
-        for (let i = 0; i < gotas.length; i++) {
-            // Selecciona un carácter al azar
-            const texto = listaCaracteres[Math.floor(Math.random() * listaCaracteres.length)];
-            
-            // Dibuja el carácter en la posición x, y actual
-            ctx.fillText(texto, i * tamanoFuente, gotas[i] * tamanoFuente);
+        for (let i = 0; i < gotas.length; i++) { // JS: Dibuja cada columna de la lluvia
+            const texto = listaCaracteres[Math.floor(Math.random() * listaCaracteres.length)]; // JS: Elige letra al azar
+            ctx.fillText(texto, i * tamanoFuente, gotas[i] * tamanoFuente); // JS: Dibuja la letra en sus coordenadas
 
-            // Mueve la gota hacia abajo.
-            // Si llega al final de la pantalla, tiene una probabilidad de volver arriba al azar
-            if (gotas[i] * tamanoFuente > canvas.height && Math.random() > 0.975) {
-                gotas[i] = 0;
+            // JS: Si llega al fondo, tiene probabilidad de reiniciar arriba
+            if (gotas[i] * tamanoFuente > canvas.height && Math.random() > 0.975) { 
+                gotas[i] = 0; 
             }
-
-            // Incrementa la posición Y
-            gotas[i]++;
+            gotas[i]++; // JS: Baja la posición para el siguiente cuadro de animación
         }
     }
 
-    // Ejecuta la función dibujar cada 50 milisegundos (controla la velocidad)
-    setInterval(dibujarMatrix, 50);
+    setInterval(dibujarMatrix, 50); // JS: Ejecuta la animación cada 50 milisegundos
 
-    // Ajusta el canvas si el usuario cambia el tamaño de la ventana
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => { // JS: Si el usuario cambia el tamaño de la ventana
+        canvas.width = window.innerWidth; // JS: Reajusta el lienzo
+        canvas.height = window.innerHeight; 
     });
 }
 
-// EJECUTAMOS LA FUNCIÓN AL CARGAR LA PÁGINA
-// Asegúrate de que esta línea esté al final del archivo, fuera de cualquier otra función.
-iniciarFondoMatrix();
+// JS: Arranca el fondo Matrix inmediatamente
+iniciarFondoMatrix(); 
 
 /* =====================================================
    LÓGICA DEL BOTÓN VOLVER ARRIBA
    ===================================================== */
-const btnSubir = document.getElementById("btn-subir");
+const btnSubir = document.getElementById("btn-subir"); // HTML/JS: Selecciona el botón flotante
 
-// Detecta el desplazamiento del usuario
-window.onscroll = function() {
-    mostrarUocultarBoton();
+window.onscroll = function() { // JS: Escucha constantemente el scroll del usuario
+    mostrarUocultarBoton(); 
 };
 
-/* LÓGICA DE NAVEGACIÓN Y PROGRESO (VERSIÓN FINAL INTEGRADA) */
-function mostrarUocultarBoton() {
-    const btn = document.getElementById("btn-subir");
-    const count = document.getElementById("contador-tarjetas");
-    const tarjetas = document.querySelectorAll('.tarjeta');
+function mostrarUocultarBoton() { 
+    const btn = document.getElementById("btn-subir"); 
+    const count = document.getElementById("contador-tarjetas"); 
+    const tarjetas = document.querySelectorAll('.tarjeta'); // JS: Atrapa todas las tarjetas visibles
     
-    // 1. TU LÓGICA DE CONTEO: Calculamos cuántas tarjetas ya pasamos
-    let recorridas = 0;
-    tarjetas.forEach(t => {
-        const posicion = t.getBoundingClientRect();
-        // Si la tarjeta ya subió más allá de los 200px de la parte superior
-        if (posicion.top < 200) { 
+    let recorridas = 0; // JS: Contador de tarjetas que ya pasamos
+    tarjetas.forEach(t => { 
+        const posicion = t.getBoundingClientRect(); // JS: Mira dónde está la tarjeta en la pantalla
+        if (posicion.top < 200) { // JS: Si ya subió más arriba de 200px
             recorridas++; 
         }
     });
 
-    const total = tarjetas.length;
-    if (count) {
-        // Actualizamos el texto en tiempo real
-        count.innerText = `${recorridas} de ${total}`; 
+    const total = tarjetas.length; // JS: Número total de tarjetas en pantalla
+    if (count) { 
+        count.innerText = `${recorridas} de ${total}`; // HTML/JS: Actualiza el texto "X de Y"
     }
 
-    // 2. CONTROL DE VISIBILIDAD: Aparece tras bajar 500px
-    if (document.documentElement.scrollTop > 500 || document.body.scrollTop > 500) {
-        btn.style.display = "block";   /* Muestra el botón */
-        count.style.display = "block"; /* Muestra el contador */
-    } else {
-        btn.style.display = "none";    /* Los oculta si estamos arriba */
-        count.style.display = "none";
+    // JS: Controla cuándo aparecen los elementos flotantes
+    if (document.documentElement.scrollTop > 500 || document.body.scrollTop > 500) { 
+        btn.style.display = "block"; // CSS: Muestra el botón
+        count.style.display = "block"; // CSS: Muestra el contador
+    } else { 
+        btn.style.display = "none"; // CSS: Los oculta si estamos arriba
+        count.style.display = "none"; 
     }
 }
 
-// Al hacer clic, sube con un efecto suave (smooth)
-btnSubir.addEventListener('click', () => {
-    window.scrollTo({
+// JS: Detecta el clic en el botón de subir
+btnSubir.addEventListener('click', () => { 
+    window.scrollTo({ // JS: Regresa al inicio de la página con suavidad
         top: 0,
         behavior: 'smooth'
     });
 });
 
-
-
-
-
-
-
-
-
-
-
+// JS: Puente para conectar el HTML con las funciones del módulo
+window.iniciarSesion = async () => { await signInWithPopup(auth, provider); };
+window.toggleFavorito = toggleFavorito;
+window.filtrarPorCategoria = filtrarPorCategoria;
+window.abrirTutorial = abrirTutorial;
+window.cerrarTutorial = cerrarTutorial;
+window.toggleDarkMode = toggleDarkMode;
+window.copiarComando = copiarComando;
+window.toggleLectura = toggleLectura;
