@@ -3617,46 +3617,34 @@ if (buscador) { // JS: Si el input de búsqueda existe
     });
 }
 
-// JS: Función unificada para filtrar por categorías, favoritos o mostrar todas
-function filtrarPorCategoria(cat) { 
-    // CSS/JS: Quita el color de realce (clase active) de todas las pestañas
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); 
-    
-    // HTML/JS: Selecciona el botón que se presionó y le pone el color de activo
-    const botonActivo = document.querySelector(`button[onclick="filtrarPorCategoria('${cat}')"]`); 
-    if (botonActivo) botonActivo.classList.add('active'); 
+// JS: Función mejorada que recuerda la pestaña y evita saltos visuales
+function filtrarPorCategoria(cat, esRefresco = false) { 
+    categoriaActual = cat; // JS: Guarda la pestaña elegida en la memoria
 
-    // ============================================================
-    // LÓGICA DE FILTRADO (INTEGRADA)
-    // ============================================================
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); 
+    const botonActivo = document.querySelector(`button[onclick="filtrarPorCategoria('${cat}')"]`); 
+    if (botonActivo) botonActivo.classList.add('active');
+
+    // JS: Lógica de filtrado inteligente
     let final;
     if (cat === 'todas') {
-        final = misNotas; // JS: Muestra el catálogo completo
+        final = misNotas;
     } else if (cat === 'favoritas') {
-        // JS: Filtra solo las notas cuyos títulos estén en tu lista de la nube
         final = misNotas.filter(n => misFavoritos.includes(n.titulo)); 
     } else {
-        // JS: Filtra por la categoría técnica (cmd, atajos, etc.)
         final = misNotas.filter(n => n.categoria === cat);
     }
     
-    mostrarNotas(final); // JS: Dibuja las tarjetas resultantes en pantalla
+    mostrarNotas(final); // JS: Dibuja las notas
 
-    // ============================================================
-    // LÓGICA DE SCROLL (MANTENIDA)
-    // ============================================================
-    const barra = document.getElementById('tabs-categorias'); 
-    if (barra) { 
-        const rectBarra = barra.getBoundingClientRect(); // JS: Obtiene la posición en pantalla
-
-        if (rectBarra.top <= 1) { // JS: Si la barra ya está pegada al techo
+    // JS: Solo mueve la pantalla si NO es un refresco de favoritos
+    if (!esRefresco) {
+        const barra = document.getElementById('tabs-categorias'); 
+        if (barra && barra.getBoundingClientRect().top <= 1) { 
             const contenedor = document.getElementById('lista-recursos'); 
-            const alturaBarra = barra.offsetHeight; 
-            const posicionDestino = contenedor.offsetTop - alturaBarra; 
-
-            window.scrollTo({ // JS: Realiza un scroll suave hasta las tarjetas
-                top: posicionDestino,
-                behavior: 'smooth'
+            window.scrollTo({ 
+                top: contenedor.offsetTop - barra.offsetHeight, 
+                behavior: 'smooth' 
             });
         }
     }
@@ -3789,6 +3777,7 @@ window.cerrarTutorial = cerrarTutorial;
 window.toggleDarkMode = toggleDarkMode; 
 window.copiarComando = copiarComando; 
 window.toggleLectura = toggleLectura;
+
 
 
 
