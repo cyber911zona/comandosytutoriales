@@ -2982,8 +2982,74 @@ goto inicio
         ],
         pasos: []
     },
-    
-    
+    { // JS: Objeto de datos para la herramienta PowerToys
+        categoria: "utilidades", // JS: Se asigna a la pestaña de utilidades técnicas
+        titulo: "Microsoft PowerToys (Pro Suite)", // JS: Nombre destacado en la tarjeta
+        imagen: "img/utilidades/powertoys.jpg", // HTML/JS: Ruta de la imagen ilustrativa
+        comando: "winget install Microsoft.PowerToys", // JS: Comando rápido de instalación por terminal
+        descripcion: "Colección de herramientas de Microsoft para usuarios avanzados que mutan la productividad de Windows.", // JS: Resumen
+        contenidoTutorialHtml: ` 
+            <h3>🚀 Potencia tu Flujo de Trabajo</h3> 
+            <p>PowerToys añade funciones de personalización y productividad que no vienen por defecto en Windows 10 u 11.</p>
+            
+            <div class="tutorial-pasos"> 
+                <h4>Paso 1: Instalación por Consola</h4>
+                <p>Abre CMD o PowerShell y pega el siguiente comando:</p>
+                <div class="contenedor-comando"> 
+                    <code>winget install Microsoft.PowerToys</code> 
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"> 
+                        <i class="fas fa-copy"></i> Copiar 
+                    </button>
+                </div>
+                <p style="margin-top:10px;"><small><i>Nota: También puedes bajarlo desde la Microsoft Store o GitHub.</i></small></p>
+            </div>
+
+            <details class="acordeon-tutorial">
+                <summary class="acordeon-header">
+                    <i class="fas fa-rocket"></i> PRODUCTIVIDAD EXTREMA
+                </summary>
+                <div class="tutorial-pasos">
+                    <p><strong>PowerToys Run:</strong> El buscador más rápido (<kbd>Alt</kbd> + <kbd>Espacio</kbd>). Lanza apps y hace cálculos al instante.</p>
+                    <p><strong>Text Extractor:</strong> Copia texto de CUALQUIER imagen o video con <kbd>Win</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd>.</p>
+                    <p><strong>Always on Top:</strong> Fija una ventana al frente de todas con <kbd>Win</kbd> + <kbd>Ctrl</kbd> + <kbd>T</kbd>.</p>
+                </div>
+            </details>
+
+            <details class="acordeon-tutorial" style="margin-top: 10px;">
+                <summary class="acordeon-header">
+                    <i class="fas fa-palette"></i> DISEÑO Y MULTIMEDIA
+                </summary>
+                <div class="tutorial-pasos">
+                    <p><strong>Selector de colores:</strong> Obtén el código HEX/RGB de cualquier píxel con <kbd>Win</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>.</p>
+                    <p><strong>Image Resizer:</strong> Cambia el tamaño de cientos de fotos a la vez desde el clic derecho.</p>
+                    <p><strong>Peek (Ojear):</strong> Previsualiza fotos y archivos sin abrirlos usando <kbd>Ctrl</kbd> + <kbd>Espacio</kbd>.</p>
+                </div>
+            </details>
+
+            <details class="acordeon-tutorial" style="margin-top: 10px;">
+                <summary class="acordeon-header">
+                    <i class="fas fa-mouse"></i> CONTROL Y SISTEMA
+                </summary>
+                <div class="tutorial-pasos">
+                    <p><strong>Awake:</strong> Evita que tu PC se suspenda mientras descargas archivos pesados.</p>
+                    <p><strong>Encontrar mi Mouse:</strong> Pulsa <kbd>Ctrl</kbd> dos veces y un haz de luz te dirá dónde está el puntero.</p>
+                    <p><strong>PowerRename:</strong> Cambia el nombre a miles de archivos con reglas inteligentes de búsqueda.</p>
+                </div>
+            </details>
+        `, // HTML/JS: Contenido con acordeones inyectado en el modal
+        links: [ // JS: Enlaces de referencia externa
+            { 
+                texto: "Web Oficial (GitHub)", 
+                url: "https://github.com/microsoft/PowerToys" 
+            },
+            { 
+                texto: "Video Tutorial Completo", 
+                url: "https://www.youtube.com/watch?v=bEGfn3riLRg",
+                plataforma: "youtube"
+            }
+        ],
+        pasos: [] // JS: Campo vacío por uso de HTML personalizado
+    },   
             
 ];
 
@@ -3510,6 +3576,7 @@ btnSubir.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
 
 
 
