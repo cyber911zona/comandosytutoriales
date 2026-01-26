@@ -103,7 +103,9 @@ const misNotas = [
                             <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
                         </div>
                         <p style="margin-top: 10px;"><small><i>Tip final: Si sigue sin moverse, intenta presionar la tecla <kbd>ESC</kbd> dos veces sobre la ventana de CMD para "despertar" el proceso.</i></small></p>
-                        <a href="https://www.youtube.com/watch?v=1d3GCF8tZqk" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i>Video: Solución Error 62.3%</a>
+                        <div class="flex-group">
+                            <a href="https://www.youtube.com/watch?v=1d3GCF8tZqk" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i>Video: Solución Error 62.3%</a>
+                        </div> 
                     </div>                        
                 </details>
 
@@ -3508,6 +3510,7 @@ btnSubir.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
 
 
 
