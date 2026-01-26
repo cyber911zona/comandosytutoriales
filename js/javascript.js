@@ -2985,7 +2985,7 @@ goto inicio
     { // JS: Objeto de datos para la herramienta PowerToys
         categoria: "utilidades", // JS: Se asigna a la pestaña de utilidades técnicas
         titulo: "Microsoft PowerToys (Pro Suite)", // JS: Nombre destacado en la tarjeta
-        imagen: "img/utilidades/PowerToys.jpg", // HTML/JS: Ruta de la imagen ilustrativa
+        imagen: "img/utilidades/powertoys.jpg", // HTML/JS: Ruta de la imagen ilustrativa
         comando: "winget install Microsoft.PowerToys", // JS: Comando rápido de instalación por terminal
         descripcion: "Colección de herramientas de Microsoft para usuarios avanzados que mutan la productividad de Windows.", // JS: Resumen
         contenidoTutorialHtml: ` 
@@ -3576,6 +3576,7 @@ btnSubir.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
 
 
 
