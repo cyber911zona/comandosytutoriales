@@ -62,7 +62,10 @@ const misNotas = [
                     <button class="btn-copiar-interno" onclick="copiarComando(this)">
                         <i class="fas fa-copy"></i> Copiar
                     </button>
-                </div>                
+                </div>
+                    <div class="flex-group">
+                        <a href="https://www.youtube.com/watch?v=OlLYiFcWG6g" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Tutorial sfc</a>                        
+                    </div>                
 
                 <h4 style="margin-top:20px;">Fase 2: Reparación Profunda de Imagen (DISM)</h4>
                 <p>Repara la base del sistema usando los servidores de Microsoft si SFC falla.</p>
@@ -112,6 +115,9 @@ const misNotas = [
                         <i class="fas fa-copy"></i> Copiar
                     </button>
                 </div>
+                    <div class="flex-group">
+                        <a href="https://www.youtube.com/watch?v=-mjcLr3Q4yA" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Tutorial CHKDSK </a>                        
+                    </div>   
             </div>
 
             <div class="tutorial-pasos warning" style="border-left-color: #f39c12; background: rgba(243, 156, 18, 0.1); margin-top: 30px;">
@@ -135,6 +141,9 @@ const misNotas = [
                         <i class="fas fa-copy"></i> Copiar
                     </button>
                 </div>
+                    <div class="flex-group">
+                        <a href="https://www.youtube.com/watch?v=KzCcvFdS0rE" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Tutorial </a>                        
+                    </div>  
             </div>
 
             <details class="acordeon-tutorial" style="margin-top: 20px;">
@@ -148,6 +157,9 @@ const misNotas = [
                         <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
                     </div>
                 </div>
+                    <div class="flex-group">
+                        <a href="https://www.youtube.com/watch?v=ld-qI9qWt70" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Tutorial </a>                        
+                    </div>  
             </details>
         `,
         links: [
@@ -157,7 +169,7 @@ const misNotas = [
             }
         ],
         pasos: []
-    },
+    },    
     {
         categoria: "cmd",
         titulo: "Consultar Dirección IP (ipconfig)",
@@ -3495,6 +3507,7 @@ btnSubir.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
 
 
 
