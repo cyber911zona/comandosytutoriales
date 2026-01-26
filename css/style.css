@@ -400,7 +400,7 @@ header p {
     display: grid;                    /* CSS: Activa rejilla de columnas */
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* CSS: Columnas automáticas responsivas */
     gap: 25px;                        /* CSS: Espacio entre tarjetas */
-    max-width: 1200px;                /* CSS: Ancho máximo en PC */
+    max-width: 1450px;                /* CSS: Ancho máximo en PC Cambia de 1200 a 1450 para que entren 4 */
     margin: 40px auto;                /* CSS: Centrado horizontal y margen vertical */
     padding: 0 20px;                  /* CSS: Espacio lateral para móviles */
 }
@@ -1241,3 +1241,4 @@ code a.link-comando:hover {
     transform: none !important;
     opacity: 1 !important;
 }
+
