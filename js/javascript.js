@@ -54,7 +54,6 @@ async function iniciarSesion() {
 // JS: No olvides que al final de tu archivo debe estar el "puente"
 window.iniciarSesion = iniciarSesion;
 
-
 // 3. EL VIGILANTE: Detecta la sesión y baja los datos
 onAuthStateChanged(auth, async (user) => {
     usuarioActual = user;
@@ -83,7 +82,7 @@ async function toggleFavorito(tituloNota) {
         await setDoc(userRef, { favoritos: arrayUnion(tituloNota) }, { merge: true });
         misFavoritos.push(tituloNota);
     }
-    mostrarNotas(misNotas);
+    filtrarPorCategoria(categoriaActual, true);
 }
 
 
@@ -3777,6 +3776,7 @@ window.cerrarTutorial = cerrarTutorial;
 window.toggleDarkMode = toggleDarkMode; 
 window.copiarComando = copiarComando; 
 window.toggleLectura = toggleLectura;
+
 
 
 
