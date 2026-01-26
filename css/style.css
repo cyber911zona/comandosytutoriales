@@ -1234,3 +1234,10 @@ code a.link-comando:hover {
     color: #f39c12; /* Color naranja atajos */
     transform: rotate(45deg);
 }
+
+/* CSS: Si el contenedor tiene esta clase, las tarjetas no deben animarse al aparecer */
+#lista-recursos.sin-animacion .tarjeta {
+    animation: none !important; /* CSS: Cancela el fadeInUp */
+    transform: none !important;
+    opacity: 1 !important;
+}
