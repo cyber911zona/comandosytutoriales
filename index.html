@@ -141,6 +141,9 @@
                 <button onclick="alert('Bienvenido a tu Guía de Comandos')" data-tooltip="Ayuda">
                     <i class="fas fa-question-circle"></i>
                 </button>
+                <button id="btn-login" onclick="iniciarSesion()" data-tooltip="Entrar con Google">
+                    <i class="fas fa-user-circle"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -238,6 +241,10 @@
                 <button class="tab utilidades" onclick="filtrarPorCategoria('utilidades')">
                     <i class="fas fa-tools"></i> Utilidades
                 </button>
+
+                <button class="tab favoritas" onclick="filtrarPorCategoria('favoritas')">
+                    <i class="fas fa-cog"></i> Favoritos
+                </button>
             </nav>
 
     <main>
@@ -295,7 +302,7 @@
         </div>
     </div>
     
-    <script src="js/javascript.js" defer></script>
+    <script type="module" src="js/javascript.js" defer></script>
     <!-- 
         Enlace al archivo JavaScript.
         defer hace que se cargue después del HTML.
@@ -306,6 +313,6 @@
             <button id="btn-subir" title="Volver arriba">
                 <i class="fas fa-chevron-up"></i>
             </button>
-        </div>
+        </div>       
 </body>
 </html>
