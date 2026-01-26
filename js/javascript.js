@@ -156,10 +156,11 @@ const misNotas = [
                         <code>ipconfig /flushdns</code>
                         <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
                     </div>
-                </div>
                     <div class="flex-group">
                         <a href="https://www.youtube.com/watch?v=ld-qI9qWt70" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Tutorial </a>                        
                     </div>  
+                </div>
+                    
             </details>
         `,
         links: [
@@ -3507,6 +3508,7 @@ btnSubir.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
 
 
 
