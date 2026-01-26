@@ -3729,3 +3729,5 @@ window.cerrarTutorial = cerrarTutorial;
 window.toggleDarkMode = toggleDarkMode;
 window.copiarComando = copiarComando;
 window.toggleLectura = toggleLectura;
+// Al final de javascript.js
+window.iniciarSesion = iniciarSesion;
