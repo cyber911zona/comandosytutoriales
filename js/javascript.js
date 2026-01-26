@@ -6,6 +6,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from
 import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // JS: Aquí he puesto los datos exactos que te dio la página de Firebase
+// 1. CONFIGURACIÓN DE FIREBASE (Mantén tus llaves reales aquí)
 const firebaseConfig = {
   apiKey: "AIzaSyBUHP2Gi25IxYZw1NgQrZh17lY92g2c-Kc",
   authDomain: "comandosytutoriales.firebaseapp.com",
@@ -24,9 +25,42 @@ const provider = new GoogleAuthProvider();
 let usuarioActual = null;
 let misFavoritos = []; 
 
-// JS: Sincronización con la nube
+// 2. EL DISPARADOR: Abre la ventana y captura errores
+async function iniciarSesion() {
+    try {
+        console.log("Iniciando ventana de Google...");
+        const result = await signInWithPopup(auth, provider);
+        console.log("¡Éxito!", result.user.displayName);
+    } catch (error) {
+        console.error("Código de error:", error.code);
+        if (error.code === 'auth/operation-not-allowed') {
+            alert("Error: Activa 'Google' en Sign-in method de Firebase.");
+        } else if (error.code === 'auth/unauthorized-domain') {
+            alert("Error: Agrega tu dominio en Authorized domains.");
+        }
+    }
+}
+
+// 3. EL VIGILANTE: Detecta la sesión y baja los datos
+onAuthStateChanged(auth, async (user) => {
+    usuarioActual = user;
+    if (user) {
+        // JS: Si hay usuario, busca sus favoritos guardados
+        const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+        if (docSnap.exists()) {
+            misFavoritos = docSnap.data().favoritos || [];
+        }
+    } else {
+        // JS: Si sale de la cuenta, limpia la lista
+        misFavoritos = [];
+    }
+    mostrarNotas(misNotas); // JS: Dibuja las tarjetas con los cambios
+});
+
+// 4. EL TRABAJADOR: Guarda o borra el engranaje en la nube
 async function toggleFavorito(tituloNota) {
     if (!usuarioActual) return alert("Inicia sesión para guardar favoritos");
+
     const userRef = doc(db, "usuarios", usuarioActual.uid);
     if (misFavoritos.includes(tituloNota)) {
         await updateDoc(userRef, { favoritos: arrayRemove(tituloNota) });
@@ -37,16 +71,6 @@ async function toggleFavorito(tituloNota) {
     }
     mostrarNotas(misNotas);
 }
-
-// JS: Monitoreo de sesión
-onAuthStateChanged(auth, async (user) => {
-    usuarioActual = user;
-    if (user) {
-        const docSnap = await getDoc(doc(db, "usuarios", user.uid));
-        if (docSnap.exists()) misFavoritos = docSnap.data().favoritos || [];
-    }
-    mostrarNotas(misNotas);
-});
 
 
 // =====================================================
@@ -3736,3 +3760,4 @@ window.cerrarTutorial = cerrarTutorial; // JS: Conecta la X del modal
 window.toggleDarkMode = toggleDarkMode; // JS: Conecta el cambio de tema
 window.copiarComando = copiarComando; // JS: Conecta los botones de copiar
 window.toggleLectura = toggleLectura; // JS: Conecta el modo lectura
+
