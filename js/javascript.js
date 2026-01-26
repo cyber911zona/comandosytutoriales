@@ -85,7 +85,6 @@ async function toggleFavorito(tituloNota) {
     filtrarPorCategoria(categoriaActual, true);
 }
 
-
 // =====================================================
 // DATOS: Aquí se almacena toda la información de las tarjetas
 // =====================================================
@@ -3776,6 +3775,7 @@ window.cerrarTutorial = cerrarTutorial;
 window.toggleDarkMode = toggleDarkMode; 
 window.copiarComando = copiarComando; 
 window.toggleLectura = toggleLectura;
+
 
 
 
