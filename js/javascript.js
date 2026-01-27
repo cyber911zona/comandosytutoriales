@@ -2512,91 +2512,7 @@ goto inicio
         `,
         links: [],
         pasos: []
-    },
-    {
-        categoria: "tutoriales",
-        titulo: "Manual Maestro: Reconstrucción del Proyecto",
-        imagen: "img/tutoriales/googleCloud.jpg",
-        comando: "Full-Stack: Firebase + PWA",
-        descripcion: "Guía técnica completa paso a paso: configuración de Google Cloud, estructura de archivos local, lógica de sincronización y despliegue en GitHub.",
-        contenidoTutorialHtml: `
-            <h3>🛠️ Fase 1: Configuración de la Nube (Firebase)</h3>
-            <p>Para que tus favoritos sean persistentes y se guarden en cualquier equipo, necesitamos el motor de Google.</p>
-            
-            <div class="tutorial-pasos">
-                <h4>1. Crear el Proyecto</h4>
-                <p>Entra a <a href="https://console.firebase.google.com/" target="_blank" class="link-comando">Firebase Console</a>, crea el proyecto <code>comandosytutoriales</code> y desactiva Analytics para mayor rapidez.</p>
-
-                <h4>2. Configurar Autenticación (Google Login)</h4>
-                <ul>
-                    <li>Ve a <strong>Compilación > Authentication</strong>.</li>
-                    <li>En <strong>Sign-in method</strong>, habilita <strong>Google</strong> con tu correo de soporte.</li>
-                    <li>En <strong>Configuración > Dominios autorizados</strong>, añade <code>localhost</code> y <code>cyber911zona.github.io</code>.</li>
-                </ul>
-
-                <h4>3. Base de Datos y Seguridad (Firestore)</h4>
-                <p>Crea la base de datos en <strong>Modo Producción</strong> (ubicación sugerida: <code>northamerica-south1</code>). En la pestaña <strong>Reglas</strong>, pega este escudo de seguridad:</p>
-                <div class="contenedor-comando">
-                    <code>rules_version = '2';<br>service cloud.firestore {<br>&nbsp;&nbsp;match /databases/{database}/documents {<br>&nbsp;&nbsp;&nbsp;&nbsp;match /usuarios/{userId} {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow read, write: if request.auth != null && request.auth.uid == userId;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>}</code>
-                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar Reglas</button>
-                </div>
-            </div>
-
-            <h3>💻 Fase 2: Estructura de Archivos y Código Maestro</h3>
-            <div class="tutorial-pasos warning">
-                <h4>Estructura de Carpetas Local</h4>
-                <pre style="font-size:0.85rem; color:var(--text-main);">
-    📁 mi-proyecto/
-    ├── 📄 index.html
-    ├── 📄 manifest.json
-    ├── 📄 sw.js
-    ├── 📁 css/ ➔ 📄 style.css
-    ├── 📁 js/  ➔ 📄 javascript.js
-    └── 📁 img/ ➔ (Iconos y capturas)</pre>
-            </div>
-
-            <div class="tutorial-pasos">
-                <h4>1. El HTML (Script como Módulo)</h4>
-                <p>Indispensable para que las librerías de Firebase carguen correctamente:</p>
-                <div class="contenedor-comando">
-                    <code>&lt;script type="module" src="js/javascript.js" defer&gt;&lt;/script&gt;</code>
-                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
-                </div>
-
-                <h4 style="margin-top:20px;">2. El CSS (Engranaje Favorito)</h4>
-                <p>Define el estilo del icono cuando la nota está guardada en la nube:</p>
-                <div class="contenedor-comando">
-                    <code>.btn-fav-card.active { color: #f39c12; transform: rotate(45deg); }</code>
-                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
-                </div>
-
-                <h4 style="margin-top:20px;">3. El JS (Vigilante y Puente)</h4>
-                <p>Usa <code>onAuthStateChanged</code> para detectar la sesión y sincronizar los datos. Al ser un módulo, debes exportar las funciones a la ventana global:</p>
-                <div class="contenedor-comando">
-                    <code>window.toggleFavorito = toggleFavorito; window.filtrarPorCategoria = filtrarPorCategoria;</code>
-                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
-                </div>
-            </div>
-
-            <h3>🚀 Fase 4: Despliegue y Mantenimiento</h3>
-            <div class="tutorial-pasos">
-                <h4>Publicar en GitHub</h4>
-                <p>Sube tus archivos a un repositorio llamado <code>comandosytutoriales</code>. En <strong>Settings > Pages</strong>, activa la rama <code>main</code>.</p>
-
-                <h4>Actualizar Caché (Service Worker)</h4>
-                <p>Si haces cambios y no se ven, debes subir la versión en <code>sw.js</code>:</p>
-                <div class="contenedor-comando">
-                    <code>const CACHE_NAME = 'v5-cache'; // Sube el número y haz Ctrl+F5</code>
-                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
-                </div>
-            </div>
-        `,
-        links: [
-            { texto: "Firebase Console", url: "https://console.firebase.google.com/" },
-            { texto: "GitHub Pages Settings", url: "https://github.com/settings/pages" }
-        ],
-        pasos: []
-    },
+    },    
             
     //CATEGORIA PROGRAMACION
     // =====================================================
@@ -2923,6 +2839,90 @@ goto inicio
                 url: "https://www.facebook.com/reel/728884509538774",
                 plataforma: "facebook"
             }
+        ],
+        pasos: []
+    },
+    {
+        categoria: "programacion",
+        titulo: "Manual Maestro: Reconstrucción del Proyecto",
+        imagen: "img/tutoriales/googleCloud.jpg",
+        comando: "Full-Stack: Firebase + PWA",
+        descripcion: "Guía técnica completa paso a paso: configuración de Google Cloud, estructura de archivos local, lógica de sincronización y despliegue en GitHub.",
+        contenidoTutorialHtml: `
+            <h3>🛠️ Fase 1: Configuración de la Nube (Firebase)</h3>
+            <p>Para que tus favoritos sean persistentes y se guarden en cualquier equipo, necesitamos el motor de Google.</p>
+            
+            <div class="tutorial-pasos">
+                <h4>1. Crear el Proyecto</h4>
+                <p>Entra a <a href="https://console.firebase.google.com/" target="_blank" class="link-comando">Firebase Console</a>, crea el proyecto <code>comandosytutoriales</code> y desactiva Analytics para mayor rapidez.</p>
+
+                <h4>2. Configurar Autenticación (Google Login)</h4>
+                <ul>
+                    <li>Ve a <strong>Compilación > Authentication</strong>.</li>
+                    <li>En <strong>Sign-in method</strong>, habilita <strong>Google</strong> con tu correo de soporte.</li>
+                    <li>En <strong>Configuración > Dominios autorizados</strong>, añade <code>localhost</code> y <code>cyber911zona.github.io</code>.</li>
+                </ul>
+
+                <h4>3. Base de Datos y Seguridad (Firestore)</h4>
+                <p>Crea la base de datos en <strong>Modo Producción</strong> (ubicación sugerida: <code>northamerica-south1</code>). En la pestaña <strong>Reglas</strong>, pega este escudo de seguridad:</p>
+                <div class="contenedor-comando">
+                    <code>rules_version = '2';<br>service cloud.firestore {<br>&nbsp;&nbsp;match /databases/{database}/documents {<br>&nbsp;&nbsp;&nbsp;&nbsp;match /usuarios/{userId} {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow read, write: if request.auth != null && request.auth.uid == userId;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>}</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar Reglas</button>
+                </div>
+            </div>
+
+            <h3>💻 Fase 2: Estructura de Archivos y Código Maestro</h3>
+            <div class="tutorial-pasos warning">
+                <h4>Estructura de Carpetas Local</h4>
+                <pre style="font-size:0.85rem; color:var(--text-main);">
+    📁 mi-proyecto/
+    ├── 📄 index.html
+    ├── 📄 manifest.json
+    ├── 📄 sw.js
+    ├── 📁 css/ ➔ 📄 style.css
+    ├── 📁 js/  ➔ 📄 javascript.js
+    └── 📁 img/ ➔ (Iconos y capturas)</pre>
+            </div>
+
+            <div class="tutorial-pasos">
+                <h4>1. El HTML (Script como Módulo)</h4>
+                <p>Indispensable para que las librerías de Firebase carguen correctamente:</p>
+                <div class="contenedor-comando">
+                    <code>&lt;script type="module" src="js/javascript.js" defer&gt;&lt;/script&gt;</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+
+                <h4 style="margin-top:20px;">2. El CSS (Engranaje Favorito)</h4>
+                <p>Define el estilo del icono cuando la nota está guardada en la nube:</p>
+                <div class="contenedor-comando">
+                    <code>.btn-fav-card.active { color: #f39c12; transform: rotate(45deg); }</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+
+                <h4 style="margin-top:20px;">3. El JS (Vigilante y Puente)</h4>
+                <p>Usa <code>onAuthStateChanged</code> para detectar la sesión y sincronizar los datos. Al ser un módulo, debes exportar las funciones a la ventana global:</p>
+                <div class="contenedor-comando">
+                    <code>window.toggleFavorito = toggleFavorito; window.filtrarPorCategoria = filtrarPorCategoria;</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+            </div>
+
+            <h3>🚀 Fase 4: Despliegue y Mantenimiento</h3>
+            <div class="tutorial-pasos">
+                <h4>Publicar en GitHub</h4>
+                <p>Sube tus archivos a un repositorio llamado <code>comandosytutoriales</code>. En <strong>Settings > Pages</strong>, activa la rama <code>main</code>.</p>
+
+                <h4>Actualizar Caché (Service Worker)</h4>
+                <p>Si haces cambios y no se ven, debes subir la versión en <code>sw.js</code>:</p>
+                <div class="contenedor-comando">
+                    <code>const CACHE_NAME = 'v5-cache'; // Sube el número y haz Ctrl+F5</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+            </div>
+        `,
+        links: [
+            { texto: "Firebase Console", url: "https://console.firebase.google.com/" },
+            { texto: "GitHub Pages Settings", url: "https://github.com/settings/pages" }
         ],
         pasos: []
     },
@@ -3890,6 +3890,7 @@ window.copiarComando = copiarComando;
 window.toggleLectura = toggleLectura;
 // JS: Añade esto al final de tu lista de puentes
 window.cerrarSesion = cerrarSesion;
+
 
 
 
