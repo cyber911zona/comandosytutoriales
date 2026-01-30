@@ -173,9 +173,12 @@ const misNotas = [
                         <i class="fas fa-copy"></i> Copiar
                     </button>
                 </div>
-                    <div class="flex-group">
-                        <a href="https://www.youtube.com/watch?v=OlLYiFcWG6g" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Tutorial sfc</a>                        
-                    </div>                
+                    <div class="links-seccion">
+                        <a href="https://www.youtube.com/watch?v=OlLYiFcWG6g" target="_blank" class="btn-pro-link youtube" data-tooltip="Como REPARAR Windows de Archivos Dañados SFC /Scannow">
+                            <i class="fab fa-youtube"></i> 
+                            <span class="texto-btn-cortado">Video: Como REPARAR Windows de Archivos Dañados SFC /Scannow</span>
+                        </a>
+                    </div>
 
                 <h4 style="margin-top:20px;">Fase 2: Reparación Profunda de Imagen (DISM)</h4>
                 <p>Repara la base del sistema usando los servidores de Microsoft si SFC falla.</p>
@@ -213,9 +216,12 @@ const misNotas = [
                             <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
                         </div>
                         <p style="margin-top: 10px;"><small><i>Tip final: Si sigue sin moverse, intenta presionar la tecla <kbd>ESC</kbd> dos veces sobre la ventana de CMD para "despertar" el proceso.</i></small></p>
-                        <div class="flex-group">
-                            <a href="https://www.youtube.com/watch?v=1d3GCF8tZqk" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i>Video: Solución Error 62.3%</a>
-                        </div>                         
+                        <div class="links-seccion">
+                            <a href="https://www.youtube.com/watch?v=1d3GCF8tZqk" target="_blank" class="btn-pro-link youtube" data-tooltip="Video: Solución Error 62.3%">
+                                <i class="fab fa-youtube"></i> 
+                                <span class="texto-btn-cortado">Video: Solución Error 62.3%</span>
+                            </a>
+                        </div>                        
                     </div>                        
                 </details>
 
@@ -227,9 +233,12 @@ const misNotas = [
                         <i class="fas fa-copy"></i> Copiar
                     </button>
                 </div>
-                    <div class="flex-group">
-                        <a href="https://www.youtube.com/watch?v=-mjcLr3Q4yA" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Tutorial CHKDSK </a>                        
-                    </div>   
+                    <div class="links-seccion">
+                        <a href="https://www.youtube.com/watch?v=-mjcLr3Q4yA" target="_blank" class="btn-pro-link youtube" data-tooltip="Video: Reparar Errores de Disco Duro, Unidades Físicas y Externas desde Cmd">
+                            <i class="fab fa-youtube"></i> 
+                            <span class="texto-btn-cortado">Video: Reparar Errores de Disco Duro, Unidades Físicas y Externas desde Cmd</span>
+                        </a>
+                    </div>                        
             </div>
 
             <div class="tutorial-pasos warning" style="border-left-color: #f39c12; background: rgba(243, 156, 18, 0.1); margin-top: 30px;">
@@ -253,9 +262,12 @@ const misNotas = [
                         <i class="fas fa-copy"></i> Copiar
                     </button>
                 </div>
-                    <div class="flex-group">
-                        <a href="https://www.youtube.com/watch?v=KzCcvFdS0rE" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Tutorial </a>                        
-                    </div>  
+                    <div class="links-seccion">
+                        <a href="https://www.youtube.com/watch?v=KzCcvFdS0rE" target="_blank" class="btn-pro-link youtube" data-tooltip="Video: BOOTREC FIXBOOT Element Not Found - Windows Error Fixed">
+                            <i class="fab fa-youtube"></i> 
+                            <span class="texto-btn-cortado">Video: BOOTREC FIXBOOT Element Not Found - Windows Error Fixed</span>
+                        </a>
+                    </div>                       
             </div>
 
             <details class="acordeon-tutorial" style="margin-top: 20px;">
@@ -268,9 +280,12 @@ const misNotas = [
                         <code>ipconfig /flushdns</code>
                         <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
                     </div>
-                    <div class="flex-group">
-                        <a href="https://www.youtube.com/watch?v=ld-qI9qWt70" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Tutorial </a>                        
-                    </div>
+                    <div class="links-seccion">
+                        <a href="https://www.youtube.com/watch?v=ld-qI9qWt70" target="_blank" class="btn-pro-link youtube" data-tooltip="Video: Como Vaciar La Caché De DNS En Windows 10 / 11">
+                            <i class="fab fa-youtube"></i> 
+                            <span class="texto-btn-cortado">Video: Como Vaciar La Caché De DNS En Windows 10 / 11</span>
+                        </a>
+                    </div>                       
                 </div>
                       
             </details>
@@ -2463,10 +2478,16 @@ goto inicio
                             <code>mstsc</code>
                             <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
                         </div>
-                        <div class="flex-group">
-                            <a href="https://www.youtube.com/shorts/tllEuQI0Rw8" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Video: Activar en W11</a>
-                            <a href="https://www.youtube.com/shorts/kTVrUyNSYnE" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Video: Conexión LAN</a>
-                        </div>
+                        <div class="links-seccion">
+                            <a href="https://www.youtube.com/shorts/tllEuQI0Rw8" target="_blank" class="btn-pro-link youtube" data-tooltip="Video: Cómo Habilitar el escritorio remoto en Windows 11">
+                                <i class="fab fa-youtube"></i> 
+                                <span class="texto-btn-cortado">Video: Cómo Habilitar el escritorio remoto en Windows 11</span>
+                            </a>
+                            <a href="https://www.youtube.com/shorts/kTVrUyNSYnE" target="_blank" class="btn-pro-link youtube" data-tooltip="Video: ¿Cómo CONFIGURAR un ESCRITORIO REMOTO?">
+                                <i class="fab fa-youtube"></i> 
+                                <span class="texto-btn-cortado">Video: ¿Cómo CONFIGURAR un ESCRITORIO REMOTO?</span>
+                            </a>
+                        </div>                        
                     </div>
                 </details>
 
@@ -2479,10 +2500,16 @@ goto inicio
                         <div class="contenedor-comando">
                             <code>remotedesktop.google.com</code>
                             <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar Link</button>
-                        </div>
-                        <div class="flex-group">
-                            <a href="https://www.youtube.com/watch?v=CnQfQVNz9Es" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Tutorial Completo</a>
-                            <a href="https://remotedesktop.google.com/access" target="_blank" class="btn-pro-link google"><i class="fab fa-google"></i> google extensiones</a>
+                        </div>                        
+                        <div class="links-seccion">
+                            <a href="https://www.youtube.com/watch?v=CnQfQVNz9Es" target="_blank" class="btn-pro-link youtube" data-tooltip="Video: Como usar ESCRITORIO REMOTO de GOOGLE CHROME">
+                                <i class="fab fa-youtube"></i> 
+                                <span class="texto-btn-cortado">Video: Como usar ESCRITORIO REMOTO de GOOGLE CHROME</span>
+                            </a>
+                            <a href="https://remotedesktop.google.com/access" target="_blank" class="btn-pro-link google" data-tooltip="Abrir extensiones de Google Remote">
+                                <i class="fab fa-google"></i> 
+                                <span class="texto-btn-cortado">google extensiones</span>
+                            </a>
                         </div>
                     </div>
                 </details>
@@ -2497,9 +2524,12 @@ goto inicio
                             <li><strong>El Técnico (Ayuda):</strong> Debe <strong>iniciar sesión</strong> con su cuenta Microsoft para generar el código de seguridad.</li>
                             <li><strong>El Usuario (Recibe):</strong> Introduce el código y hace clic en <strong>Enviar</strong>.</li>
                             <li>Al permitir el acceso, el técnico podrá ver y <strong>manipular la PC remota</strong>.</li>
-                        </ol>
-                        <div class="flex-group">
-                            <a href="https://www.youtube.com/shorts/PRdne2V_B7A" target="_blank" class="btn-pro-link youtube"><i class="fab fa-youtube"></i> Guía de Asistencia</a>
+                        </ol>                        
+                        <div class="links-seccion">
+                            <a href="https://www.youtube.com/shorts/PRdne2V_B7A" target="_blank" class="btn-pro-link youtube" data-tooltip="Video: Acceso remoto a Varias computadoras">
+                                <i class="fab fa-youtube"></i> 
+                                <span class="texto-btn-cortado">Video: Acceso remoto a Varias computadoras</span>
+                            </a>
                         </div>
                     </div>
                 </details>
@@ -2512,7 +2542,7 @@ goto inicio
         `,
         links: [],
         pasos: []
-    },    
+    },
             
     //CATEGORIA PROGRAMACION
     // =====================================================
@@ -2795,53 +2825,6 @@ goto inicio
         ],
         pasos: []
     },
-    //CATEGORIA EXCEL
-    {
-        categoria: "excel",
-        titulo: "Quitar Protección de Hoja (Sin Clave)",
-        imagen: "img/excel/Excel.jpg",
-        comando: ".zip",
-        descripcion: "Elimina la protección de una hoja de Excel modificando su XML interno para recuperar el acceso a la edición.",
-        contenidoTutorialHtml: `
-            <h3>🔓 Desbloqueo de Hoja Protegida</h3>
-            <p>Este método es infalible cuando olvidas la contraseña de una hoja específica de Excel y necesitas editarla con urgencia.</p>
-            
-            <div class="tutorial-pasos">
-                <h4>Paso 1: Cambiar a formato ZIP</h4>
-                <p>Haz una copia de seguridad y cambia la extensión del archivo original de <strong>.xlsx</strong> a <strong>.zip</strong>. Ábrelo con tu descompresor preferido.</p>
-                
-                <h4>Paso 2: Localizar la Hoja</h4>
-                <p>Navega a la siguiente ruta interna del archivo comprimido:</p>
-                <div class="contenedor-comando">
-                    <code>xl/worksheets/</code>
-                    <button class="btn-copiar-interno" onclick="copiarComando(this)">
-                        <i class="fas fa-copy"></i> Copiar Ruta
-                    </button>
-                </div>
-                <p>Extrae el archivo <strong>.xml</strong> de la hoja bloqueada (ejemplo:) <code>sheet1.xml</code> a tu escritorio.</p>
-                
-                <h4>Paso 3: Editar el archivo XML</h4>
-                <p>Abre el archivo con el <strong>Bloc de Notas</strong>, presiona <kbd>Ctrl</kbd> + <kbd>F</kbd> y busca la siguiente etiqueta <code>&lt;sheetProtection ... /&gt;</code>
-                 para borrarla desde el signo <strong>&lt;</strong> hasta el <strong>/&gt;</strong></p>
-                
-                <h4>Paso 4: Guardar y Finalizar</h4>
-                <p>Guarda los cambios en el archivo, reemplaza el original dentro del ZIP con esta nueva versión y regresa la extensión del archivo a <strong>.xlsx</strong>.</p>
-            </div>
-        `,
-        links: [
-            {
-                texto: "Video Tutorial",
-                url: "https://www.youtube.com/shorts/gcMF7Yu0u6Y",
-                plataforma: "youtube"
-            },
-            {
-                texto: "Video Tutorial",
-                url: "https://www.facebook.com/reel/728884509538774",
-                plataforma: "facebook"
-            }
-        ],
-        pasos: []
-    },
     {
         categoria: "programacion",
         titulo: "Manual Maestro: Reconstrucción del Proyecto",
@@ -2922,7 +2905,56 @@ goto inicio
         `,
         links: [
             { texto: "Firebase Console", url: "https://console.firebase.google.com/" },
-            { texto: "GitHub Pages Settings", url: "https://github.com/settings/pages" }
+            { texto: "GitHub Pages Settings", url: "https://github.com/settings/pages" },
+            { texto: "Documentación Firebase Auth", url: "https://firebase.google.com/docs/auth/web/google-signin", plataforma: "google" }                    
+        ],
+        pasos: []
+    },
+
+    //CATEGORIA EXCEL
+    {
+        categoria: "excel",
+        titulo: "Quitar Protección de Hoja (Sin Clave)",
+        imagen: "img/excel/Excel.jpg",
+        comando: ".zip",
+        descripcion: "Elimina la protección de una hoja de Excel modificando su XML interno para recuperar el acceso a la edición.",
+        contenidoTutorialHtml: `
+            <h3>🔓 Desbloqueo de Hoja Protegida</h3>
+            <p>Este método es infalible cuando olvidas la contraseña de una hoja específica de Excel y necesitas editarla con urgencia.</p>
+            
+            <div class="tutorial-pasos">
+                <h4>Paso 1: Cambiar a formato ZIP</h4>
+                <p>Haz una copia de seguridad y cambia la extensión del archivo original de <strong>.xlsx</strong> a <strong>.zip</strong>. Ábrelo con tu descompresor preferido.</p>
+                
+                <h4>Paso 2: Localizar la Hoja</h4>
+                <p>Navega a la siguiente ruta interna del archivo comprimido:</p>
+                <div class="contenedor-comando">
+                    <code>xl/worksheets/</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)">
+                        <i class="fas fa-copy"></i> Copiar Ruta
+                    </button>
+                </div>
+                <p>Extrae el archivo <strong>.xml</strong> de la hoja bloqueada (ejemplo:) <code>sheet1.xml</code> a tu escritorio.</p>
+                
+                <h4>Paso 3: Editar el archivo XML</h4>
+                <p>Abre el archivo con el <strong>Bloc de Notas</strong>, presiona <kbd>Ctrl</kbd> + <kbd>F</kbd> y busca la siguiente etiqueta <code>&lt;sheetProtection ... /&gt;</code>
+                 para borrarla desde el signo <strong>&lt;</strong> hasta el <strong>/&gt;</strong></p>
+                
+                <h4>Paso 4: Guardar y Finalizar</h4>
+                <p>Guarda los cambios en el archivo, reemplaza el original dentro del ZIP con esta nueva versión y regresa la extensión del archivo a <strong>.xlsx</strong>.</p>
+            </div>
+        `,
+        links: [
+            {
+                texto: "Video Tutorial",
+                url: "https://www.youtube.com/shorts/gcMF7Yu0u6Y",
+                plataforma: "youtube"
+            },
+            {
+                texto: "Video Tutorial",
+                url: "https://www.facebook.com/reel/728884509538774",
+                plataforma: "facebook"
+            }
         ],
         pasos: []
     },
@@ -3477,9 +3509,11 @@ function mostrarNotas(notasAMostrar, esRefresco = false) {
                         if(link.plataforma === "facebook") icono = "fab fa-facebook"; // CSS: Icono oficial de Facebook
                         if(link.plataforma === "google") icono = "fab fa-google"; // CSS: Icono oficial de Google
 
+                        // JS: Añadimos 'data-tooltip' y una clase al texto interno
                         return `
-                            <a href="${link.url}" target="_blank" class="btn-pro-link ${link.plataforma || 'generic'}">
-                                <i class="${icono}"></i> ${link.texto}
+                            <a href="${link.url}" target="_blank" class="btn-pro-link ${link.plataforma || 'generic'}" data-tooltip="${link.texto}">
+                                <i class="${icono}"></i> 
+                                <span class="texto-btn-cortado">${link.texto}</span>
                             </a>`; // HTML: Genera la etiqueta de enlace con su estilo
                     }).join('')}
                 </div>
@@ -3532,6 +3566,47 @@ function mostrarNotas(notasAMostrar, esRefresco = false) {
 
         // HTML: Inserta la tarjeta terminada en la página web
         listaRecursos.appendChild(tarjeta); 
+
+                // 2. ESCÁNER TÉCNICO: ¿El texto se sale de la caja?
+        const elementosParaChecar = tarjeta.querySelectorAll('h3, p');
+
+        elementosParaChecar.forEach(el => {
+            // JS: Solo activamos la expansión si el contenido es 10px más grande que la caja
+            // Esto ignora errores de redondeo de sub-píxeles del navegador.
+            if (el.scrollHeight > (el.clientHeight + 10)) {
+                el.classList.add('expandible');
+                el.onclick = () => el.classList.toggle('expandida');
+            } else {
+                // JS: Si el texto cabe perfecto, limpiamos cualquier rastro de expansión
+                el.classList.remove('expandible');
+                el.classList.remove('expandida');
+                el.onclick = null; 
+                el.style.cursor = 'default';
+            }
+        });
+
+        // ============================================================
+        // EL NUEVO CÓDIGO (ESCÁNER DE BOTONES)
+        // ============================================================
+        const botonesLinks = tarjeta.querySelectorAll('.btn-pro-link');
+
+        botonesLinks.forEach(btn => {
+            const spanTexto = btn.querySelector('.texto-btn-cortado');
+            
+            if (spanTexto) {
+                // JS: Comparamos el ancho total del contenido (scrollWidth) 
+                // contra el ancho físico que tiene permitido el botón (offsetWidth)
+                const estaRecortado = spanTexto.scrollWidth > spanTexto.offsetWidth;
+
+                if (estaRecortado) {
+                    btn.classList.add('con-tooltip');
+                } else {
+                    btn.classList.remove('con-tooltip');
+                    btn.removeAttribute('title'); 
+                }
+            }
+        });
+        
     });
 }
 
@@ -3584,7 +3659,21 @@ function abrirTutorial(index) {
         if (contenedorCuerpo) { // JS: Si existe
             contenedorCuerpo.scrollTo({ top: 0, behavior: 'instant' }); // JS: Hace scroll al inicio inmediatamente
         }
-    }, 10);
+        // 2. ESCÁNER DE BOTONES INTERNOS: Aplicamos el estilo rectangular inteligente
+        const botonesInternos = cuerpoTutorial.querySelectorAll('.btn-pro-link');
+        
+        botonesInternos.forEach(btn => {
+            const spanTexto = btn.querySelector('.texto-btn-cortado');
+            if (spanTexto) {
+                // JS: Medimos si el texto se recorta dentro de la guía
+                if (spanTexto.scrollWidth > spanTexto.offsetWidth) {
+                    btn.classList.add('con-tooltip');
+                } else {
+                    btn.classList.remove('con-tooltip');
+                }
+            }
+        });
+    }, 50); // JS: 50ms es ideal para que el DOM esté listo para mediciones
 }
 
 // JS: Función para ocultar la ventana emergente
@@ -3890,13 +3979,3 @@ window.copiarComando = copiarComando;
 window.toggleLectura = toggleLectura;
 // JS: Añade esto al final de tu lista de puentes
 window.cerrarSesion = cerrarSesion;
-
-
-
-
-
-
-
-
-
-
