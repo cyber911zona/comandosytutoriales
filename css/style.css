@@ -279,20 +279,55 @@ header p {
     scrollbar-width: thin;      /* CSS: Barra de scroll delgada */
 }
 
+/* 1. Centrar los botones dentro de la barra de navegación */
+.tabs-container {
+    display: flex;
+    justify-content: center; /* JS: Centra todas las pestañas en la pantalla */
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px;
+    scrollbar-width: none;
+}
+/* 2. Centrar el contenido DENTRO de cada pestaña */
 /* CSS: Estilo para cada botón <button class="tab"> */
 .tab { 
-    background: transparent;          /* CSS: Fondo invisible */
-    color: var(--text-muted);         /* CSS: Texto gris */
-    border: 2px solid transparent;    /* CSS: Reserva espacio de borde */
-    padding: 10px 20px;               /* CSS: Tamaño de botón */
-    border-radius: 30px;              /* CSS: Redondeado total */
-    cursor: pointer;                  /* CSS: Cursor de mano */
-    font-weight: 600;                 /* CSS: Texto negrita */
-    font-family: var(--font-body);    /* CSS: Fuente Inter */
-    display: flex;                    /* CSS: Icono + Texto en fila */
-    align-items: center;              /* CSS: Centrado vertical */
-    gap: 8px;                         /* CSS: Espacio icono-texto */
-    transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.2s ease, color 0.3s ease; /* CSS: Suaviza animaciones */
+    /* 1. ESTRUCTURA Y ALINEACIÓN (Lo nuevo) */
+    height: 42px;             /* Altura fija para uniformidad */
+    display: flex;            /* Activa el contenedor flexible */
+    align-items: center;      /* Centrado vertical */
+    justify-content: center;  /* Centrado horizontal (Texto + Número) */
+    gap: 8px;                 /* Espacio entre icono, texto y número */
+    flex-shrink: 0;           /* Evita que el botón se aplaste en móviles */
+    padding: 0 20px;          /* Espacio lateral interno */
+
+    /* 2. ESTILO VISUAL (Tus originales) */
+    background: transparent;
+    color: var(--text-muted);
+    border: 2px solid transparent;
+    border-radius: 30px;      /* Mantiene la forma de cápsula */
+    cursor: pointer;
+    font-weight: 600;
+    font-family: var(--font-body);
+    
+    /* 3. ANIMACIONES */
+    transition: background-color 0.4s ease, 
+                box-shadow 0.4s ease, 
+                transform 0.2s ease, 
+                color 0.3s ease;
+}
+
+/* 3. Estilo del contador (Badge) para que se vea profesional */
+.count-badge {
+    background: rgba(255, 255, 255, 0.15); /* Fondo sutil traslúcido */
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    min-width: 20px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* CSS: Efecto hover para botones de categoría */
