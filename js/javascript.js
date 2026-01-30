@@ -66,31 +66,49 @@ async function cerrarSesion() {
     }
 }
 
-// JS: El Vigilante ahora también controla el diseño del botón
+// javascript.js
+
+// JS: El Vigilante ahora controla el acceso, la estética y los contadores
 onAuthStateChanged(auth, async (user) => {
-    const btnLogin = document.getElementById('btn-login'); // HTML: Selecciona tu botón de usuario
+    const btnLogin = document.getElementById('btn-login'); 
     usuarioActual = user;
 
     if (user) {
-        // UI: Si hay usuario, el botón se vuelve de "Salir"
+        // 1. UI: Si hay usuario, el botón se vuelve de "Salir"
         if (btnLogin) {
-            btnLogin.innerHTML = '<i class="fas fa-sign-out-alt"></i>'; // CSS: Cambia icono a puerta de salida
+            btnLogin.innerHTML = '<i class="fas fa-sign-out-alt"></i>';
             btnLogin.setAttribute('data-tooltip', 'Cerrar Sesión');
-            btnLogin.onclick = cerrarSesion; // JS: Cambia la función a cerrar sesión
+            btnLogin.onclick = cerrarSesion; 
         }
         
-        const docSnap = await getDoc(doc(db, "usuarios", user.uid));
-        if (docSnap.exists()) misFavoritos = docSnap.data().favoritos || [];
+        // 2. DATOS: Traemos la información desde Firestore
+        const userRef = doc(db, "usuarios", user.uid);
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+            const data = userDoc.data();
+            misFavoritos = data.favoritos || [];
+            
+            // 🔥 CORRECCIÓN CLAVE: Actualiza los números apenas lleguen los favoritos
+            actualizarContadoresTabs(); 
+        }
+        
+        // 3. RENDER: Refrescamos la pantalla principal
+        filtrarPorCategoria('todas');
+
     } else {
         // UI: Si no hay usuario, el botón vuelve a ser de "Login"
         if (btnLogin) {
-            btnLogin.innerHTML = '<i class="fas fa-user-circle"></i>'; // CSS: Icono original de usuario
+            btnLogin.innerHTML = '<i class="fas fa-user-circle"></i>';
             btnLogin.setAttribute('data-tooltip', 'Entrar con Google');
-            btnLogin.onclick = iniciarSesion; // JS: Vuelve a la función de entrar
+            btnLogin.onclick = iniciarSesion;
         }
+        
+        // Reseteamos favoritos y contadores al salir
         misFavoritos = [];
+        actualizarContadoresTabs();
+        filtrarPorCategoria('todas');
     }
-    mostrarNotas(misNotas);
 });
 
 // 4. EL TRABAJADOR: Guarda o borra el engranaje en la nube
