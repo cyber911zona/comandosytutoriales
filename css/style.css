@@ -356,6 +356,23 @@ header p {
 .tab.active.excel { background: #0b5f2e; box-shadow: 0 4px 12px rgba(11, 95, 46, 0.4); } /* CSS: Bosque para Excel */
 .tab.active.utilidades { background: #ec4899; box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4); } /* CSS: Fucsia para Utilidades */
 
+/* style.css */
+
+/* Esto cambia el color del texto y el borde solo de la pestaña favoritos al seleccionarla */
+.tab.favoritas.active {
+    color: #f39c12; /* Cambia este código por el color que te guste */
+    border-color: #f39c12;
+    background: rgba(243, 156, 18, 0.1); /* Fondo sutil de color */
+}
+
+/* style.css */
+
+/* Esto cambia el circulito del número solo en la pestaña de favoritos */
+.tab.favoritas .count-badge {
+    background: #f39c12 !important; /* Color de fondo del circulito */
+    color: white !important; /* Color del número */
+}
+
 /* CSS: Barra de herramientas <div class="global-tools"> en index.html */
 .global-tools { 
     display: flex; /* CSS: Iconos en fila */
