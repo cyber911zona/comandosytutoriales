@@ -414,14 +414,20 @@ header p {
     border-radius: var(--radius-lg);  /* CSS: Esquinas redondeadas de variable */
     padding: 25px;                    /* CSS: Espacio interno */
     box-shadow: 
-        0 8px 32px 0 rgba(0, 0, 0, 0.2), /* CSS: Sombra profunda */
-        inset 0 0 0 1px rgba(255, 255, 255, 0.05); /* CSS: Brillo interno */
-    background-clip: padding-box; /* CSS: Previene sangrado de fondo sobre bordes */
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* CSS: Animación premium */
+        0 8px 32px 0 rgba(0, 0, 0, 0.2); /* CSS: Sombra profunda */
     display: flex;                    /* CSS: Contenido apilado */
     flex-direction: column;           /* CSS: Dirección vertical */
     position: relative;               /* CSS: Ancla para imágenes */
     overflow: hidden;                 /* CSS: Mantiene fotos dentro de bordes */
+    /* 2. LA ANIMACIÓN: Cómo entra a la pantalla */
+    animation: fadeInUp 0.4s ease forwards;
+    /* 3. LA TRANSICIÓN MEJORADA: Cómo se mueve después */
+    /* Usamos !important para asegurar que esta lista de transiciones 
+       específicas (opacidad, transform, etc.) sea la que mande sobre la anterior */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.4s ease, 
+                opacity 0.4s ease, 
+                border-color 0.4s ease !important;   
 }
 
 /* CSS: Efecto hover para cada tarjeta */
@@ -662,7 +668,8 @@ main {
 
 /* CSS: Ajuste de posición para las tarjetas */
 #lista-recursos { 
-    padding-top: 10px; /* CSS: Separación de la barra fija */
+    padding-top: 10px; /* Tu margen original */
+    transition: all 0.5s ease; /* El nuevo comando para suavidad */
 }
 
 /* =====================================================
@@ -1174,11 +1181,6 @@ code a.link-comando:hover {
         opacity: 1; 
         transform: translateY(0); /* CSS: Sube a su sitio */
     }
-}
-
-/* CSS: Aplicación de animación a todas las tarjetas inyectadas */
-.tarjeta { 
-    animation: fadeInUp 0.4s ease forwards; 
 }
 
 /* =====================================================
