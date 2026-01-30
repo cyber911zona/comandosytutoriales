@@ -438,6 +438,8 @@ header p {
     height: 160px; /* CSS: Alto fijo */
     overflow: hidden; /* CSS: Corta zoom de imagen */
     border-bottom: 2px solid var(--primary); /* CSS: Línea índigo divisoria */
+    /* JS: Si la tarjeta NO tiene imagen, este bloque debe seguir ocupando espacio */
+    background: var(--bg-body);
 }
 
 /* CSS: Estilo para la <img> inyectada por javascript.js */
@@ -461,18 +463,83 @@ header p {
     margin-bottom: 15px; /* CSS: Espacio inferior */
 }
 
-/* CSS: Título de cada tarjeta */
-.tarjeta h3 { 
-    font-size: 1.3rem; /* CSS: Tamaño letra */
-    margin: 0; /* CSS: Sin margen */
-    color: var(--text-main); /* CSS: Color según tema */
+/* 1. Caja de Cabecera: Bloquea el espacio del Título y la Etiqueta */
+.tarjeta-header {
+    /* JS: Altura fija para que el comando negro no suba ni baje */
+    min-height: 90px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 5px;
 }
 
-/* CSS: Descripción breve en tarjeta */
+/* 2. El Título: Ya no necesita min-height porque lo controla el header, 
+   pero limitamos las líneas para que no rompa la caja */
+.tarjeta h3 { 
+    font-size: 1.25rem;
+    margin: 0;
+    color: var(--text-main);
+    
+    /* JS: 1.4 de alto por línea x 2 líneas = 2.8rem exactos */
+    line-height: 1.4; 
+    min-height: 2.8rem; 
+    
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    overflow: hidden;
+}
+
+/* 3. Bloque de Comando (code): Reserva un alto fijo para que la descripción siempre empiece a la misma altura */
+.tarjeta code {
+    background: #1e293b !important;
+    padding: 10px;
+    border-radius: 10px;
+    display: block;
+    margin: 10px 0;
+    height: 2.8rem; /* JS: Antes era 3.2rem, ahora es más compacto */
+    line-height: 1.2;
+    overflow-x: auto;
+    white-space: nowrap; 
+}
+
+/* 4. Descripción: Altura mínima para 3 líneas */
 .tarjeta p { 
-    color: var(--text-muted); /* CSS: Gris suave */
-    line-height: 1.6; /* CSS: Altura línea lectura */
-    flex-grow: 1; /* CSS: Empuja botones al fondo */
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    overflow: hidden;   
+    /* JS: Reserva espacio para 3 líneas exactas (1.6 de alto x 3 líneas = ~4.8em) */
+    min-height: 4.5em; 
+}
+
+/* CSS: Indica al usuario que el texto se puede tocar */
+.expandible {
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* CSS: Cuando se activa la expansión, quitamos los límites */
+.expandible.expandida {
+    display: block !important; /* CSS: Apaga el motor de recorte */
+    -webkit-line-clamp: unset !important; 
+    line-clamp: unset !important;
+    overflow: visible !important;
+    min-height: auto !important; /* CSS: Deja que crezca lo que necesite */
+    background: rgba(99, 102, 241, 0.05); /* CSS: Un toque de color para resaltar */
+    padding: 5px;
+    border-radius: 8px;
+}
+
+/* CSS: Efecto visual al pasar el mouse */
+.expandible:hover {
+    color: var(--primary);
 }
 
 /* CSS: Texto resaltado en descripción */
@@ -487,6 +554,7 @@ header p {
     gap: 12px; /* CSS: Separación botones */
     margin-top: auto; /* CSS: Anclado al fondo */
     padding-top: 15px; /* CSS: Margen interno */
+    border-top: 1px solid var(--border-glass); /* JS: Una línea sutil para separar el contenido de los botones */
 }
 
 /* CSS: Base para botones "Copiar" y "Guía" */
@@ -535,12 +603,13 @@ body.dark-mode .btn-copiar:hover { background: #334155; }
 }
 
 /* CSS: Contenedor de botones de links externos */
+/* 1. Contenedor: Forzamos la cuadrícula de 2 columnas */
 .links-seccion { 
-    display: flex; /* CSS: Fila */
-    flex-wrap: wrap; /* CSS: Salto de línea automático */
-    gap: 15px; /* CSS: Espacio entre links */
-    margin-top: 15px; /* CSS: Margen superior */
-    margin-bottom: 10px; /* CSS: Margen inferior */
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    margin: 10px 0;
+    min-height: 40px; 
 }
 
 /* CSS: Estilo para los <a> inyectados por javascript.js */
@@ -605,6 +674,8 @@ main {
     padding: 4px 10px; /* CSS: Tamaño caja */
     border-radius: 4px; /* CSS: Redondeado leve */
     display: inline-block; /* CSS: Ancho según texto */
+    /* JS: Esta es la clave para que no se alargue */
+    width: fit-content;
     margin-bottom: 10px; /* CSS: Espacio inferior */
 }
 
@@ -936,18 +1007,90 @@ code a.link-comando:hover {
    ===================================================== */
 
 /* CSS: Base para botones profesionales de enlaces externos */
+/* 2. Botón: Ahora es un rectángulo de tamaño fijo (Uniforme) */
 .btn-pro-link { 
-    display: inline-flex; /* CSS: Caja ajustable icono-texto */
-    align-items: center; /* CSS: Centrado vertical */
-    gap: 8px; /* CSS: Separación */
-    padding: 8px 14px; /* CSS: Tamaño botón */
-    border-radius: 8px; /* CSS: Redondeado sutil */
-    font-size: 0.8rem; /* CSS: Letra pequeña */
-    text-decoration: none; /* CSS: Sin subrayado */
-    font-weight: 600; /* CSS: Negrita */
-    transition: all 0.3s ease; /* CSS: Suaviza interacciones */
-    border: 1px solid; /* CSS: Reserva espacio para borde de color */
-    margin-bottom: 5px; /* CSS: Margen inferior */
+    /* JS: FÓRMULA CLAVE: (50% del ancho total) MENOS (5px, que es la mitad del gap de 10px) */
+    /* Esto garantiza que siempre quepan dos, sin importar el tamaño de pantalla */
+    width: calc(50% - 5px); /* JS: Exactamente la mitad menos el hueco */
+    height: 40px; 
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 0 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    text-decoration: none;
+    font-weight: 600;
+    position: relative; 
+    overflow: visible; /* JS: Para que la burbuja se vea fuera del botón */
+    box-sizing: border-box;
+}
+
+/* 3. El Texto: Esta configuración es VITAL para que el JS pueda medir */
+.texto-btn-cortado {
+    display: block !important;/* JS: Obligatorio para medición */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* JS: Pone los "..." */
+    flex: 1; /* JS: Ocupa todo el espacio sobrante del botón */
+    text-align: left;
+}
+
+/* 4. LA BURBUJA (Tooltip): Aparece sobre el rectángulo */
+.btn-pro-link::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 140%; left: 50%;
+    transform: translateX(-50%) translateY(10px) scale(0.9);
+    background: linear-gradient(135deg, #1e293b, #0f172a); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6); /* Sombra más fuerte para que resalte */
+    color: #f1f5f9;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    width: max-content;
+    max-width: 180px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Z-INDEX SUPREMO: Esto asegura que tape a cualquier otra cosa */
+    z-index: 9999 !important;
+}
+
+/* Flecha de la burbuja */
+.btn-pro-link::before {
+    content: '';
+    position: absolute;
+    bottom: 130%; left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    border: 6px solid transparent;
+    border-top-color: #0f172a;
+    opacity: 0;
+    transition: 0.3s ease;
+    /* Z-INDEX SUPREMO TAMBIÉN AQUÍ */
+    z-index: 9999 !important;
+}
+
+/* Solo se muestra si tiene la clase con-tooltip (puesta por JS) */
+.btn-pro-link.con-tooltip:hover::after,
+.btn-pro-link.con-tooltip:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* CSS: Asegura que los botones internos del tutorial también sigan la cuadrícula de 2x2 */
+.tutorial-contenido-pro .links-seccion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+/* CSS: Fuerza a que los botones internos tengan el mismo tamaño que los de afuera */
+.tutorial-contenido-pro .btn-pro-link {
+    width: calc(50% - 5px);
 }
 
 /* CSS: Efecto hover común para todos los links externos */
@@ -955,6 +1098,7 @@ code a.link-comando:hover {
     color: white !important; /* CSS: Letra siempre blanca */
     transform: translateY(-2px); /* CSS: Levanta botón */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* CSS: Sombra profundidad */
+    z-index: 100; /* Se eleva sobre el contenido normal */
 }
 
 /* CSS: Variante Roja para Youtube mediante javascript.js (link.plataforma) */
@@ -1241,4 +1385,3 @@ code a.link-comando:hover {
     transform: none !important;
     opacity: 1 !important;
 }
-
