@@ -4012,4 +4012,3 @@ window.copiarComando = copiarComando;
 window.toggleLectura = toggleLectura;
 // JS: Añade esto al final de tu lista de puentes
 window.cerrarSesion = cerrarSesion;
-
