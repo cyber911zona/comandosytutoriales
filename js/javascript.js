@@ -94,18 +94,41 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // 4. EL TRABAJADOR: Guarda o borra el engranaje en la nube
+// javascript.js
+
 async function toggleFavorito(tituloNota) {
     if (!usuarioActual) return alert("Inicia sesión para guardar favoritos");
 
     const userRef = doc(db, "usuarios", usuarioActual.uid);
-    if (misFavoritos.includes(tituloNota)) {
+    const esYaFavorito = misFavoritos.includes(tituloNota);
+
+    // 1. Actualizamos la base de datos
+    if (esYaFavorito) {
         await updateDoc(userRef, { favoritos: arrayRemove(tituloNota) });
         misFavoritos = misFavoritos.filter(f => f !== tituloNota);
     } else {
         await setDoc(userRef, { favoritos: arrayUnion(tituloNota) }, { merge: true });
         misFavoritos.push(tituloNota);
     }
-    filtrarPorCategoria(categoriaActual, true);
+
+    // 2. LÓGICA DE INGENIERÍA: Decidir si refrescar todo o solo una pieza
+    if (categoriaActual === 'favoritas') {
+        // Si estamos en la pestaña de favoritos, sí hay que borrar la tarjeta que quitaste
+        filtrarPorCategoria(categoriaActual, true);
+    } else {
+        // Si estamos en cualquier otra categoría, NO borramos nada. 
+        // Solo buscamos el botón en el DOM y le cambiamos el color.
+        const tarjetas = document.querySelectorAll('.tarjeta');
+        tarjetas.forEach(t => {
+            const h3 = t.querySelector('h3');
+            if (h3 && h3.innerText === tituloNota) {
+                const btn = t.querySelector('.btn-fav-card');
+                if (btn) btn.classList.toggle('active'); // CSS: Cambia el color naranja al instante
+            }
+        });
+        // Actualizamos los numeritos de las pestañas sin que la pantalla parpadee
+        actualizarContadoresTabs();
+    }
 }
 
 // =====================================================
@@ -3434,6 +3457,31 @@ function titleCase(str) {
         .join(' '); // JS: Une las palabras de nuevo en un solo texto
 }
 
+function actualizarContadoresTabs() {
+    // HTML/JS: Selecciona todas las pestañas del menú superior
+    document.querySelectorAll('.tab').forEach(boton => { 
+        // JS: Extrae la categoría del atributo 'onclick' del botón
+        const cat = boton.getAttribute('onclick').match(/'([^']+)'/)[1]; 
+        // JS: Calcula cuántas notas hay para esa categoría específica
+        // JS: Reemplaza las líneas 1146-1150 por estas
+        const cantidad = (cat === 'todas') 
+            ? misNotas.length 
+            : (cat === 'favoritas') // JS: Si el botón es el de favoritos
+                ? misFavoritos.length // JS: Usa el tamaño de tu lista de la nube
+                : misNotas.filter(n => n.categoria === cat).length;
+            
+        // JS: Busca el círculo pequeño del contador en el botón
+        let badge = boton.querySelector('.count-badge'); 
+        if (!badge) { // JS: Si no tiene círculo de contador, lo crea
+            badge = document.createElement('span'); // JS: Crea el elemento span
+            badge.className = 'count-badge'; // CSS: Le asigna la clase para estilo
+            boton.appendChild(badge); // HTML: Lo mete dentro del botón
+        }
+        badge.innerText = cantidad; // HTML/JS: Escribe el número en el círculo
+    });
+}
+window.actualizarContadoresTabs = actualizarContadoresTabs;
+
 // =====================================================
 // 4. MOTOR DE RENDERIZADO
 // Esta función CREA las tarjetas dinámicamente en HTML
@@ -3475,29 +3523,6 @@ function mostrarNotas(notasAMostrar, esRefresco = false) {
         const originalIndex = misNotas.findIndex( 
             n => n.titulo === nota.titulo
         );
-
-        // HTML/JS: Selecciona todas las pestañas del menú superior
-        document.querySelectorAll('.tab').forEach(boton => { 
-            // JS: Extrae la categoría del atributo 'onclick' del botón
-            const cat = boton.getAttribute('onclick').match(/'([^']+)'/)[1]; 
-            // JS: Calcula cuántas notas hay para esa categoría específica
-            // JS: Reemplaza las líneas 1146-1150 por estas
-            const cantidad = (cat === 'todas') 
-                ? misNotas.length 
-                : (cat === 'favoritas') // JS: Si el botón es el de favoritos
-                    ? misFavoritos.length // JS: Usa el tamaño de tu lista de la nube
-                    : misNotas.filter(n => n.categoria === cat).length;
-                
-            // JS: Busca el círculo pequeño del contador en el botón
-            let badge = boton.querySelector('.count-badge'); 
-            if (!badge) { // JS: Si no tiene círculo de contador, lo crea
-                badge = document.createElement('span'); // JS: Crea el elemento span
-                badge.className = 'count-badge'; // CSS: Le asigna la clase para estilo
-                boton.appendChild(badge); // HTML: Lo mete dentro del botón
-            }
-            badge.innerText = cantidad; // HTML/JS: Escribe el número en el círculo
-        });
-
 
         // JS: Genera los botones de enlaces si la nota tiene datos
         let htmlLinks = (nota.links && nota.links.length > 0) 
