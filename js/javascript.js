@@ -4002,6 +4002,11 @@ btnSubir.addEventListener('click', () => {
 // JS: Conecta el botón con la función detallada de arriba (la que tiene alertas de error)
 window.iniciarSesion = iniciarSesion; 
 
+// JS: Ejecutar una vez al cargar para que los números aparezcan de inmediato
+document.addEventListener('DOMContentLoaded', () => {
+    actualizarContadoresTabs();
+});
+
 // JS: El resto de conexiones para tus botones
 window.toggleFavorito = toggleFavorito; 
 window.filtrarPorCategoria = filtrarPorCategoria; 
