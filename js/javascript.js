@@ -94,15 +94,13 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // 4. EL TRABAJADOR: Guarda o borra el engranaje en la nube
-// javascript.js
-
 async function toggleFavorito(tituloNota) {
     if (!usuarioActual) return alert("Inicia sesión para guardar favoritos");
 
     const userRef = doc(db, "usuarios", usuarioActual.uid);
     const esYaFavorito = misFavoritos.includes(tituloNota);
 
-    // 1. Actualizamos la base de datos
+    // 1. Sincronización con la base de datos
     if (esYaFavorito) {
         await updateDoc(userRef, { favoritos: arrayRemove(tituloNota) });
         misFavoritos = misFavoritos.filter(f => f !== tituloNota);
@@ -111,24 +109,34 @@ async function toggleFavorito(tituloNota) {
         misFavoritos.push(tituloNota);
     }
 
-    // 2. LÓGICA DE INGENIERÍA: Decidir si refrescar todo o solo una pieza
-    if (categoriaActual === 'favoritas') {
-        // Si estamos en la pestaña de favoritos, sí hay que borrar la tarjeta que quitaste
-        filtrarPorCategoria(categoriaActual, true);
-    } else {
-        // Si estamos en cualquier otra categoría, NO borramos nada. 
-        // Solo buscamos el botón en el DOM y le cambiamos el color.
-        const tarjetas = document.querySelectorAll('.tarjeta');
-        tarjetas.forEach(t => {
-            const h3 = t.querySelector('h3');
-            if (h3 && h3.innerText === tituloNota) {
-                const btn = t.querySelector('.btn-fav-card');
-                if (btn) btn.classList.toggle('active'); // CSS: Cambia el color naranja al instante
+    // 2. LÓGICA DE INGENIERÍA: Eliminación suave sin parpadeos
+    const tarjetas = document.querySelectorAll('.tarjeta');
+    
+    tarjetas.forEach(t => {
+        const h3 = t.querySelector('h3');
+        if (h3 && h3.innerText === tituloNota) {
+            const btn = t.querySelector('.btn-fav-card');
+            
+            // Caso A: Si estamos viendo la pestaña de "Favoritos"
+            if (categoriaActual === 'favoritas' && esYaFavorito) {
+                // Aplicamos efecto de desvanecimiento antes de borrar
+                t.style.transition = 'all 0.4s ease';
+                t.style.opacity = '0';
+                t.style.transform = 'scale(0.9) translateY(10px)';
+                
+                // Esperamos a que termine la animación para quitarla del DOM
+                setTimeout(() => {
+                    t.remove();
+                    actualizarContadoresTabs();
+                }, 400);
+            } 
+            // Caso B: Si estamos en cualquier otra pestaña
+            else {
+                if (btn) btn.classList.toggle('active');
+                actualizarContadoresTabs();
             }
-        });
-        // Actualizamos los numeritos de las pestañas sin que la pantalla parpadee
-        actualizarContadoresTabs();
-    }
+        }
+    });
 }
 
 // =====================================================
@@ -4004,3 +4012,4 @@ window.copiarComando = copiarComando;
 window.toggleLectura = toggleLectura;
 // JS: Añade esto al final de tu lista de puentes
 window.cerrarSesion = cerrarSesion;
+
