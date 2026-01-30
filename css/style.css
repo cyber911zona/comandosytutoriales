@@ -425,10 +425,13 @@ header p {
 }
 
 /* CSS: Efecto hover para cada tarjeta */
-.tarjeta:hover { 
-    transform: translateY(-8px);      /* CSS: Sube tarjeta */
-    box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.4); /* CSS: Resplandor índigo */
-    border-color: var(--primary);     /* CSS: Borde índigo */
+/* CSS: El efecto de elevar la tarjeta SOLO se activará en computadoras con mouse */
+@media (hover: hover) {
+    .tarjeta:hover { 
+        transform: translateY(-8px);      /* CSS: Sube tarjeta */
+        box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.4); /* CSS: Resplandor índigo */
+        border-color: var(--primary);     /* CSS: Borde índigo */
+    }
 }
 
 /* CSS: Contenedor de la foto de la tarjeta */
@@ -1375,7 +1378,7 @@ code a.link-comando:hover {
 
 /* CSS: Color del engranaje cuando la tarjeta es favorita */
 .btn-fav-card.active {
-    color: #f39c12; /* Color naranja atajos */
+    color: #1cfa2e; /* Color naranja atajos */
     transform: rotate(45deg);
 }
 
@@ -1385,3 +1388,4 @@ code a.link-comando:hover {
     transform: none !important;
     opacity: 1 !important;
 }
+
