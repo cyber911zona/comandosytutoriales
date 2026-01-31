@@ -354,6 +354,7 @@ header p {
 .tab.active.tutoriales { background: #04657e; box-shadow: 0 4px 12px rgba(3, 96, 119, 0.4); } /* CSS: Cian para Tutoriales */
 .tab.active.programacion { background: #023aa0; box-shadow: 0 4px 12px rgba(2, 58, 160, 0.4); } /* CSS: Marino para Programación */
 .tab.active.excel { background: #0b5f2e; box-shadow: 0 4px 12px rgba(11, 95, 46, 0.4); } /* CSS: Bosque para Excel */
+.tab.active.investigacion { background: #397399; box-shadow: 0 4px 12px rgba(72, 225, 236, 0.4); } /* CSS: Fucsia para Utilidades */
 .tab.active.utilidades { background: #ec4899; box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4); } /* CSS: Fucsia para Utilidades */
 
 /* style.css - Pestaña Favoritos con Alta Visibilidad */
@@ -749,6 +750,7 @@ main {
 .etiqueta.tutoriales { background-color: #04657e; color: white; } /* CSS: Cian */
 .etiqueta.programacion { background-color: #023aa0; color: white; } /* CSS: Marino */
 .etiqueta.excel { background-color: #0b5f2e; color: white; } /* CSS: Bosque */
+.etiqueta.investigacion { background-color: #0b445f; color: white; } /* CSS: Bosque */
 .etiqueta.utilidades { background-color: #ec4899; color: white; } /* CSS: Fucsia */
 
 /* =====================================================
