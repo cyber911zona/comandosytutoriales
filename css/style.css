@@ -351,26 +351,23 @@ header p {
 .tab.active.aplicaciones { background: #db9717; box-shadow: 0 4px 12px rgba(219, 151, 23, 0.4); } /* CSS: Ocre para Aplicaciones */
 .tab.active.onlinea { background: #2ecc71; box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4); } /* CSS: Verde para Online */
 .tab.active.windows { background: #54d8f0; box-shadow: 0 4px 12px rgba(84, 216, 240, 0.4); color: #1e293b; } /* CSS: Celeste para Windows */
-.tab.active.tutoriales { background: #17acd1; box-shadow: 0 4px 12px rgba(23, 172, 209, 0.4); } /* CSS: Cian para Tutoriales */
+.tab.active.tutoriales { background: #04657e; box-shadow: 0 4px 12px rgba(3, 96, 119, 0.4); } /* CSS: Cian para Tutoriales */
 .tab.active.programacion { background: #023aa0; box-shadow: 0 4px 12px rgba(2, 58, 160, 0.4); } /* CSS: Marino para Programación */
 .tab.active.excel { background: #0b5f2e; box-shadow: 0 4px 12px rgba(11, 95, 46, 0.4); } /* CSS: Bosque para Excel */
 .tab.active.utilidades { background: #ec4899; box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4); } /* CSS: Fucsia para Utilidades */
 
-/* style.css */
-
-/* Esto cambia el color del texto y el borde solo de la pestaña favoritos al seleccionarla */
+/* style.css - Pestaña Favoritos con Alta Visibilidad */
 .tab.favoritas.active {
-    color: #f39c12; /* Cambia este código por el color que te guste */
-    border-color: #f39c12;
-    background: rgba(243, 156, 18, 0.1); /* Fondo sutil de color */
+    color: #ff9f43 !important; /* Naranja Ámbar técnico */
+    border-color: rgba(255, 159, 67, 0.6);
+    background: rgba(255, 159, 67, 0.1); 
+    box-shadow: 0 0 15px rgba(255, 159, 67, 0.2); 
 }
 
-/* style.css */
-
-/* Esto cambia el circulito del número solo en la pestaña de favoritos */
 .tab.favoritas .count-badge {
-    background: #f39c12 !important; /* Color de fondo del circulito */
-    color: white !important; /* Color del número */
+    background: #ff9f43 !important;
+    color: #0f172a !important; /* Texto oscuro para máxima lectura */
+    box-shadow: 0 0 10px rgba(255, 159, 67, 0.5);
 }
 
 /* CSS: Barra de herramientas <div class="global-tools"> en index.html */
@@ -749,7 +746,7 @@ main {
 .etiqueta.aplicaciones { background-color: #db9717; color: white; } /* CSS: Ocre */
 .etiqueta.onlinea { background-color: #2ecc71; color: white; } /* CSS: Verde */
 .etiqueta.windows { background-color: #54d8f0; color: white; } /* CSS: Celeste */
-.etiqueta.tutoriales { background-color: #17acd1; color: white; } /* CSS: Cian */
+.etiqueta.tutoriales { background-color: #04657e; color: white; } /* CSS: Cian */
 .etiqueta.programacion { background-color: #023aa0; color: white; } /* CSS: Marino */
 .etiqueta.excel { background-color: #0b5f2e; color: white; } /* CSS: Bosque */
 .etiqueta.utilidades { background-color: #ec4899; color: white; } /* CSS: Fucsia */
@@ -1417,23 +1414,54 @@ code a.link-comando:hover {
 }
 
 /* CSS: Estilo para el engranaje de favoritos dentro de cada tarjeta */
+/* style.css - Reemplaza el bloque existente de .btn-fav-card */
+
+/* style.css - Botón Pin en Tarjeta */
+
 .btn-fav-card {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 1.3rem;
-    cursor: pointer;
     position: absolute;
     top: 15px;
     right: 15px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     z-index: 10;
-    transition: 0.3s ease;
+    
+    /* --- EFECTO FÍSICO (Relieve) --- */
+    background: rgba(15, 23, 42, 0.7); /* Un poco más opaco para proteger el color */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.5), /* Sombra de caída */
+        inset 0 1px 1px rgba(255, 255, 255, 0.1); /* Brillo de borde superior */
+    
+    color: rgba(255, 255, 255, 0.6); /* Gris tecnológico apagado */
+    font-size: 1.1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* CSS: Color del engranaje cuando la tarjeta es favorita */
+/* Hover: Pre-iluminación */
+.btn-fav-card:hover {
+    background: rgba(28, 250, 46, 0.1);
+    color: #1cfa2e;
+    transform: scale(1.1) translateY(-2px);
+    border-color: rgba(28, 250, 46, 0.3);
+}
+
+/* --- ESTADO ACTIVO: El "Pin" Clavado --- */
 .btn-fav-card.active {
-    color: #1cfa2e; /* Color naranja atajos */
-    transform: rotate(45deg);
+    color: #ff9f43 !important;
+    /* Fondo más oscuro para que el naranja resalte sobre cualquier foto */
+    background: rgba(15, 23, 42, 0.9) !important; 
+    border: 2px solid #ff9f43; /* Borde más grueso para que no se pierda */
+    box-shadow: 
+        0 0 25px rgba(255, 159, 67, 0.4), /* Resplandor naranja */
+        inset 0 0 10px rgba(255, 159, 67, 0.2);
+    transform: rotate(45deg) scale(1.1); /* Un poco más grande al estar activo */
 }
 
 /* CSS: Si el contenedor tiene esta clase, las tarjetas no deben animarse al aparecer */
