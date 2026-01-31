@@ -714,17 +714,18 @@ goto inicio
                     </div>
                 </details>
 
+                <div class="links-seccion">
+                    <a href="https://drive.google.com/file/d/1kx9-V82F8wJrqUhRj9_c15cAvNkc242k/view?usp=drive_link" target="_blank" class="btn-pro-link google" data-tooltip="Descargar Archivo">
+                        <i class="fab fa-google"></i> 
+                        <span class="texto-btn-cortado">Descargar Archivo</span>
+                    </a>
+                </div>
+
                 <h4>Paso 2: Ejecución</h4>
                 <p>Haz clic derecho y selecciona <strong>Ejecutar como administrador</strong> para habilitar todas las funciones.</p>
             </div>
         `,
-        links: [
-            {
-                texto: "Descargar Archivo",
-                url: "https://drive.google.com/file/d/1kx9-V82F8wJrqUhRj9_c15cAvNkc242k/view?usp=drive_link",
-                plataforma: "google"
-            }     
-        ],
+        links: [],
         pasos: []
     },
     {
@@ -1990,7 +1991,7 @@ goto inicio
             </div>
         `,
         links: [
-            { texto: "Video Tutorual UEFI Virtual", url: "https://www.youtube.com/watch?v=2yrfVEkfalA", plataforma: "youtube" }
+            { texto: "Video Tutorial UEFI Virtual", url: "https://www.youtube.com/watch?v=2yrfVEkfalA", plataforma: "youtube" }
         ],
         pasos: []
     },
@@ -3531,7 +3532,7 @@ function mostrarNotas(notasAMostrar, esRefresco = false) {
 
     // JS: Empieza el ciclo para procesar cada tarjeta una por una
     notasAMostrar.forEach((nota) => { 
-
+        const tituloEscapado = nota.titulo.replace(/'/g, "\\'");
         // JS: Crea el bloque de imagen solo si la propiedad existe
         let imgHtml = nota.imagen ? ` 
             <div class="tarjeta-img-contenedor">
@@ -3589,8 +3590,8 @@ function mostrarNotas(notasAMostrar, esRefresco = false) {
 
         // HTML/JS: Construye toda la estructura interna de la tarjeta
         tarjeta.innerHTML = ` 
-            <button class="btn-fav-card ${claseFav}" onclick="toggleFavorito('${nota.titulo}')">
-                <i class="fas fa-cog"></i> 
+            <button class="btn-fav-card ${claseFav}" onclick="toggleFavorito('${tituloEscapado}')">
+                <i class="fas fa-thumbtack"></i> 
             </button>
             ${imgHtml}
             <div class="tarjeta-header">
