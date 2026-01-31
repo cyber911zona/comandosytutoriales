@@ -3,13 +3,14 @@
 <head> <!-- Información del documento, no visible (HTML) -->
 
     <meta charset="UTF-8"> <!-- Permite acentos y símbolos (HTML) -->
+    <meta name="referrer" content="unsafe-url">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Diseño adaptable a móviles (HTML + CSS responsive) -->
 
     <link rel="manifest" href="manifest.json"> <!-- Conecta con manifiesto PWA (HTML + JS Service Worker) -->
     <meta name="theme-color" content="#6366f1"> <!-- Color de interfaz en modo app (HTML + PWA) -->
 
     <title>Comandos y Tutoriales</title> <!-- Título de la pestaña (HTML) -->
-
+    
     <link rel="icon" type="image/png" href="img/iconos/favicon.png"> <!-- Ícono de pestaña (HTML) -->
     <link rel="apple-touch-icon" sizes="180x180" href="img/iconos/apple-touch-icon.png"> <!-- Ícono en iOS (HTML) -->
 
@@ -111,8 +112,9 @@
         </button>
 
         <button class="tab favoritas" onclick="filtrarPorCategoria('favoritas')">
-            <i class="fas fa-cog"></i> Favoritos
+            <i class="fas fa-thumbtack"></i> Favoritos
         </button>
+        
     </nav>
 
     <main> <!-- Contenido principal (HTML semántico) -->
