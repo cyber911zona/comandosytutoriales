@@ -2875,10 +2875,59 @@ goto inicio
         ],
         pasos: []
     },
+    //CATEGORIA EXCEL
     {
-        categoria: "programacion",
+        categoria: "excel",
+        titulo: "Quitar Protección de Hoja (Sin Clave)",
+        imagen: "img/excel/Excel.jpg",
+        comando: ".zip",
+        descripcion: "Elimina la protección de una hoja de Excel modificando su XML interno para recuperar el acceso a la edición.",
+        contenidoTutorialHtml: `
+            <h3>🔓 Desbloqueo de Hoja Protegida</h3>
+            <p>Este método es infalible cuando olvidas la contraseña de una hoja específica de Excel y necesitas editarla con urgencia.</p>
+            
+            <div class="tutorial-pasos">
+                <h4>Paso 1: Cambiar a formato ZIP</h4>
+                <p>Haz una copia de seguridad y cambia la extensión del archivo original de <strong>.xlsx</strong> a <strong>.zip</strong>. Ábrelo con tu descompresor preferido.</p>
+                
+                <h4>Paso 2: Localizar la Hoja</h4>
+                <p>Navega a la siguiente ruta interna del archivo comprimido:</p>
+                <div class="contenedor-comando">
+                    <code>xl/worksheets/</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)">
+                        <i class="fas fa-copy"></i> Copiar Ruta
+                    </button>
+                </div>
+                <p>Extrae el archivo <strong>.xml</strong> de la hoja bloqueada (ejemplo:) <code>sheet1.xml</code> a tu escritorio.</p>
+                
+                <h4>Paso 3: Editar el archivo XML</h4>
+                <p>Abre el archivo con el <strong>Bloc de Notas</strong>, presiona <kbd>Ctrl</kbd> + <kbd>F</kbd> y busca la siguiente etiqueta <code>&lt;sheetProtection ... /&gt;</code>
+                 para borrarla desde el signo <strong>&lt;</strong> hasta el <strong>/&gt;</strong></p>
+                
+                <h4>Paso 4: Guardar y Finalizar</h4>
+                <p>Guarda los cambios en el archivo, reemplaza el original dentro del ZIP con esta nueva versión y regresa la extensión del archivo a <strong>.xlsx</strong>.</p>
+            </div>
+        `,
+        links: [
+            {
+                texto: "Video Tutorial",
+                url: "https://www.youtube.com/shorts/gcMF7Yu0u6Y",
+                plataforma: "youtube"
+            },
+            {
+                texto: "Video Tutorial",
+                url: "https://www.facebook.com/reel/728884509538774",
+                plataforma: "facebook"
+            }
+        ],
+        pasos: []
+    },
+    // INVESTIGACION
+    {
+        categoria: "investigacion",
         titulo: "Manual Maestro: Reconstrucción del Proyecto",
-        imagen: "img/tutoriales/googleCloud.jpg",
+        esPrivada: true, // ESTO HACE QUE LA TARJETA SEA PRIVADA
+        imagen: "img/investigacion/googleCloud.jpg",
         comando: "Full-Stack: Firebase + PWA",
         descripcion: "Guía técnica completa paso a paso: configuración de Google Cloud, estructura de archivos local, lógica de sincronización y despliegue en GitHub.",
         contenidoTutorialHtml: `
@@ -2960,55 +3009,161 @@ goto inicio
         ],
         pasos: []
     },
-
-    //CATEGORIA EXCEL
     {
-        categoria: "excel",
-        titulo: "Quitar Protección de Hoja (Sin Clave)",
-        imagen: "img/excel/Excel.jpg",
-        comando: ".zip",
-        descripcion: "Elimina la protección de una hoja de Excel modificando su XML interno para recuperar el acceso a la edición.",
+        categoria: "investigacion",
+        titulo: "Manual Maestro: Acceso y Autenticación",
+        esPrivada: true, // ESTO HACE QUE LA TARJETA SEA PRIVADA 
+        imagen: "img/investigacion/autenticacao.jpg",
+        comando: "Firebase + Google Cloud Auth",
+        descripcion: "Solución definitiva para errores de 'Referer Blocked', 'Invalid Action' y problemas de Login en local y GitHub.",
         contenidoTutorialHtml: `
-            <h3>🔓 Desbloqueo de Hoja Protegida</h3>
-            <p>Este método es infalible cuando olvidas la contraseña de una hoja específica de Excel y necesitas editarla con urgencia.</p>
+            <h3>🔐 Configuración de Seguridad y Login</h3>
+            <p>Esta guía resuelve los bloqueos de conexión cuando trabajas entre tu computadora local (VS Code) y el sitio publicado en GitHub.</p>
             
             <div class="tutorial-pasos">
-                <h4>Paso 1: Cambiar a formato ZIP</h4>
-                <p>Haz una copia de seguridad y cambia la extensión del archivo original de <strong>.xlsx</strong> a <strong>.zip</strong>. Ábrelo con tu descompresor preferido.</p>
-                
-                <h4>Paso 2: Localizar la Hoja</h4>
-                <p>Navega a la siguiente ruta interna del archivo comprimido:</p>
-                <div class="contenedor-comando">
-                    <code>xl/worksheets/</code>
-                    <button class="btn-copiar-interno" onclick="copiarComando(this)">
-                        <i class="fas fa-copy"></i> Copiar Ruta
-                    </button>
-                </div>
-                <p>Extrae el archivo <strong>.xml</strong> de la hoja bloqueada (ejemplo:) <code>sheet1.xml</code> a tu escritorio.</p>
-                
-                <h4>Paso 3: Editar el archivo XML</h4>
-                <p>Abre el archivo con el <strong>Bloc de Notas</strong>, presiona <kbd>Ctrl</kbd> + <kbd>F</kbd> y busca la siguiente etiqueta <code>&lt;sheetProtection ... /&gt;</code>
-                 para borrarla desde el signo <strong>&lt;</strong> hasta el <strong>/&gt;</strong></p>
-                
-                <h4>Paso 4: Guardar y Finalizar</h4>
-                <p>Guarda los cambios en el archivo, reemplaza el original dentro del ZIP con esta nueva versión y regresa la extensión del archivo a <strong>.xlsx</strong>.</p>
+                <h4>🛠️ Paso 1: Autorización en Firebase (El primer filtro)</h4>
+                <p>Firebase debe reconocer que tu computadora es un sitio seguro para procesar inicios de sesión.</p>
+                <ol>
+                    <li>Entra a la <strong>Consola de Firebase</strong> y selecciona tu proyecto <code>comandosytutoriales</code>.</li>
+                    <li>En el menú lateral izquierdo, haz clic en el icono del martillo <strong>Build (Compilación)</strong> y entra en <strong>Authentication</strong>.</li>
+                    <li>En la parte superior, haz clic en la pestaña <strong>Settings (Configuración)</strong>.</li>
+                    <li>En la columna izquierda de esa pestaña, selecciona <strong>Authorized domains (Dominios autorizados)</strong>.</li>
+                    <li>Haz clic en el botón azul <strong>Add domain (Añadir dominio)</strong>.</li>
+                    <li>Escribe <code>localhost</code> y dale a <strong>Add</strong>. Repite el proceso para añadir <code>127.0.0.1</code> y <code>cyber911zona.github.io</code>.</li>
+                </ol>
             </div>
+
+            <div class="tutorial-pasos">
+                <h4>🛠️ Paso 2: Restricción de API en Google Cloud (El candado externo)</h4>
+                <p>Configura los permisos de tu API Key para que no sea rechazada por los navegadores.</p>
+                <ol>
+                    <li>Entra a <strong>Google Cloud Console</strong> en la sección de Credenciales.</li>
+                    <li>Selecciona tu proyecto arriba a la izquierda y haz clic en el nombre de tu <strong>API Key</strong> (la que termina en <code>-Kc</code>).</li>
+                    <li>Baja a <strong>Restricciones de aplicaciones</strong> y marca <strong>Sitios web</strong>.</li>
+                    <li>En la sección <strong>Restricciones de sitios web</strong>, haz clic en <strong>AÑADIR</strong> y pega estos cuatro enlaces uno por uno (copia exactamente estos formatos sin el http):</li>
+                </ol>
+                
+                <div class="contenedor-comando">
+                    <code>127.0.0.1/*</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+                <div class="contenedor-comando">
+                    <code>localhost/*</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+                <div class="contenedor-comando">
+                    <code>cyber911zona.github.io/*</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+                <div class="contenedor-comando">
+                    <code>comandosytutoriales.firebaseapp.com/*</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+                <p><strong>⚠️ OBLIGATORIO:</strong> Haz clic en el botón azul <strong>GUARDAR</strong> al final de la página o los cambios se perderán.</p>
+            </div>
+
+            <div class="tutorial-pasos warning">
+                <h4>🛠️ Paso 3: Sincronización de Puertos (VS Code)</h4>
+                <p>Si el login falla en local, mira la barra de direcciones de tu navegador al darle a <strong>Go Live</strong>.</p>
+                <p>Si ves un número diferente a 5500 (ej: <code>:5501</code>), debes volver al <strong>Paso 2</strong> y añadir ese número exacto: <code>127.0.0.1:5501/*</code>.</p>
+            </div>
+
+            <div class="tutorial-pasos">
+                <h4>🛠️ Paso 4: Limpieza de Service Worker (Caché)</h4>
+                <p>Tu navegador puede estar leyendo permisos viejos guardados en el archivo <code>sw.js</code>.</p>
+                <ol>
+                    <li>En tu web, presiona <strong>F12</strong> y ve a <strong>Application (Aplicación)</strong>.</li>
+                    <li>En el menú izquierdo selecciona <strong>Storage (Almacenamiento)</strong>.</li>
+                    <li>Haz clic en el botón azul <strong>Clear site data (Borrar todos los datos)</strong>.</li>
+                    <li>Recarga la página con <strong>Ctrl + F5</strong>.</li>
+                </ol>
+            </div>
+
+            <details class="acordeon-tutorial">
+                <summary class="acordeon-header">
+                    <i class="fas fa-microchip"></i> 🧪 LA PRUEBA DE ORO (DIAGNÓSTICO)
+                </summary>
+                <div class="tutorial-pasos warning">
+                    <p>¿Sigue fallando? Haz esto para encontrar al culpable:</p>
+                    <ul>
+                        <li>Ve a <strong>Google Cloud</strong> > Tu Llave y cambia Restricciones a <strong>"Ninguna"</strong>.</li>
+                        <li>Dale a <strong>GUARDAR</strong> y espera 1 minuto.</li>
+                        <li>Si ahora funciona: El error está en el formato de los links del <strong>Paso 2</strong>.</li>
+                        <li>Si sigue sin funcionar: El error está en el <strong>Paso 1</strong> (Dominios de Firebase).</li>
+                    </ul>
+                </div>
+            </details>
         `,
         links: [
-            {
-                texto: "Video Tutorial",
-                url: "https://www.youtube.com/shorts/gcMF7Yu0u6Y",
-                plataforma: "youtube"
-            },
-            {
-                texto: "Video Tutorial",
-                url: "https://www.facebook.com/reel/728884509538774",
-                plataforma: "facebook"
-            }
+            { texto: "Consola de Firebase", url: "https://console.firebase.google.com/" },
+            { texto: "Credenciales Google Cloud", url: "https://console.cloud.google.com/apis/credentials" },
+            { texto: "Documentación Auth", url: "https://firebase.google.com/docs/auth/web/google-signin", plataforma: "google" }
         ],
         pasos: []
     },
-   
+    {
+        categoria: "investigacion",
+        titulo: "Manual Maestro: Escudo de Privacidad (UID)",
+        esPrivada: true, // ESTO HACE QUE LA TARJETA SEA PRIVADA 
+        imagen: "img/investigacion/privacidad.jpg", // Asegúrate de tener una imagen técnica aquí
+        comando: "JS: Filtro de Identidad (UID)",
+        descripcion: "Protege tu información sensible. Aprende a crear tarjetas privadas que solo tú puedes ver al iniciar sesión mediante tu UID único de Firebase.",
+        contenidoTutorialHtml: `
+            <h3>🔐 Lógica de Protección de Datos</h3>
+            <p>Este sistema permite que una tarjeta exista en tu código pero sea <strong>invisible</strong> para cualquier persona que no seas tú.</p>
+
+            <div class="tutorial-pasos">
+                <h4>🔍 Paso 1: Obtener tu UID Real</h4>
+                <p>Tu UID es tu "huella digital" en Firebase. Sin ella, el sistema no sabrá quién eres tú.</p>
+                <ol>
+                    <li>Entra a tu <strong>Consola de Firebase</strong> > <strong>Authentication</strong>.</li>
+                    <li>Busca tu correo en la lista de usuarios.</li>
+                    <li>Copia el código largo que aparece en la columna <strong>User UID</strong>.</li>
+                </ol>
+            </div>
+
+            <div class="tutorial-pasos">
+                <h4>🛠️ Paso 2: Marcar Notas como Privadas</h4>
+                <p>Para que el "Escudo" funcione, debes añadir una propiedad especial a la tarjeta en tu array de notas.</p>
+                <div class="contenedor-comando">
+                    <code>esPrivada: true,</code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
+                </div>
+                <p style="margin-top:10px;"><strong>Ejemplo de estructura:</strong></p>
+                <pre style="font-size:0.85rem; color:var(--text-main); background:rgba(0,0,0,0.2); padding:10px; border-radius:8px;">
+    {
+    categoria: "investigacion",
+    titulo: "Mi Nota Secreta",
+    esPrivada: true, 
+    ...
+    }</pre>
+            </div>
+
+            <div class="tutorial-pasos">
+                <h4>🛠️ Paso 3: Activar el Filtro en el Motor</h4>
+                <p>Debes modificar la función <code>mostrarNotas</code> para que verifique tu identidad antes de dibujar la tarjeta en pantalla.</p>
+                <div class="contenedor-comando">
+                    <code>
+    if (nota.esPrivada && (!usuarioActual || usuarioActual.uid !== '9Hv406JpA8PAbdPXMmH1wdhTd3i2')) {<br>
+    &nbsp;&nbsp;return; <br>
+    }
+                    </code>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar Filtro</button>
+                </div>
+                <p class="warning" style="margin-top:10px;">⚠️ <strong>Nota:</strong> Este código debe ir justo después de iniciar el <code>forEach</code> en la función <code>mostrarNotas</code>.</p>
+            </div>
+
+            <div class="tutorial-pasos">
+                <h4>💡 ¿Por qué es seguro?</h4>
+                <p>Al usar el <code>return</code> dentro del ciclo, el navegador ignora la nota privada por completo para los extraños. Para ellos, la tarjeta simplemente no existe en el DOM.</p>
+            </div>
+        `,
+        links: [
+            { texto: "Consola de Firebase", url: "https://console.firebase.google.com/" },
+            { texto: "Documentación UID Firebase", url: "https://firebase.google.com/docs/auth/admin/manage-users", plataforma: "google" }
+        ],
+        pasos: []
+    },   
     //CATEGORIA UTILIDADES    
     // =====================================================
     // CATEGORIA UTILIDADES
@@ -3484,29 +3639,54 @@ function titleCase(str) {
         .join(' '); // JS: Une las palabras de nuevo en un solo texto
 }
 
+/* javascript.js */
+
 function actualizarContadoresTabs() {
-    // HTML/JS: Selecciona todas las pestañas del menú superior
+    // Seleccionamos todas las pestañas (tabs)
     document.querySelectorAll('.tab').forEach(boton => { 
-        // JS: Extrae la categoría del atributo 'onclick' del botón
+        // Extraemos la categoría del atributo 'onclick' (ej: 'cmd', 'investigacion')
         const cat = boton.getAttribute('onclick').match(/'([^']+)'/)[1]; 
-        // JS: Calcula cuántas notas hay para esa categoría específica
-        // JS: Reemplaza las líneas 1146-1150 por estas
-        const cantidad = (cat === 'todas') 
-            ? misNotas.length 
-            : (cat === 'favoritas') // JS: Si el botón es el de favoritos
-                ? misFavoritos.length // JS: Usa el tamaño de tu lista de la nube
-                : misNotas.filter(n => n.categoria === cat).length;
-            
-        // JS: Busca el círculo pequeño del contador en el botón
-        let badge = boton.querySelector('.count-badge'); 
-        if (!badge) { // JS: Si no tiene círculo de contador, lo crea
-            badge = document.createElement('span'); // JS: Crea el elemento span
-            badge.className = 'count-badge'; // CSS: Le asigna la clase para estilo
-            boton.appendChild(badge); // HTML: Lo mete dentro del botón
+        
+        let cantidad;
+
+        // Caso especial para la pestaña de favoritos
+        if (cat === 'favoritas') {
+            cantidad = misFavoritos.length;
+        } else {
+            // Lógica de filtrado con Escudo de Privacidad
+            cantidad = misNotas.filter(n => {
+                // 1. Verificar si la nota pertenece a la categoría o si es la pestaña 'todas'
+                const coincideCat = (cat === 'todas' || n.categoria === cat);
+                if (!coincideCat) return false;
+
+                // 2. FILTRO DE SEGURIDAD: Si la nota es marcada como privada, 
+                // SOLO se cuenta si el usuario logueado coincide con tu UID
+                if (n.esPrivada && (!usuarioActual || usuarioActual.uid !== '9Hv406JpA8PAbdPXMmH1wdhTd3i2')) {
+                    return false; 
+                }
+                return true; 
+            }).length;
         }
-        badge.innerText = cantidad; // HTML/JS: Escribe el número en el círculo
+            
+        // Gestión del círculo del número (badge)
+        let badge = boton.querySelector('.count-badge'); 
+        if (!badge) {
+            badge = document.createElement('span');
+            badge.className = 'count-badge';
+            boton.appendChild(badge);
+        }
+        badge.innerText = cantidad;
+
+        // INVISIBILIDAD: Si eres un extraño, la pestaña "investigacion" desaparece
+        if (cantidad === 0 && cat === 'investigacion') {
+            boton.style.display = 'none';
+        } else {
+            boton.style.display = 'flex'; // Se asegura de mostrar las demás categorías
+        }
     });
 }
+
+// Mantener el puente global
 window.actualizarContadoresTabs = actualizarContadoresTabs;
 
 // =====================================================
@@ -3532,6 +3712,10 @@ function mostrarNotas(notasAMostrar, esRefresco = false) {
 
     // JS: Empieza el ciclo para procesar cada tarjeta una por una
     notasAMostrar.forEach((nota) => { 
+        // ESTO ES PARTE DEL CODIGO PARA QUE SEA PRIVADO DE ESTE COMANDO esPrivada: true,
+        if (nota.esPrivada && (!usuarioActual || usuarioActual.uid !== '9Hv406JpA8PAbdPXMmH1wdhTd3i2')) {
+        return; 
+    }
         const tituloEscapado = nota.titulo.replace(/'/g, "\\'");
         // JS: Crea el bloque de imagen solo si la propiedad existe
         let imgHtml = nota.imagen ? ` 
