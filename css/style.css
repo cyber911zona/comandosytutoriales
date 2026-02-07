@@ -1063,6 +1063,23 @@ code a.link-comando:hover {
     text-decoration: underline;         /* CSS: Subraya solo al tocar */
 }
 
+/* Esto asegura que el enlace sea negro en todos sus estados */
+.link-comando {
+    color: #000000; /* Negro */
+    text-decoration: none; /* Opcional: quita el subrayado si prefieres */
+}
+
+/* Para evitar que cambie a morado al hacer clic */
+.link-comando:visited {
+    color: #000000;
+}
+
+/* Opcional: un efecto visual cuando pases el mouse */
+.link-comando:hover {
+    color: #444444; 
+    text-decoration: underline;
+}
+
 /* =====================================================
    8. BOTONES DE ENLACES POR PLATAFORMA
    ===================================================== */
@@ -1473,3 +1490,28 @@ code a.link-comando:hover {
     opacity: 1 !important;
 }
 
+/* --- RESET: Limpiamos los estilos de los botones para que recuperen su color original --- */
+body.dark-mode .btn-pro-link span {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+/* --- PALABRAS CON LINK: ESTADO NORMAL (IGUAL AL TEXTO) --- */
+/* Forzamos a que las letras sean blancas y tengan la misma apariencia que el resto */
+body.dark-mode .tutorial-contenido-pro p a.link-comando,
+body.dark-mode .tutorial-contenido-pro li a.link-comando {
+    color: #ffffff !important;   /* Letras blancas como el texto normal */
+    font-weight: bold !important; /* Mantenemos negrita para que se note el relieve */
+    text-decoration: underline;  /* Mantenemos la línea para identificar que es un link */
+    text-shadow: none;           /* Sin brillos iniciales */
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Transición suave de las letras */
+}
+
+/* --- EFECTO HOVER: CAMBIO DE COLOR EN LAS LETRAS --- */
+/* Solo cuando el mouse está encima, las letras pasan de blanco a dorado */
+body.dark-mode .tutorial-contenido-pro p a.link-comando:hover,
+body.dark-mode .tutorial-contenido-pro li a.link-comando:hover {
+    color: #ffd700 !important;   /* ¡Aquí es donde las letras cambian a Dorado! */
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5); /* Añade un leve brillo al activarse */
+    text-decoration: underline !important;
+}
