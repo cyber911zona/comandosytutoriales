@@ -1818,48 +1818,90 @@ goto inicio
             }                        
         ],
         pasos: []
-    },
+    }, 
     {
         categoria: "windows",
         titulo: "Activar Hyper-V y Crear Máquina Virtual",        
         imagen: "img/windows/MaquinaVirtual.jpg", 
         comando: "OptionalFeatures",
-        descripcion: "Guía para habilitar el hipervisor nativo de Windows y configurar tu primer entorno virtual de alto rendimiento.",
+        descripcion: "Guía técnica ultra-detallada para habilitar el hipervisor nativo y configurar paso a paso tu primer entorno virtual.",
         contenidoTutorialHtml: `
-            <h3>🖥️ Virtualización Nativa en Windows</h3>
-            <p>Hyper-V es la herramienta gratuita de Microsoft para ejecutar sistemas operativos dentro de Windows 10/11 Pro, Enterprise o Education.</p>
-            
+            <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 10px;">🖥️ Fase 1: Requisitos y Activación</h3>
             <div class="tutorial-pasos">
-                <h4>Fase 1: Requisitos y Activación</h4>
-                <p><strong>1. Verificar Versión:</strong> Presiona <kbd>Win</kbd> + <kbd>R</kbd> y ejecuta el comando para confirmar que tienes una versión <strong>Pro</strong> o superior:</p>
-                <div class="contenedor-comando">
-                    <code>winver</code>
-                    <button class="btn-copiar-interno" onclick="copiarComando(this)">
-                        <i class="fas fa-copy"></i> Copiar
-                    </button>
-                </div>
+                <p><strong>1. Verificar Versión:</strong> Presiona <kbd>Win</kbd> + <kbd>R</kbd> y ejecuta <code>winver</code> para confirmar que tienes una versión <strong>Pro</strong> o superior.</p>
 
-                <p><strong>2. Habilitar Características:</strong> Abre el menú de características de Windows para instalar los componentes. Presiona <kbd>Win</kbd> + <kbd>R</kbd> y ejecuta el comando</p>
+                <p><strong>2. Habilitar Características:</strong> Presiona <kbd>Win</kbd> + <kbd>R</kbd> y ejecuta el comando:</p>
                 <div class="contenedor-comando">
                     <code>OptionalFeatures</code>
-                    <button class="btn-copiar-interno" onclick="copiarComando(this)">
-                        <i class="fas fa-copy"></i> Copiar
-                    </button>
+                    <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
                 </div>
                 <p>Busca <strong>Hyper-V</strong>, marca todas las casillas y reinicia tu computadora.</p>
 
-                <h4 style="margin-top:20px;">Fase 2: Crear Máquina Virtual</h4>
+                <p><strong>3. Compatibilidad:</strong> Marca también <strong>"Plataforma de máquina virtual"</strong> y <strong>"Plataforma del hipervisor"</strong> para soporte de WSL2 y evitar conflictos.</p>
+            </div>
+
+            <div style="height: 2px; background: linear-gradient(to right, var(--primary), transparent); margin: 30px 0;"></div>
+
+            <h3 style="border-bottom: 2px solid var(--secondary); padding-bottom: 10px;">⚙️ Fase 2: Asistente de Creación Paso a Paso</h3>
+            <p>1. Busca y abre el <strong>Administrador de Hyper-V</strong>.</p>
+            
+            <div style="background: rgba(14, 165, 233, 0.1); border-left: 4px solid var(--secondary); padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                <p style="margin: 0;"><strong>⚠️ PASO PREVIO:</strong> En la columna de la izquierda, haz clic sobre el nombre de tu computadora (ej: usuarios) para habilitar el menú de "Acciones" en el panel derecho.</p>
+            </div>
+
+            <p>2. En el panel derecho selecciona <strong>Nuevo > Máquina virtual</strong>. Sigue este orden exacto del menú izquierdo:</p>
+            
+            <div class="tutorial-pasos">
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 15px;"><strong>1. Antes de comenzar:</strong> Haz clic en el botón <kbd>Siguiente</kbd>.</li>
+                    
+                    <li style="margin-bottom: 15px;"><strong>2. Nombre y ubicación:</strong> Escribe un nombre para identificar tu máquina y pulsa <kbd>Siguiente</kbd>.</li>
+                    
+                    <li style="margin-bottom: 15px;"><strong>3. Especificar generación:</strong> Elige según tu necesidad:
+                        <ul style="margin-top: 5px;">
+                            <li><strong>Generación 1:</strong> Para sistemas antiguos de 32 bits o versiones que no soportan UEFI.</li>
+                            <li><strong>Generación 2:</strong> Para sistemas modernos basados en UEFI (64 bits). 
+                            <br>Tras seleccionar, pulsa <kbd>Siguiente</kbd>.</li>
+                        </ul>
+                    </li>
+                    
+                    <li style="margin-bottom: 15px;"><strong>4. Asignación de memoria:</strong> Define la RAM en MB. 
+                        <br><strong>Fórmula de ejemplo para 6GB:</strong> <code>6 x 1024 = 6144</code>
+                        <br>Calcula tus GB deseados y escribe el resultado. Pulsa <kbd>Siguiente</kbd>.
+                    </li>
+                    
+                    <li style="margin-bottom: 15px;"><strong>5. Configurar funciones de red:</strong> Define si tendrás conexión:
+                        <ul style="margin-top: 5px;">
+                            <li><strong>No conectado:</strong> Si deseas aislamiento total sin internet.</li>
+                            <li><strong>Default Switch:</strong> Para tener internet automático.
+                            <br>Selecciona una opción y pulsa <kbd>Siguiente</kbd>.</li>
+                        </ul>
+                    </li>
+                    
+                    <li style="margin-bottom: 15px;"><strong>6. Conectar disco duro virtual:</strong> Se guardará en <code>C:\\ProgramData\\Microsoft\\Windows\\Virtual Hard Disks\\</code>
+                        <br><strong>Tamaño:</strong> Especifica el espacio total (GB) que tendrá la máquina para Windows y tus archivos. Pon lo que consideres necesario y pulsa <kbd>Siguiente</kbd>.
+                    </li>
+                    
+                    <li style="margin-bottom: 15px;"><strong>7. Opciones de instalación:</strong> Elige <strong>"Instalar un S.O. desde un CD/DVD-ROM de arranque"</strong>. 
+                        <br>Marca <strong>"Archivo de imagen (.iso)"</strong>, usa el botón <kbd>Examinar</kbd> para buscar tu ISO y pulsa <kbd>Siguiente</kbd>.
+                    </li>
+
+                    <li style="margin-bottom: 15px;"><strong>8. Resumen:</strong> Revisa que todos los pasos coincidan y pulsa <kbd>Finalizar</kbd>.</li>
+                </ul>
+            </div>
+            <div style="height: 2px; background: linear-gradient(to right, var(--primary), transparent); margin: 30px 0;"></div>
+            <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 10px;">🚀 Fase 3: Ejecución Final</h3>                
+            <div class="tutorial-pasos warning">                
                 <ol>
-                    <li>Busca y abre el <strong>Administrador de Hyper-V</strong>.</li>
-                    <li>En el panel derecho selecciona <strong>Nuevo > Máquina virtual</strong>.</li>
-                    <li><strong>Generación:</strong> Elige <kbd>Generación 2</kbd> para soporte moderno de UEFI.</li>
-                    <li><strong>Red:</strong> Selecciona <kbd>Default Switch</kbd> para tener internet automático.</li>
-                    <li><strong>Instalación:</strong> Selecciona tu archivo <code>.ISO</code> del sistema que deseas instalar.</li>
+                    <li>En la lista central, haz clic derecho en tu máquina y selecciona <kbd>Conectar</kbd>.</li>
+                    <li>En la ventana negra, haz clic en el botón azul <kbd>Iniciar</kbd>.</li>
+                    <li><strong>⚠️ CRÍTICO:</strong> En cuanto veas letras blancas, presiona rápidamente <strong>cualquier tecla</strong> de tu teclado físico para que el arranque comience desde el ISO.</li>
+                    <li>Sigue los pasos de instalación de Windows como lo harías normalmente.</li>
                 </ol>
             </div>
             
             <div style="background: rgba(99, 102, 241, 0.1); border-left: 4px solid var(--primary); padding: 12px; margin-top: 20px; border-radius: 4px;">
-                <p style="margin: 0;"><i class="fas fa-microchip"></i> <strong>Tip técnico:</strong> Antes de empezar, asegúrate de que la <strong>Virtualización</strong> esté habilitada en tu BIOS/UEFI, de lo contrario Hyper-V no aparecerá disponible.</p>
+                <p style="margin: 0;"><i class="fas fa-microchip"></i> <strong>Tip técnico:</strong> Asegúrate de que la <strong>Virtualización</strong> esté activa en tu BIOS/UEFI, de lo contrario Hyper-V no aparecerá disponible.</p>
             </div>
         `,
         links: [
@@ -1892,39 +1934,50 @@ goto inicio
                 </div>
 
                 <h4>Paso 2: Crear el USB de Arranque</h4>
-                <p>Usa herramientas como <strong>Rufus</strong> o <strong>balenaEtcher</strong> para grabar la ISO en una memoria USB de al menos 8GB.</p>
+                <p>Usa herramientas como <a href="https://rufus.ie/es/" target="_blank" class="link-comando" style="font-weight: bold;"><strong>Rufus</strong></a> 
+                o <a href="https://etcher.balena.io/" target="_blank" class="link-comando" style="font-weight: bold;"><strong>balenaEtcher</strong></a> para grabar la ISO en una memoria USB de al menos 8GB.</p>
 
-                <details class="acordeon-tutorial">
-                    <summary class="acordeon-header">
-                        <i class="fas fa-microchip"></i> INICIO Y DRIVERS (TIP TÉCNICO)
-                    </summary>
-                    <div class="tutorial-pasos warning">
-                        <p>Al arrancar desde el USB, verás opciones especiales:</p>
-                        <ul>
-                            <li><strong>Try or Install:</strong> Opción estándar.</li>
-                            <li><strong>Modern NVIDIA Drivers:</strong> Selecciónala si tienes una tarjeta de video NVIDIA para evitar pantallas negras.</li>
-                        </ul>
-                    </div>
-                </details>
+                <div class="links-seccion">
+                    <a href="https://www.youtube.com/shorts/XKEcNDvPRtM" target="_blank" class="btn-pro-link youtube" data-tooltip="Video: Cómo crear memoria booteable con Balena Etcher">
+                        <i class="fab fa-youtube"></i> 
+                        <span class="texto-btn-cortado">Video: Cómo crear memoria booteable con Balena Etcher</span>
+                    </a>
+                </div>
 
                 <h4>Paso 3: Proceso de Instalación</h4>
                 <ol>
-                    <li>Selecciona tu idioma y haz clic en <kbd>Instalar Zorin OS</kbd>.</li>
-                    <li>Marca la casilla <strong>"Instalar software de terceros"</strong> para tener soporte de MP3 y drivers WiFi.</li>
-                    <li>Elige <strong>"Borrar disco e instalar"</strong> (si es una PC dedicada) o gestiona tus particiones manualmente.</li>
+                    <li><strong>Arranque:</strong> Enciende la PC y presiona la tecla de acceso a la BIOS (F2, F12, Del) para seleccionar el USB como prioridad. Se recomienda desactivar <em>Secure Boot</em> para evitar bloqueos.</li>
+                    
+                    <div style="background: rgba(99, 102, 241, 0.05); border: 1px solid var(--primary); padding: 15px; margin: 10px 0; border-radius: 8px;">
+                        <p style="margin-bottom: 10px;"><strong>⚠️ Al iniciar verás estas opciones en pantalla:</strong></p>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 8px;">🔵 <strong>Try or Install (Probar o Instalar):</strong> Es la opción recomendada. Te permite entrar al escritorio de Zorin para probarlo sin instalar nada, o iniciar el instalador directamente.</li>
+                            <li>🟢 <strong>Modern NVIDIA Drivers:</strong> Úsala únicamente si tu PC tiene una tarjeta de video NVIDIA. Esto carga drivers especiales para evitar que la pantalla se quede en negro.</li>
+                        </ul>
+                    </div>
+
+                    <li><strong>Bienvenida:</strong> Una vez cargado el sistema, selecciona el idioma Español y haz clic en <kbd>Instalar Zorin OS</kbd>.</li>
+                    <li><strong>Teclado y Red:</strong> Elige <strong>Spanish - Windows</strong> para que los símbolos coincidan con tu teclado físico. Marca las casillas de "Software de terceros" para tener drivers de WiFi y soporte multimedia.</li>
+                    <li><strong>Tipo de Instalación:</strong> 
+                        <ul>
+                            <li><strong>Instalar junto a Windows:</strong> Conserva tus archivos y sistemas actuales.</li>
+                            <li><strong>Borrar disco e instalar:</strong> Borra todo y deja Zorin como sistema único.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Usuario:</strong> Define tu zona horaria y crea tu nombre de usuario y contraseña.</li>
+                    <li><strong>Finalización:</strong> Al terminar, reinicia, retira el USB y presiona <kbd>Enter</kbd>.</li>
                 </ol>
 
                 <h4>Paso 4: Personalización (Zorin Appearance)</h4>
                 <p>Busca la aplicación "Zorin Appearance" para cambiar el diseño del escritorio con un solo clic (estilo Windows clásico, moderno o Touch).</p>
-
-                <div style="background: rgba(99, 102, 241, 0.1); border-left: 4px solid var(--primary); padding: 10px; margin-top: 15px; border-radius: 4px;">
-                    <p style="margin: 0;"><i class="fas fa-rocket"></i> <strong>Tip de Software:</strong> Zorin detecta automáticamente si intentas abrir un <code>.exe</code> y te ofrece instalar el soporte para aplicaciones de Windows (Wine/Bottles).</p>
-                </div>
             </div>
+                <p style="margin: 0;"><i class="fas fa-rocket"></i> <strong>Tip de Software:</strong> Zorin detecta automáticamente si intentas abrir un <strong>.exe</strong> y te ofrece instalar el soporte para aplicaciones de Windows.</p>
+                
+            
         `,
         links: [
             { texto: "Página de Descarga", url: "https://zorin.com/os/download/" },
-            { texto: "Video Tutorial (Review 18 Beta)", url: "https://www.youtube.com/watch?v=6J9TOu2a5OA", plataforma: "youtube" }
+            { texto: "Video: Cómo instalar Zorin OS 18", url: "https://www.youtube.com/watch?v=4K10IxXbLkU", plataforma: "youtube" }
         ],
         pasos: []
     },
@@ -1960,21 +2013,60 @@ goto inicio
                     <summary class="acordeon-header">
                         <i class="fas fa-plus-square"></i> CONFIGURACIÓN DE LA MÁQUINA VIRTUAL
                     </summary>
-                    <div class="tutorial-pasos warning">
-                        <ul>
-                            <li><strong>Nueva Máquina Virtual:</strong> Asigna nombre y elije <strong>Generación 2</strong> (Indispensable para UEFI).</li>
-                            <li><strong>Memoria:</strong> Asigna la RAM (ej: 4096 MB) y configura la red.</li>
-                            <li><strong>Disco:</strong> Crea el disco principal donde se instalará Windows.</li>
-                            <li><strong>Instalación:</strong> Selecciona "Instalar un sistema operativo más adelante".</li>
-                        </ul>
+                    <h3 style="border-bottom: 2px solid var(--secondary); padding-bottom: 10px;">⚙️ Asistente de Creación Paso a Paso</h3>
+                    <p>1. Busca y abre el <strong>Administrador de Hyper-V</strong>.</p>
+                    
+                    <div style="background: rgba(14, 165, 233, 0.1); border-left: 0px solid var(--secondary); padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                        <p style="margin: 0;"><strong>⚠️ PASO PREVIO:</strong> En la columna de la izquierda, haz clic sobre el nombre de tu computadora (ej: usuarios) para habilitar el menú de "Acciones" en el panel derecho.</p>
                     </div>
+
+                    <p>2. En el panel derecho selecciona <strong>Nuevo > Máquina virtual</strong>. Sigue este orden exacto del menú izquierdo:</p>
+                    
+                    
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 15px;"><strong>1. Antes de comenzar:</strong> Haz clic en el botón <kbd>Siguiente</kbd>.</li>
+                            
+                            <li style="margin-bottom: 15px;"><strong>2. Nombre y ubicación:</strong> Escribe un nombre para identificar tu máquina y pulsa <kbd>Siguiente</kbd>.</li>
+                            
+                            <li style="margin-bottom: 15px;"><strong>3. Especificar generación:</strong> Elige según tu necesidad:
+                                <ul style="margin-top: 5px;">
+                                    <li><strong>Generación 1:</strong> Para sistemas antiguos de 32 bits o versiones que no soportan UEFI.</li>
+                                    <li><strong>Generación 2:</strong> Para sistemas modernos basados en UEFI (64 bits). 
+                                    <br>Tras seleccionar, pulsa <kbd>Siguiente</kbd>.</li>
+                                </ul>
+                            </li>
+                            
+                            <li style="margin-bottom: 15px;"><strong>4. Asignación de memoria:</strong> Define la RAM en MB. 
+                                <br><strong>Fórmula de ejemplo para 6GB:</strong> <code>6 x 1024 = 6144</code>
+                                <br>Calcula tus GB deseados y escribe el resultado. Pulsa <kbd>Siguiente</kbd>.
+                            </li>
+                            
+                            <li style="margin-bottom: 15px;"><strong>5. Configurar funciones de red:</strong> Define si tendrás conexión:
+                                <ul style="margin-top: 5px;">
+                                    <li><strong>No conectado:</strong> Si deseas aislamiento total sin internet.</li>
+                                    <li><strong>Default Switch:</strong> Para tener internet automático.
+                                    <br>Selecciona una opción y pulsa <kbd>Siguiente</kbd>.</li>
+                                </ul>
+                            </li>
+                            
+                            <li style="margin-bottom: 15px;"><strong>6. Conectar disco duro virtual:</strong> Se guardará en <code>C:\\ProgramData\\Microsoft\\Windows\\Virtual Hard Disks\\</code>
+                                <br><strong>Tamaño:</strong> Especifica el espacio total (GB) que tendrá la máquina para Windows y tus archivos. Pon lo que consideres necesario y pulsa <kbd>Siguiente</kbd>.
+                            </li>
+                            
+                            <li style="margin-bottom: 15px;"><strong>7. Opciones de instalación:</strong> Elige <strong>"Instalar un S.O. desde un CD/DVD-ROM de arranque"</strong>. 
+                                <br>Marca <strong>"Archivo de imagen (.iso)"</strong>, usa el botón <kbd>Examinar</kbd> para buscar tu ISO y pulsa <kbd>Siguiente</kbd>.
+                            </li>
+
+                            <li style="margin-bottom: 15px;"><strong>8. Resumen:</strong> Revisa que todos los pasos coincidan y pulsa <kbd>Finalizar</kbd>.</li>
+                        </ul>
+                  
                 </details>
 
                 <h4>Paso 3: Ajustes de Seguridad y Hardware</h4>
-                <p>Antes de iniciar, entra en <kbd>Configuración</kbd> de la VM:</p>
+                <p>Antes de iniciar, entra en <kbd>Configuración</kbd> de la Maquina Virtual:</p>
                 <ul>
                     <li><strong>Seguridad:</strong> Deshabilita <kbd>Habilitar arranque seguro</kbd> (Secure Boot).</li>
-                    <li><strong>Integración:</strong> Marca todas las casillas en "Servicios de integración".</li>
+                    <li><strong>Servicios de Integración:</strong> Marca todas las casillas en "Servicios de integración".</li>
                     <li><strong>Puntos de control:</strong> Deshabilita el uso de puntos de control.</li>
                 </ul>
 
@@ -2942,11 +3034,11 @@ goto inicio
                 <ul>
                     <li>Ve a <strong>Compilación > Authentication</strong>.</li>
                     <li>En <strong>Sign-in method</strong>, habilita <strong>Google</strong> con tu correo de soporte.</li>
-                    <li>En <strong>Configuración > Dominios autorizados</strong>, añade <code>localhost</code> y <code>cyber911zona.github.io</code>.</li>
+                    <li>En <strong>Configuración > Dominios autorizados</strong>, añade <code>localhost</code> y <code>cyber911zona.github.io</code></li>
                 </ul>
 
                 <h4>3. Base de Datos y Seguridad (Firestore)</h4>
-                <p>Crea la base de datos en <strong>Modo Producción</strong> (ubicación sugerida: <code>northamerica-south1</code>). En la pestaña <strong>Reglas</strong>, pega este escudo de seguridad:</p>
+                <p>Crea la base de datos en <strong>Modo Producción</strong> (ubicación sugerida: <strong>northamerica-south1</strong>). En la pestaña <strong>Reglas</strong>, pega este escudo de seguridad:</p>
                 <div class="contenedor-comando">
                     <code>rules_version = '2';<br>service cloud.firestore {<br>&nbsp;&nbsp;match /databases/{database}/documents {<br>&nbsp;&nbsp;&nbsp;&nbsp;match /usuarios/{userId} {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow read, write: if request.auth != null && request.auth.uid == userId;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>}</code>
                     <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar Reglas</button>
@@ -2992,10 +3084,10 @@ goto inicio
             <h3>🚀 Fase 4: Despliegue y Mantenimiento</h3>
             <div class="tutorial-pasos">
                 <h4>Publicar en GitHub</h4>
-                <p>Sube tus archivos a un repositorio llamado <code>comandosytutoriales</code>. En <strong>Settings > Pages</strong>, activa la rama <code>main</code>.</p>
+                <p>Sube tus archivos a un repositorio llamado <strong>comandosytutoriales</strong>. En <strong>Settings > Pages</strong>, activa la rama <strong>main</strong>.</p>
 
                 <h4>Actualizar Caché (Service Worker)</h4>
-                <p>Si haces cambios y no se ven, debes subir la versión en <code>sw.js</code>:</p>
+                <p>Si haces cambios y no se ven, debes subir la versión en <strong>sw.js</strong></p>
                 <div class="contenedor-comando">
                     <code>const CACHE_NAME = 'v5-cache'; // Sube el número y haz Ctrl+F5</code>
                     <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar</button>
@@ -3029,7 +3121,7 @@ goto inicio
                     <li>En la parte superior, haz clic en la pestaña <strong>Settings (Configuración)</strong>.</li>
                     <li>En la columna izquierda de esa pestaña, selecciona <strong>Authorized domains (Dominios autorizados)</strong>.</li>
                     <li>Haz clic en el botón azul <strong>Add domain (Añadir dominio)</strong>.</li>
-                    <li>Escribe <code>localhost</code> y dale a <strong>Add</strong>. Repite el proceso para añadir <code>127.0.0.1</code> y <code>cyber911zona.github.io</code>.</li>
+                    <li>Escribe <code>localhost</code> y dale a <strong>Add</strong>. Repite el proceso para añadir <code>127.0.0.1</code> y <code>cyber911zona.github.io</code></li>
                 </ol>
             </div>
 
@@ -3038,7 +3130,7 @@ goto inicio
                 <p>Configura los permisos de tu API Key para que no sea rechazada por los navegadores.</p>
                 <ol>
                     <li>Entra a <strong>Google Cloud Console</strong> en la sección de Credenciales.</li>
-                    <li>Selecciona tu proyecto arriba a la izquierda y haz clic en el nombre de tu <strong>API Key</strong> (la que termina en <code>-Kc</code>).</li>
+                    <li>Selecciona tu proyecto arriba a la izquierda y haz clic en el nombre de tu <strong>API Key</strong> (la que termina en ).<code>-Kc</code></li>
                     <li>Baja a <strong>Restricciones de aplicaciones</strong> y marca <strong>Sitios web</strong>.</li>
                     <li>En la sección <strong>Restricciones de sitios web</strong>, haz clic en <strong>AÑADIR</strong> y pega estos cuatro enlaces uno por uno (copia exactamente estos formatos sin el http):</li>
                 </ol>
@@ -3065,12 +3157,12 @@ goto inicio
             <div class="tutorial-pasos warning">
                 <h4>🛠️ Paso 3: Sincronización de Puertos (VS Code)</h4>
                 <p>Si el login falla en local, mira la barra de direcciones de tu navegador al darle a <strong>Go Live</strong>.</p>
-                <p>Si ves un número diferente a 5500 (ej: <code>:5501</code>), debes volver al <strong>Paso 2</strong> y añadir ese número exacto: <code>127.0.0.1:5501/*</code>.</p>
+                <p>Si ves un número diferente a 5500 ej: <code>:5501</code> debes volver al <strong>Paso 2</strong> y añadir ese número exacto: <code>127.0.0.1:5501/*</code></p>
             </div>
 
             <div class="tutorial-pasos">
                 <h4>🛠️ Paso 4: Limpieza de Service Worker (Caché)</h4>
-                <p>Tu navegador puede estar leyendo permisos viejos guardados en el archivo <code>sw.js</code>.</p>
+                <p>Tu navegador puede estar leyendo permisos viejos guardados en el archivo. <code>sw.js</code></p>
                 <ol>
                     <li>En tu web, presiona <strong>F12</strong> y ve a <strong>Application (Aplicación)</strong>.</li>
                     <li>En el menú izquierdo selecciona <strong>Storage (Almacenamiento)</strong>.</li>
@@ -3150,7 +3242,7 @@ goto inicio
                     </code>
                     <button class="btn-copiar-interno" onclick="copiarComando(this)"><i class="fas fa-copy"></i> Copiar Filtro</button>
                 </div>
-                <p class="warning" style="margin-top:10px;">⚠️ <strong>Nota:</strong> Este código debe ir justo después de iniciar el <code>forEach</code> en la función <code>mostrarNotas</code>.</p>
+                <p class="warning" style="margin-top:10px;">⚠️ <strong>Nota:</strong> Este código debe ir justo después de iniciar el <code>forEach</code> en la función <code>mostrarNotas</code></p>
             </div>
 
             <div class="tutorial-pasos">
@@ -3217,7 +3309,7 @@ goto inicio
                 <p>En tu App móvil: <strong>Dispositivos</strong> ➔ <strong>Añadir (+)</strong> ➔ <strong>Otro</strong> ➔ <strong>Wi-Fi</strong> ➔ <strong>Detectar dispositivos</strong>.</p>
             </div>
             
-            <p style="margin-top: 15px; font-size: 0.85rem; color: #000000;">
+            <p style="margin-top: 15px; font-size: 0.85rem;">
                 <i class="fas fa-exclamation-circle"></i> <strong>Importante:</strong> Debes habilitar "Wake on LAN" en la BIOS y en las propiedades del adaptador de red en Windows.
             </p>
         `,
